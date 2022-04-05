@@ -8,6 +8,9 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
 
+    @Autowired
+    TelegramBotUpdateHandler telegramBotUpdateHandler;
+
     @Override
     public String getBotUsername() {
         return "Marketplace Bot";
@@ -20,5 +23,6 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
+        //TODO: call telegramBotUpdateHandler;
     }
 }
