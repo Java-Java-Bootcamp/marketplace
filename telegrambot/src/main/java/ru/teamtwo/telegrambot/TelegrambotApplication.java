@@ -10,7 +10,6 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 public class TelegrambotApplication {
 
     public static void main(String[] args) {
-//        SpringApplication.run(TelegrambotApplication.class, args);
         try {
             // Create the TelegramBotsApi object to register your bots
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
