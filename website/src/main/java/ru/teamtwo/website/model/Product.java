@@ -16,7 +16,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-// TODO : ask about Product field name out of the list in the task and sync with Alexandra about product structure
     private String name;
     private String category;
     private String model;

@@ -32,9 +32,9 @@ public class ProductOffer{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @OneToOne()
+    @OneToOne(cascade = {CascadeType.ALL})
     private Product product;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private Store store;
     private long available;
 }

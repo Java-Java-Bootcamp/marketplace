@@ -1,0 +1,23 @@
+server:
+  port: 8081
+# JPA
+spring:
+  jpa:
+    generate-ddl: true
+    hibernate.ddl-auto: create-drop
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  # H2
+  h2.console.enabled: true
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+
+marketplace.producers: Григорий,Лев,Андрей,Роман,Арсений,Степан,Владислав,Никита,Глеб,Марк
+marketplace.products: мультифоры,файлы,стикер,бумага ,блокноты,газета,конверт,календарь,линеры,ручки,ластик,маркеры,карандаши,фломастеры,степлеры,дыроколы,скрепки,скобы,стул,стол,кресло,табурет,парта,вешалка,полка,диван,кровать,софа,кушетка,шкаф
+marketplace.sellers: aliexpress,apteka,bonprix,citilink,detmir,dns-shop,eldorado,exist,holodilnik,ikea,kolesa-darom,komus,lamoda,leroymerlin,mvideo,onlinetrade,ozon,petrovich,pokupki,sbermarket,shop,sima-land,sportmaster,svyaznoy,technopoint,utkonos,vkusvill,vprok,vseinstrumenti,wildberries
+marketplace.descriptions: супер,лучше некуда,великолепный,наилучший,добротный,надежный

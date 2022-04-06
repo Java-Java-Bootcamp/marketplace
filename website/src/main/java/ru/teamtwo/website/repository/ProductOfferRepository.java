@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductOfferRepository extends JpaRepository<ProductOffer, Long> {
-    @Query ("select id, product, store, available from ProductOffer where product.name like (:productName)")
-    List<ProductOffer> getProductOffersByProductName(String productName);
+    @Query ("SELECT po FROM ProductOffer po where po.product.name LIKE %:productName%")
+    Iterable<ProductOffer> getProductOffersByProductName(String productName);
 
 }
