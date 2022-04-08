@@ -23,14 +23,26 @@ public class TelegramBot extends TelegramLongPollingBot {
         return "5189238062:AAEAKaN6jnS223nSlwKu3QPsLKS0rXi3C6c";
     }
 
+
+
     @Override
     public void onUpdateReceived(Update update) {
+        //TODO: call telegramBotUpdateHandler;
+        TelegramBotUpdateHandler updateHandler = new TelegramBotUpdateHandler();
+
         {
-            if (update.hasMessage() && update.getMessage().hasText()) {
+            if (update.hasMessage() && update.getMessage().hasText()
+            && update.getMessage().getText().equals("/search")) {
+
+//              Передача текста поиска в метод поиска товаров
+                String reply = updateHandler.searchProducts(update);
+
+//              формирование объекта с текстом ответа и id чата
                 SendMessage message = new SendMessage();
                 message.setChatId(update.getMessage().getChatId().toString());
-                message.setText(update.getMessage().getText());
+                message.setText(reply);
 
+//              Отправка результата вызова метода поиска товаров пользователю
                 try {
                     execute(message);
                 } catch (TelegramApiException e) {
