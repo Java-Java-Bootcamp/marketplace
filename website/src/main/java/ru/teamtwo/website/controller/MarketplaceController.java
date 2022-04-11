@@ -3,6 +3,7 @@ package ru.teamtwo.website.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import javax.annotation.PostConstruct;
 public class MarketplaceController {
     private final EntityGenerator generator;
     private final ProductOfferRepository repository;
+
     @Autowired
     public MarketplaceController(EntityGenerator generator, ProductOfferRepository repository) {
         this.generator = generator;
@@ -27,13 +29,14 @@ public class MarketplaceController {
     @GetMapping("/product-offers")
     public Page<ProductOffer> getProductOffersByProductName(@RequestParam(value = "text", required = true) String productNamePart,
                                                             @RequestParam(value = "limit", defaultValue = "20") int limit,
-                                                            @RequestParam(value = "offset", defaultValue = "0") int offset) {
-        return repository.getProductOffersByProductName(productNamePart, PageRequest.of(offset, limit));
+                                                            @RequestParam(value = "offset", defaultValue = "0") int offset,
+                                                            @RequestParam(value = "order") String order) {
+        final PageRequest pageRequest = PageRequest.of(offset, limit);
+        return repository.getProductOffersByProductName(productNamePart, order == null ? pageRequest : pageRequest.withSort(Sort.by(order)));
     }
 
     @PostConstruct
     private void init() {
         generator.generateEntities(repository);
     }
-
 }

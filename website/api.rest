@@ -1,1 +1,12 @@
-GET localhost:8081/marketplace/api/product-offers?text=ар&limit=3&offset=
+GET localhost:8081/marketplace/api/product-offers?text=ар&limit=3&offset=2&order=store.rate
+
+###
+GET localhost:8081/marketplace/api/product-offers?text=ар&order=product.rat
+
+#добавить обработку параметра order выдавая отсортированный список
+#GET /product-offers?text={text}&order={order)
+#возможны варианты order
+#
+#    product-rate
+#    organization-rate
+#    price

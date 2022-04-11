@@ -7,9 +7,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import ru.teamtwo.website.model.ProductOffer;
 
 public interface ProductOfferRepository extends PagingAndSortingRepository<ProductOffer, Long> {
-    @Query(value = "SELECT po FROM ProductOffer po where po.product.name LIKE %:productName%"
-            /*countQuery = "SELECT count(po.id) FROM ProductOffer po where po.product.name LIKE %:productName%",
-            nativeQuery = false*/)
+    @Query(value = "SELECT po FROM ProductOffer po where po.product.name LIKE %:productName%")
     Page<ProductOffer> getProductOffersByProductName(String productName, Pageable pageable);
-
 }
