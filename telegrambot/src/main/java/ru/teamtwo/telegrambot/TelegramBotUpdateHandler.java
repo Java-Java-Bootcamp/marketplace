@@ -41,7 +41,7 @@ public class TelegramBotUpdateHandler {
         SendMessage searchMenuMessage = telegramBotSearchMenu.searchMenu(update);
         context.setBuyerChatContext(update, SEARCH);
         buyerSearchParams.setBuyerOrderType(update, PRODUCT_RATING);
-        buyerSearchParams.setbuyerOrderTypeAscDesc(update, DESC);
+        buyerSearchParams.setBuyerOrderTypeAscDesc(update, DESC);
         return searchMenuMessage;
     }
 

@@ -30,7 +30,7 @@ public class TelegramBotSearch {
             List<ProductDTO> searchResult = restHandler.getSortedProductsByFilterWithOffsetAndLimit(
                     filter,
                     buyerSearchParams.getBuyerOrderType(update),
-                    buyerSearchParams.getbuyerOrderTypeAscDesc(update),
+                    buyerSearchParams.getBuyerOrderTypeAscDesc(update),
                     offset,
                     limit
                     );

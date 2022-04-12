@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TelegramBotMenu extends ReplyKeyboardMarkup {
-
     /**
      * Добавляет в меню строку с несколькими ячейками
      * @param rowText тексты ячеек

@@ -1,6 +1,5 @@
 package ru.teamtwo.telegrambot;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -24,12 +23,12 @@ public class BuyerSearchParams {
         return orderType;
     }
 
-    public void setbuyerOrderTypeAscDesc(Update update, TelegramBotRESTHandler.OrderTypeAscDesc OrderTypeAscDesc) {
+    public void setBuyerOrderTypeAscDesc(Update update, TelegramBotRESTHandler.OrderTypeAscDesc OrderTypeAscDesc) {
         Long buyerChatId = update.getMessage().getChatId();
         buyerOrderTypeAscDesc.put(buyerChatId, OrderTypeAscDesc);
     }
 
-    public TelegramBotRESTHandler.OrderTypeAscDesc getbuyerOrderTypeAscDesc(Update update) {
+    public TelegramBotRESTHandler.OrderTypeAscDesc getBuyerOrderTypeAscDesc(Update update) {
         Long buyerChatId = update.getMessage().getChatId();
         TelegramBotRESTHandler.OrderTypeAscDesc orderTypeAscDesc = buyerOrderTypeAscDesc.get(buyerChatId);
         return orderTypeAscDesc;
