@@ -2,10 +2,23 @@ package ru.teamtwo.telegrambot.menus;
 
 import org.springframework.context.annotation.Bean;
 
-/**
- * Хранит в себе менюшки для сортировки товаров
- */
-public class TelegramBotSortMenus {
+public class TelegramBotMenus {
+
+    @Bean
+    public static TelegramBotMenu getSearchMenu(){
+        TelegramBotMenu keyboard = new TelegramBotMenu();
+        keyboard.addRow("Главное меню");
+
+        return keyboard;
+    }
+
+    @Bean
+    public static TelegramBotMenu getMainMenuKeyboard(){
+        TelegramBotMenu keyboard = new TelegramBotMenu();
+        keyboard.addRow("Поиск");
+
+        return keyboard;
+    }
 
     /**
      * Возвращает меню для сортировки по полю товара: цена, рейтинг и т.д.
