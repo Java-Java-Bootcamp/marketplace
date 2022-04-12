@@ -16,18 +16,18 @@ public class ProductDTO {
     private double sellerRating;
     private long quantity;
 
-    public ProductDTO(ProductOffer productOffer){
-        this.id=productOffer.getId();
-        this.name=productOffer.getProduct().getName();
-        this.manufacturer=productOffer.getProduct().getManufacturer();
-        this.description=productOffer.getProduct().getDescription();
-        this.category=productOffer.getProduct().getCategory();
-        this.rating=productOffer.getProduct().getRate();
+    public ProductDTO(ProductOffer productOffer) {
+        this.id = productOffer.getId();
+        this.name = productOffer.getProduct().getName();
+        this.manufacturer = productOffer.getProduct().getManufacturer();
+        this.description = productOffer.getProduct().getDescription();
+        this.category = productOffer.getProduct().getCategory();
+        this.rating = productOffer.getProduct().getRate();
 
-        this.price=0; //TODO: добавить в Product поле price
+        this.price = 0; //TODO: добавить в Product поле price
 
-        this.sellerName=productOffer.getStore().getName();
-        this.sellerRating=productOffer.getStore().getRate();
-        this.quantity =productOffer.getAvailable();
+        this.sellerName = productOffer.getStore().getName();
+        this.sellerRating = productOffer.getStore().getRate();
+        this.quantity = productOffer.getAvailable();
     }
 }
