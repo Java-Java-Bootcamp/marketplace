@@ -1,4 +1,4 @@
-package ru.teamtwo.telegrambot;
+package ru.teamtwo.telegrambot.menus;
 
 /**
  * Хранит темплейты менюшек, отображающихся под постом
