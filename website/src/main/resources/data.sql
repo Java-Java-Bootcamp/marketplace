@@ -1,4 +1,4 @@
-INSERT INTO marketplace2.product (name,category,model,manufacturer,description,price,rating)
+INSERT INTO marketplace.product (name,category,model,manufacturer,description,price,rating)
 VALUES
     ('Hasad Dunn',39,'Emily Giles','Nec Ante Maecenas Corp.','vitae diam. Proin dolor. Nulla semper tellus id nunc',95,49),
     ('Byron Wade',96,'Zane Newman','Nulla Integer LLP','neque. Nullam ut nisi a odio semper cursus.',413,54),
@@ -22,7 +22,7 @@ VALUES
     ('Amelia Forbes',15,'Rose Cannon','Eros Turpis Non Incorporated','cursus a, enim. Suspendisse aliquet, sem',700,2);
 
 
-INSERT INTO marketplace2.store (name,rating)
+INSERT INTO marketplace.store (name,rating)
 VALUES
     ('Curabitur Egestas Ltd',83),
     ('Molestie Incorporated',97),
@@ -45,7 +45,7 @@ VALUES
     ('Dolor Sit Corporation',90),
     ('Tortor Dictum Eu Limited',83);
 
-INSERT INTO marketplace2.product_offer (product,store,quantity)
+INSERT INTO marketplace.product_offer (product,store,quantity)
 VALUES
     (8,19,4),
     (15,7,30),
@@ -67,7 +67,7 @@ VALUES
     (12,4,24),
     (18,4,42),
     (16,13,56);
-INSERT INTO marketplace2.product_offer (product,store,quantity)
+INSERT INTO marketplace.product_offer (product,store,quantity)
 VALUES
     (18,12,96),
     (3,17,63),
@@ -89,7 +89,7 @@ VALUES
     (2,12,52),
     (11,1,58),
     (11,15,85);
-INSERT INTO marketplace2.product_offer (product,store,quantity)
+INSERT INTO marketplace.product_offer (product,store,quantity)
 VALUES
     (12,8,64),
     (5,13,80),
@@ -101,7 +101,7 @@ VALUES
     (17,11,83),
     (10,16,3),
     (16,10,14);
-INSERT INTO marketplace2.product_offer (product,store,quantity)
+INSERT INTO marketplace.product_offer (product,store,quantity)
 VALUES
     (8,10,45),
     (17,12,55),
@@ -123,7 +123,7 @@ VALUES
     (8,2,14),
     (7,17,57),
     (2,18,11);
-INSERT INTO marketplace2.product_offer (product,store,quantity)
+INSERT INTO marketplace.product_offer (product,store,quantity)
 VALUES
     (7,13,62),
     (4,14,43),
@@ -145,7 +145,7 @@ VALUES
     (7,7,24),
     (11,15,38),
     (9,15,79);
-INSERT INTO marketplace2.product_offer (product,store,quantity)
+INSERT INTO marketplace.product_offer (product,store,quantity)
 VALUES
     (3,18,39),
     (13,8,32),

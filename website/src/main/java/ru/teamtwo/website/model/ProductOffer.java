@@ -1,41 +1,36 @@
 package ru.teamtwo.website.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-/*GET /product-offers?text={text}
-
-        response: List Of ProductOffer
-
-        ProductOffer:
-        product:
-        category: text
-        model: text
-        manufacturer: text
-        description: text
-        rate: numeric
-        store:
-        name: text
-        rate: numeric
-        available: numeric*/
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
-@AllArgsConstructor
-@Builder
-
-public class ProductOffer{
+@Table(name = "product_offer", schema = "marketplace")
+public class ProductOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
-    @OneToOne
+    private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "product", nullable = false)
     private Product product;
-    @OneToOne
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "store", nullable = false)
     private Store store;
-    private long available;
+
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
 }
-
-

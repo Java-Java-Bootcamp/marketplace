@@ -1,13 +1,13 @@
-CREATE SCHEMA IF NOT EXISTS marketplace2;
+CREATE SCHEMA IF NOT EXISTS marketplace;
 
-drop table if exists marketplace2.product cascade;
-drop table if exists marketplace2.store cascade;
-drop table if exists marketplace2.product_offer cascade;
+drop table if exists marketplace.product cascade;
+drop table if exists marketplace.store cascade;
+drop table if exists marketplace.product_offer cascade;
 
-CREATE TABLE IF NOT EXISTS marketplace2.product (
+CREATE TABLE IF NOT EXISTS marketplace.product (
       id SERIAL PRIMARY KEY,
       name varchar(255) NOT NULL,
-      category integer NOT NULL,
+      category varchar(255) NOT NULL,
       model varchar(255) NOT NULL,
       manufacturer varchar(255) NOT NULL,
       description TEXT NOT NULL,
@@ -15,16 +15,16 @@ CREATE TABLE IF NOT EXISTS marketplace2.product (
       rating integer NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS marketplace2.store (
+CREATE TABLE IF NOT EXISTS marketplace.store (
     id SERIAL PRIMARY KEY,
     name varchar(255) NOT NULL,
     rating integer NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS marketplace2.product_offer (
+CREATE TABLE IF NOT EXISTS marketplace.product_offer (
     id SERIAL PRIMARY KEY,
-    product integer NOT NULL REFERENCES marketplace2.product (id),
-    store integer NOT NULL REFERENCES marketplace2.store (id),
+    product integer NOT NULL REFERENCES marketplace.product (id),
+    store integer NOT NULL REFERENCES marketplace.store (id),
     quantity integer NOT NULL
 );
 
