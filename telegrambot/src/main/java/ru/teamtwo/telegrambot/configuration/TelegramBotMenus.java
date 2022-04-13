@@ -1,7 +1,10 @@
 package ru.teamtwo.telegrambot.configuration;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import ru.teamtwo.telegrambot.model.menus.TelegramBotMenu;
 
+@Configuration
 public class TelegramBotMenus {
 
     @Bean
