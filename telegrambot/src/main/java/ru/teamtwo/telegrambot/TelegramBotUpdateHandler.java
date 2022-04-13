@@ -5,7 +5,10 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
+import ru.teamtwo.telegrambot.dtos.ProductDTO;
 import ru.teamtwo.telegrambot.menus.TelegramBotMenus;
+
+import java.util.List;
 
 
 @Component
@@ -14,6 +17,9 @@ public class TelegramBotUpdateHandler {
     UserStateHandler userStateHandler;
     @Autowired
     TelegramBotSendMessageHandler sendMessageHandler;
+
+    @Autowired
+    SearchQueryHandler queryResultHandler;
 
     public void handle(TelegramLongPollingBot bot,  Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
@@ -36,16 +42,25 @@ public class TelegramBotUpdateHandler {
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SEARCH_QUERY
                     && message.equals("Главное меню")) {
-                sendMessageHandler.sendMessage(bot, chatId, "Вы в главном меню",
-                        TelegramBotMenus.getMainMenuKeyboard());
+                sendMessageHandler.sendMessage(bot, chatId, "Вы в главном меню", TelegramBotMenus.getMainMenuKeyboard());
 
                 userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SEARCH_START);
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SEARCH_QUERY) {
-                sendMessageHandler.sendMessage(bot, chatId, "Выберите тип сортировки", TelegramBotMenus.getSortByFieldKeyboard());
+                List<ProductDTO> queryResult = queryResultHandler.getSearchResult(message, user);
+                if (queryResult.isEmpty()) {
+                    sendMessageHandler.sendMessage(bot, chatId, "По вашему запросу ничего не найдено" +
+                                                                     "Попробуйте другой запрос",
+                            TelegramBotMenus.getSearchMenu());
 
-                userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SORTING_TYPE_FIELD);
-                userStateHandler.get(user).setSearchQuery(message);
+                    userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SEARCH_QUERY);
+                }
+                else {
+                    sendMessageHandler.sendMessage(bot, chatId, "Выберите тип сортировки", TelegramBotMenus.getSortByFieldKeyboard());
+
+                    userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SORTING_TYPE_FIELD);
+                    userStateHandler.get(user).setSearchQuery(message);
+                }
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SORTING_TYPE_FIELD) {
                 sendMessageHandler.sendMessage(bot, chatId, "По убыванию/возрастанию?", TelegramBotMenus.getSortByAscDescKeyboard());
