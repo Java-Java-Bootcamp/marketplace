@@ -3,18 +3,10 @@ package ru.teamtwo.telegrambot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import ru.teamtwo.telegrambot.menus.TelegramBotMainMenu;
-import ru.teamtwo.telegrambot.menus.TelegramBotMenu;
-import ru.teamtwo.telegrambot.menus.TelegramBotSearchMenu;
-import ru.teamtwo.telegrambot.menus.TelegramBotSortMenus;
+import ru.teamtwo.telegrambot.menus.TelegramBotMenus;
 
-import static ru.teamtwo.telegrambot.Context.ContextEnum.*;
-import static ru.teamtwo.telegrambot.TelegramBotRESTHandler.OrderType.PRODUCT_RATING;
-import static ru.teamtwo.telegrambot.TelegramBotRESTHandler.OrderTypeAscDesc.DESC;
 
 @Component
 public class TelegramBotUpdateHandler {
@@ -39,13 +31,13 @@ public class TelegramBotUpdateHandler {
                 userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SEARCH_QUERY);
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SEARCH_QUERY) {
-                sendMessageHandler.sendMessage(bot, chatId, "Выберите тип сортировки", TelegramBotSortMenus.getSortByFieldKeyboard());
+                sendMessageHandler.sendMessage(bot, chatId, "Выберите тип сортировки", TelegramBotMenus.getSortByFieldKeyboard());
 
                 userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SORTING_TYPE_FIELD);
                 userStateHandler.get(user).setSearchQuery(message);
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SORTING_TYPE_FIELD) {
-                sendMessageHandler.sendMessage(bot, chatId, "По убыванию/возрастанию?", TelegramBotSortMenus.getSortByAscDescKeyboard());
+                sendMessageHandler.sendMessage(bot, chatId, "По убыванию/возрастанию?", TelegramBotMenus.getSortByAscDescKeyboard());
 
                 userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SORTING_TYPE_ASCDESC);
                 //userStateHandler.get(user).setOrderType();
