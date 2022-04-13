@@ -29,9 +29,17 @@ public class TelegramBotUpdateHandler {
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SEARCH_START
                     && message.equals("Поиск")) {
-                sendMessageHandler.sendMessage(bot, chatId, "Введите запрос");
+                sendMessageHandler.sendMessage(bot, chatId, "Введите запрос",
+                        TelegramBotMenus.getSearchMenu());
 
                 userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SEARCH_QUERY);
+            }
+            else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SEARCH_QUERY
+                    && message.equals("Главное меню")) {
+                sendMessageHandler.sendMessage(bot, chatId, "Вы в главном меню",
+                        TelegramBotMenus.getMainMenuKeyboard());
+
+                userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SEARCH_START);
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SEARCH_QUERY) {
                 sendMessageHandler.sendMessage(bot, chatId, "Выберите тип сортировки", TelegramBotMenus.getSortByFieldKeyboard());
