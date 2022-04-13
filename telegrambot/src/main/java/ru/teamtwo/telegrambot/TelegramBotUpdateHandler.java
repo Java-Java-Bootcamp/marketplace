@@ -22,7 +22,9 @@ public class TelegramBotUpdateHandler {
             User user = update.getMessage().getFrom();
 
             if(message.equals("/start")){
+                sendMessageHandler.sendMessage(bot, chatId, "Добро пожаловать в Маркетплейс!");
 
+                userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SEARCH_START);
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SEARCH_START
                     && message.equals("Поиск")) {
@@ -55,17 +57,7 @@ public class TelegramBotUpdateHandler {
                 userStateHandler.get(user).getCart().putIfAbsent(userStateHandler.get(user).getCurrentProductId(), Integer.valueOf(message));
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_ADDRESS) {
-                //
             }
         }
-    }
-
-    public void sendGreetingMessage(TelegramLongPollingBot bot, String chatId, User user) {
-
-    }
-
-    public void goToSearch(TelegramLongPollingBot bot, String chatId, User user) {
-        sendMessageHandler.sendMessage(bot, chatId, "Введите поисковой запрос");
-        userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SEARCH_QUERY);
     }
 }
