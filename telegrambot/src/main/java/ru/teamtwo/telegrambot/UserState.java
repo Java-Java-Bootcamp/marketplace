@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
+import static ru.teamtwo.telegrambot.TelegramBotRESTHandler.OrderType.PRODUCT_RATING;
+import static ru.teamtwo.telegrambot.TelegramBotRESTHandler.OrderTypeAscDesc.ASC;
+
 /**
  * Хранит в себе информацию о состоянии
  * взаимодействия с пользователем: на какой стадии поиска
@@ -30,8 +33,8 @@ public class UserState {
     private String chatId = "";
     private State state = State.WAITING_FOR_SEARCH_START;
     private String searchQuery = "";
-    private TelegramBotRESTHandler.OrderType orderType;
-    private TelegramBotRESTHandler.OrderTypeAscDesc orderTypeAscDesc;
+    private TelegramBotRESTHandler.OrderType orderType = PRODUCT_RATING;
+    private TelegramBotRESTHandler.OrderTypeAscDesc orderTypeAscDesc = ASC;
     private int offset = DEFAULT_OFFSET;
     private int limit = DEFAULT_LIMIT;
     private Map<String, Integer> cart;
