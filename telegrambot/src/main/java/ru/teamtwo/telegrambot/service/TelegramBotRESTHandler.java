@@ -1,4 +1,4 @@
-package ru.teamtwo.telegrambot;
+package ru.teamtwo.telegrambot.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,25 +34,17 @@ public class TelegramBotRESTHandler {
      * Виды сортировки по полям товара для запросов товаров
      */
     public enum OrderType{
-        PRICE("price"),
-        PRODUCT_RATING("rating"),
-        SELLER_RATING("sellerRating");
-        public final String text;
-        OrderType(String text){
-            this.text = text;
-        }
+        PRICE,
+        PRODUCT_RATING,
+        SELLER_RATING
     }
 
     /**
      * Виды сортировки - по убывающей/возрастающей
      */
     public enum OrderTypeAscDesc{
-        ASC("asc"),
-        DESC("desc");
-        public final String text;
-        OrderTypeAscDesc(String text){
-            this.text = text;
-        }
+        ASC,
+        DESC
     }
 
     /**
@@ -89,7 +81,7 @@ public class TelegramBotRESTHandler {
         uri.append(FILTER_PARAMETER).append("=").append(filter).append("&");
         uri.append(OFFSET_PARAMETER).append("=").append(offset).append("&");
         uri.append(LIMIT_PARAMETER).append("=").append(limit).append("&");
-        uri.append(ORDER_PARAMETER).append("=").append(ascDesc).append("_").append(orderType.text);
+        uri.append(ORDER_PARAMETER).append("=").append(ascDesc).append("_").append(orderType.toString());
         logger.debug("getSortedProductsByFilterWithOffset URI:{}", uri);
 
         List<ProductDTO> productList = webClient

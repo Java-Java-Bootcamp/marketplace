@@ -1,4 +1,4 @@
-package ru.teamtwo.telegrambot;
+package ru.teamtwo.telegrambot.model.menus;
 
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TelegramBotMenu extends ReplyKeyboardMarkup {
-
     /**
      * Добавляет в меню строку с несколькими ячейками
      * @param rowText тексты ячеек
