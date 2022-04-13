@@ -1,4 +1,4 @@
-package ru.teamtwo.telegrambot.menus;
+package ru.teamtwo.telegrambot.configuration;
 
 import org.springframework.context.annotation.Bean;
 

@@ -1,4 +1,4 @@
-package ru.teamtwo.telegrambot.handlers;
+package ru.teamtwo.telegrambot.service;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.User;

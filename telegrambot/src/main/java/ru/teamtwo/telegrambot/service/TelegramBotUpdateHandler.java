@@ -1,4 +1,4 @@
-package ru.teamtwo.telegrambot.handlers;
+package ru.teamtwo.telegrambot.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.teamtwo.telegrambot.model.UserState;
 import ru.teamtwo.telegrambot.dtos.ProductDTO;
-import ru.teamtwo.telegrambot.menus.TelegramBotMenus;
+import ru.teamtwo.telegrambot.configuration.TelegramBotMenus;
 
 import java.util.List;
 

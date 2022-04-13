@@ -1,4 +1,4 @@
-package ru.teamtwo.telegrambot.menus;
+package ru.teamtwo.telegrambot.configuration;
 
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;

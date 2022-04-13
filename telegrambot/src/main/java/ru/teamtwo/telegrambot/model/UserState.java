@@ -2,12 +2,12 @@ package ru.teamtwo.telegrambot.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.teamtwo.telegrambot.handlers.TelegramBotRESTHandler;
+import ru.teamtwo.telegrambot.service.TelegramBotRESTHandler;
 
 import java.util.Map;
 
-import static ru.teamtwo.telegrambot.handlers.TelegramBotRESTHandler.OrderType.PRODUCT_RATING;
-import static ru.teamtwo.telegrambot.handlers.TelegramBotRESTHandler.OrderTypeAscDesc.ASC;
+import static ru.teamtwo.telegrambot.service.TelegramBotRESTHandler.OrderType.PRODUCT_RATING;
+import static ru.teamtwo.telegrambot.service.TelegramBotRESTHandler.OrderTypeAscDesc.ASC;
 
 /**
  * Хранит в себе информацию о состоянии
