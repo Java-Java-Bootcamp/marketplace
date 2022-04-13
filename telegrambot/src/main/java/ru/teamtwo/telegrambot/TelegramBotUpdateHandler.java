@@ -56,6 +56,8 @@ public class TelegramBotUpdateHandler {
                     userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SEARCH_QUERY);
                 }
                 else {
+                    String queryResultText = queryResultHandler.queryResultToString(queryResult);
+                    sendMessageHandler.sendMessage(bot, chatId, queryResultText);
                     sendMessageHandler.sendMessage(bot, chatId, "Выберите тип сортировки", TelegramBotMenus.getSortByFieldKeyboard());
 
                     userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SORTING_TYPE_FIELD);

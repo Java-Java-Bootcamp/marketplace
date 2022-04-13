@@ -2,14 +2,11 @@ package ru.teamtwo.telegrambot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.teamtwo.telegrambot.dtos.ProductDTO;
 
 import java.util.List;
-
-import static ru.teamtwo.telegrambot.menus.TelegramBotMenus.getSortByFieldKeyboard;
+import java.util.stream.Collectors;
 
 @Component
 public class SearchQueryHandler {
@@ -28,5 +25,12 @@ public class SearchQueryHandler {
 
         List<ProductDTO> queryResult = restHandler.getSortedProductsByFilterWithOffsetAndLimit(message, orderType, orderTypeAscDesc, offset, limit);
         return queryResult;
+    }
+
+    public String queryResultToString(List<ProductDTO> queryResult) {
+        String listString = queryResult.stream().map(Object::toString)
+                .collect(Collectors.joining(", "));
+
+        return listString;
     }
 }
