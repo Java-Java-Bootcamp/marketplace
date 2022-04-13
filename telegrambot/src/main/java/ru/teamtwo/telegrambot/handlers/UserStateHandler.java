@@ -1,7 +1,8 @@
-package ru.teamtwo.telegrambot;
+package ru.teamtwo.telegrambot.handlers;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.User;
+import ru.teamtwo.telegrambot.model.UserState;
 
 import java.util.HashMap;
 import java.util.Map;

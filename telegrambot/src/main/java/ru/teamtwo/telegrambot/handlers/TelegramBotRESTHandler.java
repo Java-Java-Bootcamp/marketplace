@@ -1,4 +1,4 @@
-package ru.teamtwo.telegrambot;
+package ru.teamtwo.telegrambot.handlers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package ru.teamtwo.telegrambot;
+package ru.teamtwo.telegrambot.handlers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
