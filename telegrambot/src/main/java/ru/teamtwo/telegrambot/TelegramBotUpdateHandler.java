@@ -22,7 +22,8 @@ public class TelegramBotUpdateHandler {
             User user = update.getMessage().getFrom();
 
             if(message.equals("/start")){
-                sendMessageHandler.sendMessage(bot, chatId, "Добро пожаловать в Маркетплейс!");
+                sendMessageHandler.sendMessage(bot, chatId, "Добро пожаловать в Маркетплейс!",
+                        TelegramBotMenus.getMainMenuKeyboard());
 
                 userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SEARCH_START);
             }
