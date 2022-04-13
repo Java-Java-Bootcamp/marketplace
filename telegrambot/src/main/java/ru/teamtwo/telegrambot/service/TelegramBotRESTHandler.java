@@ -20,8 +20,8 @@ public class TelegramBotRESTHandler {
     private static final Logger logger = LoggerFactory.getLogger(TelegramBotRESTHandler.class);
 
     @Value("${telegrambot.rest.webClientUri}")
-    private static String WEB_CLIENT_URI;
-    private static final String PRODUCT_OFFERS_URI = "product-offers";
+    private static String WEB_CLIENT_URI = "http://localhost:8081/marketplace/api";
+    private static final String PRODUCT_OFFERS_URI = "/product-offers";
     private static final String FILTER_PARAMETER = "filter";
     private static final String OFFSET_PARAMETER = "offset";
     private static final String LIMIT_PARAMETER = "limit";
@@ -76,6 +76,7 @@ public class TelegramBotRESTHandler {
         logger.debug("getSortedProductsByFilterWithOffset({},{},{},{},{})",filter,orderType,ascDesc,offset,limit);
 
         StringBuilder uri = new StringBuilder();
+        uri.append(WEB_CLIENT_URI);
         uri.append(PRODUCT_OFFERS_URI);
         uri.append("?");
         uri.append(FILTER_PARAMETER).append("=").append(filter).append("&");
