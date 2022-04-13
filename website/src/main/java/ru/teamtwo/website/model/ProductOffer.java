@@ -1,9 +1,6 @@
 package ru.teamtwo.website.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -26,15 +23,17 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
+@AllArgsConstructor
+@Builder
 
 public class ProductOffer{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     private Product product;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     private Store store;
     private long available;
 }

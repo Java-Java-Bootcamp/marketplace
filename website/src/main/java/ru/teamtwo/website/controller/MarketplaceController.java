@@ -11,7 +11,6 @@ import ru.teamtwo.website.dtos.ProductDTO;
 import ru.teamtwo.website.repository.ProductOfferRepository;
 import ru.teamtwo.website.service.EntityGenerator;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +40,7 @@ public class MarketplaceController {
                 .collect(Collectors.toList());
     }
 
-    @PostConstruct
+//    @PostConstruct
     private void init() {
         generator.generateEntities(repository);
     }

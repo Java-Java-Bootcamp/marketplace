@@ -1,16 +1,17 @@
 package ru.teamtwo.website.model;
 
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
+@AllArgsConstructor
+@Builder
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,5 +22,6 @@ public class Product {
     private String model;
     private String manufacturer;
     private String description;
+    private BigDecimal price;
     private float rate;
 }

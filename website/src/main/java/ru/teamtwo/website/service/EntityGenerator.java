@@ -10,7 +10,6 @@ import ru.teamtwo.website.repository.ProductOfferRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 @Service
 public class EntityGenerator {
@@ -28,6 +27,7 @@ public class EntityGenerator {
         fillData(data);
         repository.saveAll(data);
     }
+
 
     private void fillData(List<ProductOffer> data) {
 
