@@ -34,7 +34,7 @@ public class TelegramBotRESTHandler {
      * Виды сортировки по полям товара для запросов товаров
      */
     public enum OrderType{
-        PRICE,
+        PRODUCT_PRICE,
         PRODUCT_RATING,
         SELLER_RATING
     }
