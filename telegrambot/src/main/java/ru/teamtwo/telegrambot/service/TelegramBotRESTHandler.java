@@ -34,7 +34,8 @@ public class TelegramBotRESTHandler {
      * Виды сортировки по полям товара для запросов товаров
      */
     public enum OrderType{
-        PRICE,
+        PRODUCT_NAME,
+        PRODUCT_PRICE,
         PRODUCT_RATING,
         SELLER_RATING
     }
@@ -82,7 +83,8 @@ public class TelegramBotRESTHandler {
         uri.append(FILTER_PARAMETER).append("=").append(filter).append("&");
         uri.append(OFFSET_PARAMETER).append("=").append(offset).append("&");
         uri.append(LIMIT_PARAMETER).append("=").append(limit).append("&");
-        uri.append(ORDER_PARAMETER).append("=").append(ascDesc).append("_").append(orderType.toString());
+        uri.append(ORDER_PARAMETER).append("=").append(ascDesc).append("_")
+                .append(orderType.toString().replace("_", "."));
         logger.debug("getSortedProductsByFilterWithOffset URI:{}", uri);
 
         List<ProductDTO> productList = webClient
