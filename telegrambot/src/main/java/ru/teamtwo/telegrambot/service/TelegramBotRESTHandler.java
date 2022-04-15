@@ -12,6 +12,7 @@ import reactor.core.publisher.Mono;
 import ru.teamtwo.telegrambot.dtos.OrderDTO;
 import ru.teamtwo.telegrambot.dtos.ProductDTO;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,18 +20,19 @@ import java.util.stream.Collectors;
 public class TelegramBotRESTHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(TelegramBotRESTHandler.class);
-    private static String WEB_CLIENT_URI;
+    @Value("${telegrambot.rest.webClientUri}")
+    private String WEB_CLIENT_URI;
     private static final String PRODUCT_OFFERS_URI = "/product-offers";
     private static final String FILTER_PARAMETER = "filter";
     private static final String OFFSET_PARAMETER = "offset";
     private static final String LIMIT_PARAMETER = "limit";
     private static final String ORDER_PARAMETER = "order";
     private static final String POST_NEW_ORDER_URI = "orders";
-    private final WebClient webClient = WebClient.create(WEB_CLIENT_URI);
+    private WebClient webClient;
 
-    @Autowired
-    public TelegramBotRESTHandler(@Value("${telegrambot.rest.webClientUri}") String webClientUri) {
-        WEB_CLIENT_URI = webClientUri;
+    @PostConstruct
+    public void init(){
+        webClient = WebClient.create(WEB_CLIENT_URI);
     }
 
     /**
