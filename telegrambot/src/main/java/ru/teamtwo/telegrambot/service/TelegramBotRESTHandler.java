@@ -2,6 +2,7 @@ package ru.teamtwo.telegrambot.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -18,17 +19,19 @@ import java.util.stream.Collectors;
 public class TelegramBotRESTHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(TelegramBotRESTHandler.class);
-
-    @Value("${telegrambot.rest.webClientUri}")
-    private static String WEB_CLIENT_URI = "http://localhost:8081/marketplace/api";
+    private static String WEB_CLIENT_URI;
     private static final String PRODUCT_OFFERS_URI = "/product-offers";
     private static final String FILTER_PARAMETER = "filter";
     private static final String OFFSET_PARAMETER = "offset";
     private static final String LIMIT_PARAMETER = "limit";
     private static final String ORDER_PARAMETER = "order";
-
     private static final String POST_NEW_ORDER_URI = "orders";
     private final WebClient webClient = WebClient.create(WEB_CLIENT_URI);
+
+    @Autowired
+    public TelegramBotRESTHandler(@Value("${telegrambot.rest.webClientUri}") String webClientUri) {
+        WEB_CLIENT_URI = webClientUri;
+    }
 
     /**
      * Виды сортировки по полям товара для запросов товаров
