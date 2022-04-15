@@ -18,7 +18,7 @@ import static ru.teamtwo.telegrambot.service.TelegramBotRESTHandler.OrderTypeAsc
 @NoArgsConstructor
 public class UserState {
 
-    private static final int DEFAULT_LIMIT = 5;
+    private static final int DEFAULT_LIMIT = 20;
     private static final int DEFAULT_OFFSET = 0;
 
     public enum State{
