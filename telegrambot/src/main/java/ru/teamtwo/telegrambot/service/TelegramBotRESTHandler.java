@@ -31,7 +31,7 @@ public class TelegramBotRESTHandler {
     private WebClient webClient;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         webClient = WebClient.create(WEB_CLIENT_URI);
     }
 

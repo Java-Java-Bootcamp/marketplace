@@ -2,8 +2,11 @@ package ru.teamtwo.telegrambot.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.reactive.function.client.WebClient;
 import ru.teamtwo.telegrambot.service.TelegramBotRESTHandler;
 
+import javax.annotation.PostConstruct;
 import java.util.Map;
 
 import static ru.teamtwo.telegrambot.service.TelegramBotRESTHandler.OrderType.PRODUCT_RATING;

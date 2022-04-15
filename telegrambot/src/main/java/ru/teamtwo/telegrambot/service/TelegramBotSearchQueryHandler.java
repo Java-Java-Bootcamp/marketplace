@@ -28,12 +28,7 @@ public class TelegramBotSearchQueryHandler {
         int limit = userStateHandler.get(user).getLimit();
 
         List<ProductDTO> queryResult = restHandler.getSortedProductsByFilterWithOffsetAndLimit(message, orderType, orderTypeAscDesc, offset, limit);
-        if (queryResult.isEmpty()) {
-            return null;
-        }
-        else {
-            List<String> ProductDTOToString = resultFormatter.getFormattedResult(queryResult);
-            return ProductDTOToString;
-        }
+        List<String> result = queryResult.isEmpty() ? null : resultFormatter.getFormattedResult(queryResult);
+        return result;
     }
 }
