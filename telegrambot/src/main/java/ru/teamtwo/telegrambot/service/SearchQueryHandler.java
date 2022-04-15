@@ -21,16 +21,20 @@ public class SearchQueryHandler {
         TelegramBotRESTHandler.OrderType orderType = userStateHandler.get(user).getOrderType();
         TelegramBotRESTHandler.OrderTypeAscDesc orderTypeAscDesc = userStateHandler.get(user).getOrderTypeAscDesc();
         int offset = 0;
-        int limit = 5;
+        int limit = 10;
 
         List<ProductDTO> queryResult = restHandler.getSortedProductsByFilterWithOffsetAndLimit(message, orderType, orderTypeAscDesc, offset, limit);
-        return queryResult;
+        if (queryResult.isEmpty()) {
+            return null;
+        }
+        else {
+            return queryResult;
+        }
     }
 
     public String queryResultToString(List<ProductDTO> queryResult) {
         String listString = queryResult.stream().map(Object::toString)
                 .collect(Collectors.joining(", "));
-
         return listString;
     }
 }

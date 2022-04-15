@@ -49,7 +49,7 @@ public class TelegramBotUpdateHandler {
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SEARCH_QUERY) {
                 List<ProductDTO> queryResult = queryResultHandler.getSearchResult(message, user);
-                if (queryResult.isEmpty()) {
+                if (queryResult == null) {
                     sendMessageHandler.sendMessage(bot, chatId, "По вашему запросу ничего не найдено \n" +
                                                                      "Попробуйте другой запрос",
                             TelegramBotMenus.getSearchMenu());
