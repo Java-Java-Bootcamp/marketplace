@@ -21,7 +21,7 @@ public class ProductDTO {
 
     public String toString() {
         int var10000 = this.getId();
-        return "Название: " + this.getName() + ",\n" +
+        return  " Название: " + this.getName() + ",\n" +
                 " Производитель: " + this.getManufacturer() + ",\n" +
                 " Описание: " + this.getDescription() + ",\n" +
                 " Категория: " + this.getCategory() + ",\n" +
@@ -29,6 +29,6 @@ public class ProductDTO {
                 " Стоимость: " + this.getPrice() + ",\n" +
                 " Продавец: " + this.getSellerName() + ",\n" +
                 " Рейтинг продавца: " + this.getSellerRating() + ",\n" +
-                " Осталось: " + this.getAvailable() + ")";
+                " Осталось: " + this.getAvailable();
     }
 }
