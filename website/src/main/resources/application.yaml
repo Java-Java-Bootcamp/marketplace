@@ -19,7 +19,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/dbmarketplace2
     username: postgres
-    password: polka
+    password: admin
   sql:
     init:
       mode: always
