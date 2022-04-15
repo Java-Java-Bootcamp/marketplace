@@ -20,8 +20,8 @@ public class TelegramBotRESTHandler {
     private static final Logger logger = LoggerFactory.getLogger(TelegramBotRESTHandler.class);
 
     @Value("${telegrambot.rest.webClientUri}")
-    private static String WEB_CLIENT_URI;
-    private static final String PRODUCT_OFFERS_URI = "product-offers";
+    private static String WEB_CLIENT_URI = "http://localhost:8081/marketplace/api";
+    private static final String PRODUCT_OFFERS_URI = "/product-offers";
     private static final String FILTER_PARAMETER = "filter";
     private static final String OFFSET_PARAMETER = "offset";
     private static final String LIMIT_PARAMETER = "limit";
@@ -34,6 +34,7 @@ public class TelegramBotRESTHandler {
      * Виды сортировки по полям товара для запросов товаров
      */
     public enum OrderType{
+        PRODUCT_NAME,
         PRODUCT_PRICE,
         PRODUCT_RATING,
         SELLER_RATING
@@ -76,12 +77,14 @@ public class TelegramBotRESTHandler {
         logger.debug("getSortedProductsByFilterWithOffset({},{},{},{},{})",filter,orderType,ascDesc,offset,limit);
 
         StringBuilder uri = new StringBuilder();
+        uri.append(WEB_CLIENT_URI);
         uri.append(PRODUCT_OFFERS_URI);
         uri.append("?");
         uri.append(FILTER_PARAMETER).append("=").append(filter).append("&");
         uri.append(OFFSET_PARAMETER).append("=").append(offset).append("&");
         uri.append(LIMIT_PARAMETER).append("=").append(limit).append("&");
-        uri.append(ORDER_PARAMETER).append("=").append(ascDesc).append("_").append(orderType.toString());
+        uri.append(ORDER_PARAMETER).append("=").append(ascDesc).append("_")
+                .append(orderType.toString().replace("_", "."));
         logger.debug("getSortedProductsByFilterWithOffset URI:{}", uri);
 
         List<ProductDTO> productList = webClient
