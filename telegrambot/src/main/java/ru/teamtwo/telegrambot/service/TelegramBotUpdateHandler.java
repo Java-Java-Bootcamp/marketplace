@@ -6,7 +6,6 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.teamtwo.telegrambot.model.UserState;
-import ru.teamtwo.telegrambot.dtos.ProductDTO;
 import ru.teamtwo.telegrambot.configuration.TelegramBotMenus;
 
 import java.util.List;
@@ -20,93 +19,119 @@ public class TelegramBotUpdateHandler {
     TelegramBotSendMessageHandler sendMessageHandler;
 
     @Autowired
-    SearchQueryHandler queryResultHandler;
+    TelegramBotSearchQueryHandler queryResultHandler;
 
     public void handle(TelegramLongPollingBot bot,  Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String message = update.getMessage().getText();
             String chatId = String.valueOf(update.getMessage().getChatId());
             User user = update.getMessage().getFrom();
+            var userState = userStateHandler.get(user);
 
             if(message.equals("/start")){
                 sendMessageHandler.sendMessage(bot, chatId, "Добро пожаловать в Маркетплейс!",
                         TelegramBotMenus.getMainMenuKeyboard());
 
-                userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SEARCH_START);
+                userState.setState(UserState.State.WAITING_FOR_SEARCH_START);
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SEARCH_START
                     && message.equals("Поиск")) {
                 sendMessageHandler.sendMessage(bot, chatId, "Введите запрос",
                         TelegramBotMenus.getSearchMenu());
 
-                userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SEARCH_QUERY);
+                userState.setState(UserState.State.WAITING_FOR_SEARCH_QUERY);
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SEARCH_QUERY
                     && message.equals("Главное меню")) {
                 sendMessageHandler.sendMessage(bot, chatId, "Вы в главном меню", TelegramBotMenus.getMainMenuKeyboard());
 
-                userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SEARCH_START);
+                userState.setState(UserState.State.WAITING_FOR_SEARCH_START);
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SEARCH_QUERY) {
-                List<ProductDTO> queryResult = queryResultHandler.getSearchResult(message, user);
-                if (queryResult.isEmpty()) {
+                List<String> queryResult = queryResultHandler.getSearchResult(message, user);
+                if (queryResult == null) {
                     sendMessageHandler.sendMessage(bot, chatId, "По вашему запросу ничего не найдено \n" +
-                                    "Попробуйте другой запрос",
+                                                                     "Попробуйте другой запрос",
                             TelegramBotMenus.getSearchMenu());
 
-                    userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SEARCH_QUERY);
+                    userState.setState(UserState.State.WAITING_FOR_SEARCH_QUERY);
                 }
                 else {
-                    String queryResultText = queryResultHandler.queryResultToString(queryResult);
-                    sendMessageHandler.sendMessage(bot, chatId, queryResultText);
-                    sendMessageHandler.sendMessage(bot, chatId, "Выберите тип сортировки", TelegramBotMenus.getSortByFieldKeyboard());
+                    List<String> queryResultList = queryResultHandler.getSearchResult(message, user);
+                    for (String product : queryResultList) {
+                        sendMessageHandler.sendMessage(bot, chatId, product);
+                    }
+                    sendMessageHandler.sendMessage(bot, chatId, "Выберите тип сортировки", TelegramBotMenus.getSortByFieldOffsetKeyboard());
 
-                    userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SORTING_TYPE_FIELD);
-                    userStateHandler.get(user).setSearchQuery(message);
+                    userState.setState(UserState.State.WAITING_FOR_SORTING_TYPE_FIELD);
+                    userState.setSearchQuery(message);
                 }
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SORTING_TYPE_FIELD
-                    && update.getMessage().getText().equals("Цена")) {
-                userStateHandler.get(user).setOrderType(TelegramBotRESTHandler.OrderType.PRODUCT_PRICE);
-                List<ProductDTO> queryResult = queryResultHandler.getSearchResult(userStateHandler.get(user).getSearchQuery(), user);
-                String queryResultText = queryResultHandler.queryResultToString(queryResult);
-                sendMessageHandler.sendMessage(bot, chatId, queryResultText);
-                sendMessageHandler.sendMessage(bot, chatId, "По убыванию/возрастанию?", TelegramBotMenus.getSortByAscDescKeyboard());
-                userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SORTING_TYPE_ASCDESC);
+            && update.getMessage().getText().equals("Цена")) {
+                userState.setOrderType(TelegramBotRESTHandler.OrderType.PRODUCT_PRICE);
+                List<String> queryResultList = queryResultHandler.getSearchResult(userStateHandler.get(user).getSearchQuery(), user);
+                for (String product : queryResultList) {
+                    sendMessageHandler.sendMessage(bot, chatId, product);
+                }
+                sendMessageHandler.sendMessage(bot, chatId, "По убыванию/возрастанию?", TelegramBotMenus.getSortByAscDescOffsetKeyboard());
+                userState.setState(UserState.State.WAITING_FOR_SORTING_TYPE_ASCDESC);
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SORTING_TYPE_FIELD
                     && update.getMessage().getText().equals("Рейтинг товара")) {
-                userStateHandler.get(user).setOrderType(TelegramBotRESTHandler.OrderType.PRODUCT_RATING);
-                List<ProductDTO> queryResult = queryResultHandler.getSearchResult(userStateHandler.get(user).getSearchQuery(), user);
-                String queryResultText = queryResultHandler.queryResultToString(queryResult);
-                sendMessageHandler.sendMessage(bot, chatId, queryResultText);
-                sendMessageHandler.sendMessage(bot, chatId, "По убыванию/возрастанию?", TelegramBotMenus.getSortByAscDescKeyboard());
-                userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SORTING_TYPE_ASCDESC);
+                userState.setOrderType(TelegramBotRESTHandler.OrderType.PRODUCT_RATING);
+                List<String> queryResultList = queryResultHandler.getSearchResult(userStateHandler.get(user).getSearchQuery(), user);
+                for (String product : queryResultList) {
+                    sendMessageHandler.sendMessage(bot, chatId, product);
+                }
+                sendMessageHandler.sendMessage(bot, chatId, "По убыванию/возрастанию?", TelegramBotMenus.getSortByAscDescOffsetKeyboard());
+                userState.setState(UserState.State.WAITING_FOR_SORTING_TYPE_ASCDESC);
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SORTING_TYPE_FIELD
                     && update.getMessage().getText().equals("Рейтинг продавца")) {
-                userStateHandler.get(user).setOrderType(TelegramBotRESTHandler.OrderType.SELLER_RATING);
-                List<ProductDTO> queryResult = queryResultHandler.getSearchResult(userStateHandler.get(user).getSearchQuery(), user);
-                String queryResultText = queryResultHandler.queryResultToString(queryResult);
-                sendMessageHandler.sendMessage(bot, chatId, queryResultText);
-                sendMessageHandler.sendMessage(bot, chatId, "По убыванию/возрастанию?", TelegramBotMenus.getSortByAscDescKeyboard());
-                userStateHandler.get(user).setState(UserState.State.WAITING_FOR_SORTING_TYPE_ASCDESC);
+                userState.setOrderType(TelegramBotRESTHandler.OrderType.SELLER_RATING);
+                List<String> queryResultList = queryResultHandler.getSearchResult(userStateHandler.get(user).getSearchQuery(), user);
+                for (String product : queryResultList) {
+                    sendMessageHandler.sendMessage(bot, chatId, product);
+                }
+                sendMessageHandler.sendMessage(bot, chatId, "По убыванию/возрастанию?", TelegramBotMenus.getSortByAscDescOffsetKeyboard());
+                userState.setState(UserState.State.WAITING_FOR_SORTING_TYPE_ASCDESC);
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SORTING_TYPE_ASCDESC
-                    && update.getMessage().getText().equals("По возрастанию")) {
-                userStateHandler.get(user).setOrderTypeAscDesc(TelegramBotRESTHandler.OrderTypeAscDesc.ASC);
-                List<ProductDTO> queryResult = queryResultHandler.getSearchResult(userStateHandler.get(user).getSearchQuery(), user);
-                String queryResultText = queryResultHandler.queryResultToString(queryResult);
-                sendMessageHandler.sendMessage(bot, chatId, queryResultText);
-                sendMessageHandler.sendMessage(bot, chatId, "Результат");
+                && update.getMessage().getText().equals("По возрастанию")) {
+                userState.setOrderTypeAscDesc(TelegramBotRESTHandler.OrderTypeAscDesc.ASC);
+                List<String> queryResultList = queryResultHandler.getSearchResult(userStateHandler.get(user).getSearchQuery(), user);
+                for (String product : queryResultList) {
+                    sendMessageHandler.sendMessage(bot, chatId, product);
+                }
+                    sendMessageHandler.sendMessage(bot, chatId, "Результат");
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SORTING_TYPE_ASCDESC
                     && update.getMessage().getText().equals("По убыванию")) {
-                userStateHandler.get(user).setOrderTypeAscDesc(TelegramBotRESTHandler.OrderTypeAscDesc.DESC);
-                List<ProductDTO> queryResult = queryResultHandler.getSearchResult(userStateHandler.get(user).getSearchQuery(), user);
-                String queryResultText = queryResultHandler.queryResultToString(queryResult);
-                sendMessageHandler.sendMessage(bot, chatId, queryResultText);
+                userState.setOrderTypeAscDesc(TelegramBotRESTHandler.OrderTypeAscDesc.DESC);
+                List<String> queryResultList = queryResultHandler.getSearchResult(userStateHandler.get(user).getSearchQuery(), user);
+                for (String product : queryResultList) {
+                    sendMessageHandler.sendMessage(bot, chatId, product);
+                }
                 sendMessageHandler.sendMessage(bot, chatId, "Результат");
+            }
+            else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SORTING_TYPE_FIELD
+                    && update.getMessage().getText().equals("Показать ещё")) {
+                userState.setOffset(userStateHandler.get(user).getOffset()+1);
+                List<String> queryResultList = queryResultHandler.getSearchResult(userStateHandler.get(user).getSearchQuery(), user);
+                for (String product : queryResultList) {
+                    sendMessageHandler.sendMessage(bot, chatId, product);
+                }
+                sendMessageHandler.sendMessage(bot, chatId, "Выберите тип сортировки", TelegramBotMenus.getSortByFieldOffsetKeyboard());
+            }
+            else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_SORTING_TYPE_ASCDESC
+                    && update.getMessage().getText().equals("Показать ещё")) {
+                userState.setOffset(userStateHandler.get(user).getOffset()+1);
+                List<String> queryResultList = queryResultHandler.getSearchResult(userStateHandler.get(user).getSearchQuery(), user);
+                for (String product : queryResultList) {
+                    sendMessageHandler.sendMessage(bot, chatId, product);
+                }
+                sendMessageHandler.sendMessage(bot, chatId, "По убыванию/возрастанию?", TelegramBotMenus.getSortByAscDescOffsetKeyboard());
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_ADD_OR_FINISH) {
                 if(message.equals("Оформить заказ")){
@@ -114,7 +139,7 @@ public class TelegramBotUpdateHandler {
                 }
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_QUANTITY) {
-                userStateHandler.get(user).getCart().putIfAbsent(userStateHandler.get(user).getCurrentProductId(), Integer.valueOf(message));
+                userState.getCart().putIfAbsent(userStateHandler.get(user).getCurrentProductId(), Integer.valueOf(message));
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_ADDRESS) {
             }

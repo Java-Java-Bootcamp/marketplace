@@ -3,13 +3,14 @@ package ru.teamtwo.telegrambot.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.User;
+import ru.teamtwo.telegrambot.SearchQueryResultFormatter;
 import ru.teamtwo.telegrambot.dtos.ProductDTO;
+import ru.teamtwo.telegrambot.model.UserState;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
-public class SearchQueryHandler {
+public class TelegramBotSearchQueryHandler {
 
     @Autowired
     TelegramBotRESTHandler restHandler;
@@ -17,20 +18,17 @@ public class SearchQueryHandler {
     @Autowired
     UserStateHandler userStateHandler;
 
-    public List<ProductDTO> getSearchResult(String message, User user) {
+    @Autowired
+    SearchQueryResultFormatter resultFormatter;
+
+    public List<String> getSearchResult(String message, User user) {
         TelegramBotRESTHandler.OrderType orderType = userStateHandler.get(user).getOrderType();
         TelegramBotRESTHandler.OrderTypeAscDesc orderTypeAscDesc = userStateHandler.get(user).getOrderTypeAscDesc();
-        int offset = 0;
-        int limit = 5;
+        int offset = userStateHandler.get(user).getOffset();
+        int limit = userStateHandler.get(user).getLimit();
 
         List<ProductDTO> queryResult = restHandler.getSortedProductsByFilterWithOffsetAndLimit(message, orderType, orderTypeAscDesc, offset, limit);
-        return queryResult;
-    }
-
-    public String queryResultToString(List<ProductDTO> queryResult) {
-        String listString = queryResult.stream().map(Object::toString)
-                .collect(Collectors.joining(", "));
-
-        return listString;
+        List<String> result = queryResult.isEmpty() ? null : resultFormatter.getFormattedResult(queryResult);
+        return result;
     }
 }

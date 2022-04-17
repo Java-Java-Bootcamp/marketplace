@@ -1,5 +1,6 @@
 package ru.teamtwo.telegrambot.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.teamtwo.telegrambot.model.UserState;
@@ -10,6 +11,9 @@ import java.util.Map;
 @Component
 public class UserStateHandler {
 
+    @Autowired
+    UserState userState;
+
     private Map<User, UserState> map = new HashMap<>();
 
     /**
@@ -19,7 +23,7 @@ public class UserStateHandler {
      * @return UserState пользователя
      */
     public UserState get(User user){
-        map.putIfAbsent(user, new UserState());
+        map.putIfAbsent(user, userState);
         return map.get(user);
     }
 

@@ -28,11 +28,12 @@ public class TelegramBotMenus {
      * @return Меню
      */
     @Bean
-    public static TelegramBotMenu getSortByFieldKeyboard(){
+    public static TelegramBotMenu getSortByFieldOffsetKeyboard(){
         TelegramBotMenu sortFieldKeyboard = new TelegramBotMenu();
         sortFieldKeyboard.addRow("Цена");
         sortFieldKeyboard.addRow("Рейтинг товара");
         sortFieldKeyboard.addRow("Рейтинг продавца");
+        sortFieldKeyboard.addRow("Показать ещё");
 
         return sortFieldKeyboard;
     }
@@ -42,10 +43,11 @@ public class TelegramBotMenus {
      * @return Меню
      */
     @Bean
-    public static TelegramBotMenu getSortByAscDescKeyboard(){
+    public static TelegramBotMenu getSortByAscDescOffsetKeyboard(){
         TelegramBotMenu sortAscDescKeyboard = new TelegramBotMenu();
         sortAscDescKeyboard.addRow("По возрастанию");
         sortAscDescKeyboard.addRow("По убыванию");
+        sortAscDescKeyboard.addRow("Показать ещё");
 
         return sortAscDescKeyboard;
     }

@@ -2,6 +2,7 @@ package ru.teamtwo.telegrambot.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -11,6 +12,7 @@ import reactor.core.publisher.Mono;
 import ru.teamtwo.telegrambot.dtos.OrderDTO;
 import ru.teamtwo.telegrambot.dtos.ProductDTO;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,22 +20,26 @@ import java.util.stream.Collectors;
 public class TelegramBotRESTHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(TelegramBotRESTHandler.class);
-
     @Value("${telegrambot.rest.webClientUri}")
-    private static String WEB_CLIENT_URI;
-    private static final String PRODUCT_OFFERS_URI = "product-offers";
+    private String WEB_CLIENT_URI;
+    private static final String PRODUCT_OFFERS_URI = "/product-offers";
     private static final String FILTER_PARAMETER = "filter";
     private static final String OFFSET_PARAMETER = "offset";
     private static final String LIMIT_PARAMETER = "limit";
     private static final String ORDER_PARAMETER = "order";
-
     private static final String POST_NEW_ORDER_URI = "orders";
-    private final WebClient webClient = WebClient.create(WEB_CLIENT_URI);
+    private WebClient webClient;
+
+    @PostConstruct
+    public void init() {
+        webClient = WebClient.create(WEB_CLIENT_URI);
+    }
 
     /**
      * Виды сортировки по полям товара для запросов товаров
      */
     public enum OrderType{
+        PRODUCT_NAME,
         PRODUCT_PRICE,
         PRODUCT_RATING,
         SELLER_RATING
@@ -76,12 +82,14 @@ public class TelegramBotRESTHandler {
         logger.debug("getSortedProductsByFilterWithOffset({},{},{},{},{})",filter,orderType,ascDesc,offset,limit);
 
         StringBuilder uri = new StringBuilder();
+        uri.append(WEB_CLIENT_URI);
         uri.append(PRODUCT_OFFERS_URI);
         uri.append("?");
         uri.append(FILTER_PARAMETER).append("=").append(filter).append("&");
         uri.append(OFFSET_PARAMETER).append("=").append(offset).append("&");
         uri.append(LIMIT_PARAMETER).append("=").append(limit).append("&");
-        uri.append(ORDER_PARAMETER).append("=").append(ascDesc).append("_").append(orderType.toString());
+        uri.append(ORDER_PARAMETER).append("=").append(ascDesc).append("_")
+                .append(orderType.toString().replace("_", "."));
         logger.debug("getSortedProductsByFilterWithOffset URI:{}", uri);
 
         List<ProductDTO> productList = webClient
