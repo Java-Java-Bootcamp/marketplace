@@ -11,9 +11,6 @@ import java.util.Map;
 @Component
 public class UserStateHandler {
 
-    @Autowired
-    UserState userState;
-
     private Map<User, UserState> map = new HashMap<>();
 
     /**
