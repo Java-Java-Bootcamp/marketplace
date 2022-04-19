@@ -2,6 +2,8 @@ server:
   port: 8081
 # JPA
 spring:
+  main:
+    banner-mode: off
   jpa:
     defer-datasource-initialization: true
     show-sql: true

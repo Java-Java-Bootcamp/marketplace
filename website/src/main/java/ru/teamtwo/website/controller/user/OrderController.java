@@ -26,7 +26,7 @@ public class OrderController {
     private OrderRepository repository;
 
     @GetMapping("{id}")
-    public OrderDto get(@PathVariable long id){
+    public OrderDto get(@PathVariable Integer id){
         log.debug("get: {}", id);
         return new OrderDto(repository.getById(id));
     }

@@ -46,7 +46,7 @@ public class UserState {
     private TelegramBotRESTHandler.OrderTypeAscDesc orderTypeAscDesc = ASC;
     private int offset = DEFAULT_OFFSET;
     private int limit = DEFAULT_LIMIT;
-    private Map<String, Integer> cart;
+    private Map<Integer, Integer> cart;
     private String currentProductId = "";
 
     /**

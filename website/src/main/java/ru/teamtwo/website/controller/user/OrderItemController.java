@@ -29,7 +29,7 @@ public class OrderItemController {
     private OrderItemRepository repository;
 
     @GetMapping("{id}")
-    public OrderItemDto get(@PathVariable long id){
+    public OrderItemDto get(@PathVariable Integer id){
         log.debug("get: {}", id);
         return new OrderItemDto(repository.getById(id));
     }

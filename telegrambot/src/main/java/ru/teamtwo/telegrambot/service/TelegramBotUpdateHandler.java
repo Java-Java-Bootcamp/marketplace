@@ -1,6 +1,7 @@
 package ru.teamtwo.telegrambot.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -17,6 +18,7 @@ public class TelegramBotUpdateHandler {
     UserStateHandler userStateHandler;
     @Autowired
     TelegramBotSendMessageHandler sendMessageHandler;
+    @Lazy
     @Autowired
     TelegramBot telegramBot;
     @Autowired
@@ -140,7 +142,7 @@ public class TelegramBotUpdateHandler {
                 }
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_QUANTITY) {
-                userState.getCart().putIfAbsent(userStateHandler.get(user).getCurrentProductId(), Integer.valueOf(message));
+                //userState.getCart().putIfAbsent(userStateHandler.get(user).getCurrentProductId(), Integer.valueOf(message));
             }
             else if (userStateHandler.get(user).getState()==UserState.State.WAITING_FOR_ADDRESS) {
             }
