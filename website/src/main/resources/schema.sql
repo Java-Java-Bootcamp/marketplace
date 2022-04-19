@@ -3,6 +3,10 @@ CREATE SCHEMA IF NOT EXISTS marketplace;
 drop table if exists marketplace.product cascade;
 drop table if exists marketplace.store cascade;
 drop table if exists marketplace.product_offer cascade;
+drop table if exists marketplace.customer cascade;
+drop table if exists marketplace.order cascade;
+drop table if exists marketplace.order_item cascade;
+drop table if exists marketplace.cart_item cascade;
 
 CREATE TABLE IF NOT EXISTS marketplace.product (
       id SERIAL PRIMARY KEY,
@@ -27,4 +31,32 @@ CREATE TABLE IF NOT EXISTS marketplace.product_offer (
     store integer NOT NULL REFERENCES marketplace.store (id),
     quantity integer NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS marketplace.customer (
+    id integer PRIMARY KEY,
+    name varchar(255) NOT NULL,
+    address varchar(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS marketplace.cart_item (
+    id SERIAL PRIMARY KEY,
+    customer integer NOT NULL REFERENCES  marketplace.customer (id),
+    product integer NOT NULL REFERENCES marketplace.product (id),
+    quantity integer NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS marketplace.order (
+    id SERIAL PRIMARY KEY,
+    customer integer NOT NULL REFERENCES marketplace.customer (id),
+    created_on DATE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS marketplace.order_item (
+    id SERIAL PRIMARY KEY,
+    "order" integer NOT NULL REFERENCES marketplace."order" (id),
+    product integer NOT NULL REFERENCES marketplace.product (id),
+    quantity integer NOT NULL
+);
+
+
 
