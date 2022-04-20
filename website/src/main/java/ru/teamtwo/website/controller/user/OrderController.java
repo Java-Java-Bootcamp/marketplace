@@ -33,18 +33,18 @@ public class OrderController {
 
     @ResponseBody
     @PostMapping("")
-    public ResponseEntity<?> post(@RequestBody OrderDto dto){
+    public ResponseEntity<Integer> post(@RequestBody OrderDto dto){
         log.debug("post: {}", dto.toString());
         try {
             Order order = new Order();
             Customer customer = customerRepository.getById(dto.getCustomerId());
             order.setCustomer(customer);
-            order.setCreatedOn(dto.getCreatedOn());
+            //order.setCreatedOn(dto.getCreatedOn());
             order = repository.save(order);
             return ResponseEntity.status(HttpStatus.CREATED).body(order.getId());
         }catch(Exception e){
             log.debug("error: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 }

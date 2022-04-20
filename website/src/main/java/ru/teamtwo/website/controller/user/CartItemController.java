@@ -77,7 +77,7 @@ public class CartItemController {
 
     @ResponseBody
     @GetMapping("get_cart_state/{customerId}")
-    public ResponseEntity<?> getCartState(@PathVariable Integer customerId){
+    public ResponseEntity<CartItemArrayDto> getCartState(@PathVariable Integer customerId){
         log.debug("getCartState: {}", customerId);
         try {
             Set<CartItem> cartItems = repository.getCartItemsByCustomer_Id(customerId);
@@ -90,7 +90,7 @@ public class CartItemController {
             return ResponseEntity.status(HttpStatus.OK).body(cartItemArrayDto);
         }catch(Exception e){
             log.error("getCartState error: {}", e.toString());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 }

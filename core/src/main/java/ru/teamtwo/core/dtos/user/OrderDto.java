@@ -14,11 +14,11 @@ import java.time.LocalDate;
 public class OrderDto implements Serializable {
     private Integer id;
     private Integer customerId;
-    private LocalDate createdOn;
+    //private LocalDate createdOn;
 
     public OrderDto(Order entity) {
         this.id = entity.getId();
         this.customerId = entity.getCustomer().getId();
-        this.createdOn = entity.getCreatedOn();
+        //this.createdOn = entity.getCreatedOn();
     }
 }

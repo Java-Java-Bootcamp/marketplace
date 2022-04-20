@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -37,8 +38,8 @@ public class Order {
     @JoinColumn(name = "customer", nullable = false)
     private Customer customer;
 
-    @Column(name = "created_on", nullable = false)
-    private LocalDate createdOn;
+    @Column(name = "created_on", nullable = true)
+    private Instant createdOn;
 
     @OneToMany(mappedBy = "order")
     private Set<OrderItem> orderItems = new LinkedHashSet<>();

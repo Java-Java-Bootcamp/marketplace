@@ -37,11 +37,11 @@ public class CustomerController {
     public ResponseEntity<?> post(@RequestBody CustomerDto dto){
         log.debug("post: {}", dto.toString());
         try {
-            repository.save(new Customer(dto));
+            Customer customer = repository.save(new Customer(dto));
+            return ResponseEntity.status(HttpStatus.CREATED).body(customer.getId());
         }catch(Exception e){
             log.debug("error: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
         }
-        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

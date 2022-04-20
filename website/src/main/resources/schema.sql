@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS marketplace.cart_item (
 CREATE TABLE IF NOT EXISTS marketplace.order (
     id SERIAL PRIMARY KEY,
     customer integer NOT NULL REFERENCES marketplace.customer (id),
-    created_on DATE NOT NULL
+    created_on timestamp DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS marketplace.order_item (
