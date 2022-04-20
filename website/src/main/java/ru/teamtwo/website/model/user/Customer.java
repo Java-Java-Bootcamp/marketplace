@@ -40,6 +40,7 @@ public class Customer {
     private Set<CartItem> cartItems = new LinkedHashSet<>();
 
     public Customer(CustomerDto dto){
+        this.id = dto.getId();
         this.name = dto.getName();
         this.address = dto.getAddress();
     }

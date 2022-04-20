@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ru.teamtwo.website.dtos.user.CartItemDto;
-import ru.teamtwo.website.dtos.user.OrderItemDto;
-import ru.teamtwo.website.model.Product;
+import ru.teamtwo.website.model.ProductOffer;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,13 +35,9 @@ public class OrderItem {
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product", nullable = false)
-    private Product product;
+    @JoinColumn(name = "product_offer", nullable = false)
+    private ProductOffer productOffer;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
-
-    public OrderItem(OrderItemDto dto){
-
-    }
 }

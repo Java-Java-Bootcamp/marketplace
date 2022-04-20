@@ -8,15 +8,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.teamtwo.telegrambot.dtos.CartItemArrayDto;
 import ru.teamtwo.telegrambot.dtos.CartItemDto;
-import ru.teamtwo.telegrambot.dtos.OrderDTO;
+import ru.teamtwo.telegrambot.dtos.CustomerDto;
+import ru.teamtwo.telegrambot.dtos.OrderDto;
+import ru.teamtwo.telegrambot.dtos.OrderItemDto;
 import ru.teamtwo.telegrambot.dtos.ProductDTO;
+import ru.teamtwo.telegrambot.model.UserState;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -35,10 +37,12 @@ public class TelegramBotRESTHandler {
     private static final String OFFSET_PARAMETER = "offset";
     private static final String LIMIT_PARAMETER = "limit";
     private static final String ORDER_PARAMETER = "order";
-    private static final String POST_NEW_ORDER_URI = "orders";
+    private static final String ORDER_URI = "/order/";
+    private static final String ORDER_ITEM_URI = "/order_item/";
     private static final String GET_CART_STATE_URI = "/cart_item/get_cart_state/";
     private static final String POST_CART_STATE_URI = "/cart_item/save_cart_state/";
-    private static final String GET_PRODUCT_OFFER_URI = "/product_offer/";
+    private static final String PRODUCT_OFFER_URI = "/product_offer/";
+    private static final String CUSTOMER_URI = "/customer/";
     private WebClient webClient;
 
     @PostConstruct
@@ -64,13 +68,13 @@ public class TelegramBotRESTHandler {
         DESC
     }
 
-    public void saveCartState(@NonNull Long userId, Map<Integer, Integer> cart){
-        logger.debug("saveCartState: {}, {}", userId, cart.size());
+    public void saveCartState(@NonNull UserState userState){
+        logger.debug("saveCartState: {}", userState);
 
         CartItemArrayDto cartItemArrayDto = new CartItemArrayDto();
         cartItemArrayDto.setCartItemDtoList(new HashSet<>());
 
-        cart.forEach((key, value) -> {
+        userState.getCart().forEach((key, value) -> {
             CartItemDto dto = new CartItemDto();
             dto.setProductId(key);
             dto.setQuantity(value);
@@ -79,7 +83,7 @@ public class TelegramBotRESTHandler {
 
         String stringMono = webClient
                 .post()
-                .uri(POST_CART_STATE_URI+userId)
+                .uri(POST_CART_STATE_URI+userState.getUser().getId())
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(Mono.just(cartItemArrayDto), CartItemArrayDto.class)
                 .retrieve()
@@ -115,7 +119,7 @@ public class TelegramBotRESTHandler {
         Map<Integer, Integer> map = new HashMap<>();
         ProductDTO productDTO = webClient
                 .get()
-                .uri(GET_PRODUCT_OFFER_URI + id)
+                .uri(PRODUCT_OFFER_URI + id)
                 .retrieve()
                 .bodyToMono(ProductDTO.class)
                 .block();
@@ -127,18 +131,75 @@ public class TelegramBotRESTHandler {
 
     /**
      * Отправить POST с новым заказом
-     * @param orderDTO Заказ
      */
-    public void postNewOrder(OrderDTO orderDTO){
-        Mono<String> stringMono = webClient
-                .post()
-                .uri(POST_NEW_ORDER_URI)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(Mono.just(orderDTO), OrderDTO.class)
-                .retrieve()
-                .bodyToMono(String.class);
+    public void postNewOrderFromUserCart(UserState userState){
+        OrderDto orderDto = new OrderDto();
+        orderDto.setCustomerId(Math.toIntExact(userState.getUser().getId()));
+        orderDto.setCreatedOn(LocalDate.of(2000,10,10));
 
-        logger.debug("postNewOrder: {}", stringMono);
+        Integer newOrderId = webClient
+                .post()
+                .uri(ORDER_URI)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(Mono.just(orderDto), OrderDto.class)
+                .retrieve()
+                .bodyToMono(Integer.class)
+                .block();
+
+        logger.debug("postNewOrder - order: {}", newOrderId);
+
+        userState.getCart().entrySet().forEach(entry->{
+            OrderItemDto orderItemDto = new OrderItemDto();
+            orderItemDto.setOrderId(newOrderId);
+            orderItemDto.setProductOfferId(entry.getKey());
+            orderItemDto.setQuantity(entry.getValue());
+
+            String itemStatus = webClient
+                    .post()
+                    .uri(ORDER_ITEM_URI)
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                    .body(Mono.just(orderItemDto), OrderItemDto.class)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+
+            logger.debug("postNewOrder - item: {}", itemStatus);
+        });
+    }
+
+    public CustomerDto getCustomerInfo(UserState userState){
+        logger.debug("getCustomerInfo: {}", userState.getUser().getId());
+
+        CustomerDto customerDto = Objects.requireNonNull(webClient
+                .get()
+                .uri(CUSTOMER_URI + userState.getUser().getId())
+                .retrieve()
+                .bodyToMono(CustomerDto.class)
+                .block());
+
+        logger.debug("getCustomerInfo: {}", customerDto);
+
+        userState.setAddress(customerDto.getAddress());
+
+        return customerDto;
+    }
+
+    public void updateCustomerInfo(UserState userState){
+        logger.debug("updateCustomerInfo: {}", userState.getUser().getId());
+
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setId(Math.toIntExact(userState.getUser().getId()));
+        customerDto.setAddress(userState.getAddress());
+        customerDto.setName(userState.getUser().getUserName());
+
+        String status = webClient
+                .post()
+                .uri(CUSTOMER_URI)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(Mono.just(customerDto), CustomerDto.class)
+                .retrieve()
+                .bodyToMono(String.class).block();
+        logger.debug("updateCustomerInfo: {}", status);
     }
 
     /**

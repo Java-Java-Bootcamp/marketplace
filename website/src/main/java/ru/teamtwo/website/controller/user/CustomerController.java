@@ -10,20 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.teamtwo.website.dtos.user.CartItemArrayDto;
-import ru.teamtwo.website.dtos.user.CartItemDto;
 import ru.teamtwo.website.dtos.user.CustomerDto;
-import ru.teamtwo.website.model.user.CartItem;
 import ru.teamtwo.website.model.user.Customer;
-import ru.teamtwo.website.repository.ProductOfferRepository;
 import ru.teamtwo.website.repository.user.CartItemRepository;
 import ru.teamtwo.website.repository.user.CustomerRepository;
-
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -48,6 +39,7 @@ public class CustomerController {
         try {
             repository.save(new Customer(dto));
         }catch(Exception e){
+            log.debug("error: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
         }
         return ResponseEntity.status(HttpStatus.CREATED).build();

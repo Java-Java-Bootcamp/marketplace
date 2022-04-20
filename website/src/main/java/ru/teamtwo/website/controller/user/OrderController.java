@@ -7,14 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.teamtwo.website.dtos.user.CustomerDto;
 import ru.teamtwo.website.dtos.user.OrderDto;
 import ru.teamtwo.website.model.user.Customer;
 import ru.teamtwo.website.model.user.Order;
-import ru.teamtwo.website.repository.ProductOfferRepository;
 import ru.teamtwo.website.repository.user.CustomerRepository;
 import ru.teamtwo.website.repository.user.OrderRepository;
 
@@ -24,7 +23,8 @@ import ru.teamtwo.website.repository.user.OrderRepository;
 public class OrderController {
     @Autowired
     private OrderRepository repository;
-
+    @Autowired
+    private CustomerRepository customerRepository;
     @GetMapping("{id}")
     public OrderDto get(@PathVariable Integer id){
         log.debug("get: {}", id);
@@ -33,13 +33,18 @@ public class OrderController {
 
     @ResponseBody
     @PostMapping("")
-    public ResponseEntity<?> post(OrderDto dto){
+    public ResponseEntity<?> post(@RequestBody OrderDto dto){
         log.debug("post: {}", dto.toString());
         try {
-            repository.save(new Order(dto));
+            Order order = new Order();
+            Customer customer = customerRepository.getById(dto.getCustomerId());
+            order.setCustomer(customer);
+            order.setCreatedOn(dto.getCreatedOn());
+            order = repository.save(order);
+            return ResponseEntity.status(HttpStatus.CREATED).body(order.getId());
         }catch(Exception e){
+            log.debug("error: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
         }
-        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

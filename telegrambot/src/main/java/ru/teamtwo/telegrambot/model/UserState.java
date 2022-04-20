@@ -48,6 +48,7 @@ public class UserState {
     private int limit = DEFAULT_LIMIT;
     private Map<Integer, Integer> cart;
     private String currentProductId = "";
+    private String address = "";
 
     /**
      * Сбрасывает все до стандартных значений

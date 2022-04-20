@@ -1,9 +1,8 @@
-package ru.teamtwo.website.dtos.user;
+package ru.teamtwo.telegrambot.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.teamtwo.website.model.user.OrderItem;
 
 import java.io.Serializable;
 
@@ -15,10 +14,4 @@ public class OrderItemDto implements Serializable {
     private Integer orderId;
     private Integer productOfferId;
     private Integer quantity;
-    public OrderItemDto(OrderItem entity){
-        this.id = entity.getId();
-        this.orderId = entity.getOrder().getId();
-        this.productOfferId = entity.getProductOffer().getId();
-        this.quantity = entity.getQuantity();
-    }
 }
