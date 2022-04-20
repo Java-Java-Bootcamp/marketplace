@@ -11,9 +11,6 @@ import java.util.Map;
 @Component
 public class UserStateHandler {
 
-    @Autowired
-    UserState userState;
-
     private Map<User, UserState> map = new HashMap<>();
 
     /**
@@ -23,7 +20,11 @@ public class UserStateHandler {
      * @return UserState пользователя
      */
     public UserState get(User user){
-        map.putIfAbsent(user, userState);
+        if(!map.containsKey(user)){
+            UserState userState = new UserState();
+            userState.setUser(user);
+            map.put(user, userState);
+        }
         return map.get(user);
     }
 

@@ -20,7 +20,7 @@ public class TelegramBotUpdateHandler {
     final TelegramBotSearchQueryHandler queryResultHandler;
     final List<ContextHandler> handlers;
 
-    public void handle(TelegramLongPollingBot bot,  Update update) {
+    public void handle(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String message = update.getMessage().getText();
             String chatId = String.valueOf(update.getMessage().getChatId());

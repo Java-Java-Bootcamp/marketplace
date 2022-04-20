@@ -25,6 +25,6 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        telegramBotUpdateHandler.handle(this, update);
+        telegramBotUpdateHandler.handle(update);
     }
 }
