@@ -1,11 +1,11 @@
-package ru.teamtwo.website.model.user;
+package ru.teamtwo.core.models.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ru.teamtwo.website.dtos.user.CustomerDto;
+import ru.teamtwo.core.dtos.user.CustomerDto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

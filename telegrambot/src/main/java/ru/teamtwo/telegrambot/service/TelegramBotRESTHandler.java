@@ -9,12 +9,12 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import ru.teamtwo.telegrambot.dtos.CartItemArrayDto;
-import ru.teamtwo.telegrambot.dtos.CartItemDto;
-import ru.teamtwo.telegrambot.dtos.CustomerDto;
-import ru.teamtwo.telegrambot.dtos.OrderDto;
-import ru.teamtwo.telegrambot.dtos.OrderItemDto;
-import ru.teamtwo.telegrambot.dtos.ProductDTO;
+import ru.teamtwo.core.dtos.user.CartItemArrayDto;
+import ru.teamtwo.core.dtos.user.CartItemDto;
+import ru.teamtwo.core.dtos.user.CustomerDto;
+import ru.teamtwo.core.dtos.user.OrderDto;
+import ru.teamtwo.core.dtos.user.OrderItemDto;
+import ru.teamtwo.core.dtos.ProductDTO;
 import ru.teamtwo.telegrambot.model.UserState;
 
 import javax.annotation.PostConstruct;

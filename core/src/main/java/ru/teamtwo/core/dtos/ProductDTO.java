@@ -1,7 +1,7 @@
-package ru.teamtwo.website.dtos;
+package ru.teamtwo.core.dtos;
 
 import lombok.Data;
-import ru.teamtwo.website.model.ProductOffer;
+import ru.teamtwo.core.models.ProductOffer;
 
 @Data
 public class ProductDTO {

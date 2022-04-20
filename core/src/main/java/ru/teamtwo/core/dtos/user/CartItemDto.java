@@ -1,9 +1,9 @@
-package ru.teamtwo.website.dtos.user;
+package ru.teamtwo.core.dtos.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.teamtwo.website.model.user.CartItem;
+import ru.teamtwo.core.models.user.CartItem;
 
 import java.io.Serializable;
 
@@ -16,7 +16,7 @@ public class CartItemDto implements Serializable {
     private Integer productId;
     private Integer quantity;
 
-    public CartItemDto(CartItem cartItem){
+    public CartItemDto(CartItem cartItem) {
         this.id = cartItem.getId();
         this.customer = cartItem.getCustomer().getId();
         this.productId = cartItem.getProduct().getId();

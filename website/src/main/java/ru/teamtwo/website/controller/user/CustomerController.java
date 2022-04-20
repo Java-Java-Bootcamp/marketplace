@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.teamtwo.website.dtos.user.CustomerDto;
-import ru.teamtwo.website.model.user.Customer;
+import ru.teamtwo.core.dtos.user.CustomerDto;
+import ru.teamtwo.core.models.user.Customer;
 import ru.teamtwo.website.repository.user.CartItemRepository;
 import ru.teamtwo.website.repository.user.CustomerRepository;
 
