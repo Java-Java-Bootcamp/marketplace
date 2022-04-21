@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.core.dtos.user.CartItemArrayDto;
 import ru.teamtwo.core.dtos.user.CartItemDto;
-import ru.teamtwo.website.service.CartItemService;
+import ru.teamtwo.website.service.user.CartItemService;
 
 @RestController
 @RequestMapping("/marketplace/api/cart_item")

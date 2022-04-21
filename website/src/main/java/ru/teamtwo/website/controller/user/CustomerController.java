@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.core.dtos.user.CustomerDto;
-import ru.teamtwo.website.service.CustomerService;
+import ru.teamtwo.website.service.user.CustomerService;
 
 @Slf4j
 @RestController
