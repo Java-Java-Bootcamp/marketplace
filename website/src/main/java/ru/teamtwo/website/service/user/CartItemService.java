@@ -30,53 +30,32 @@ public class CartItemService {
         return new CartItemDto(repository.getById(id));
     }
 
-    public ResponseEntity<?> addItem(CartItemDto dto){
-        log.debug("post: {}", dto.toString());
-        try {
-            //repository.save(new CartItem(dto));
-        }catch(Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    public ResponseEntity<?> saveState(Integer customerId, CartItemArrayDto cartItems) {
+    public void saveState(Integer customerId, CartItemArrayDto cartItems) {
         log.debug("saveCartState: {}, {}", customerId, cartItems.toString());
-        try {
-            Set<CartItem> cartItems1 = cartItems
-                    .getCartItemDtoList()
-                    .stream()
-                    .map(item->{
-                        log.debug("{}, {}, {}", item.getProductId(), item.getCustomer(), item.getQuantity());
-                        CartItem cartItem = new CartItem();
-                        cartItem.setQuantity(item.getQuantity());
-                        cartItem.setProduct(productRepository.getById(item.getProductId()));
-                        cartItem.setCustomer(customerRepository.getById(customerId));
-                        return cartItem;
-                    })
-                    .collect(Collectors.toSet());
-            repository.saveAll(cartItems1);
-        }catch(Exception e){
-            log.error("saveCartState error: {}", e.toString());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        Set<CartItem> cartItems1 = cartItems
+                .getCartItemDtoList()
+                .stream()
+                .map(item -> {
+                    log.debug("{}, {}, {}", item.getProductId(), item.getCustomer(), item.getQuantity());
+                    CartItem cartItem = new CartItem();
+                    cartItem.setQuantity(item.getQuantity());
+                    cartItem.setProduct(productRepository.getById(item.getProductId()));
+                    cartItem.setCustomer(customerRepository.getById(customerId));
+                    return cartItem;
+                })
+                .collect(Collectors.toSet());
+        repository.saveAll(cartItems1);
     }
 
     public ResponseEntity<CartItemArrayDto> getState(Integer customerId) {
         log.debug("getCartState: {}", customerId);
-        try {
-            Set<CartItem> cartItems = repository.getCartItemsByCustomer_Id(customerId);
+        Set<CartItem> cartItems = repository.getCartItemsByCustomer_Id(customerId);
 
-            CartItemArrayDto cartItemArrayDto = new CartItemArrayDto();
-            cartItemArrayDto.setCartItemDtoList(cartItems
-                    .stream()
-                    .map(CartItemDto::new)
-                    .collect(Collectors.toSet()));
-            return ResponseEntity.status(HttpStatus.OK).body(cartItemArrayDto);
-        }catch(Exception e){
-            log.error("getCartState error: {}", e.toString());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
+        CartItemArrayDto cartItemArrayDto = new CartItemArrayDto();
+        cartItemArrayDto.setCartItemDtoList(cartItems
+                .stream()
+                .map(CartItemDto::new)
+                .collect(Collectors.toSet()));
+        return ResponseEntity.status(HttpStatus.OK).body(cartItemArrayDto);
     }
 }
