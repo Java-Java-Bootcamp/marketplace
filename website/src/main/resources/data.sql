@@ -157,3 +157,7 @@ VALUES
     (13,9,49),
     (6,2,72),
     (10,17,80);
+
+INSERT INTO marketplace.customer(
+    id, name, address)
+VALUES (1, 'customer1', 'address1');
