@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.telegram.telegrambots.meta.api.objects.User;
 import ru.teamtwo.telegrambot.service.TelegramBotRESTHandler;
 
 import javax.annotation.PostConstruct;
@@ -20,7 +21,6 @@ import static ru.teamtwo.telegrambot.service.TelegramBotRESTHandler.OrderTypeAsc
  */
 @Data
 @NoArgsConstructor
-@Component
 public class UserState {
 
     @Value("${telegrambot.userState.defaultOffset}")
@@ -38,21 +38,16 @@ public class UserState {
         WAITING_FOR_ADDRESS
     }
 
+    private User user;
     private String chatId = "";
     private State state = State.WAITING_FOR_SEARCH_START;
     private String searchQuery = "";
     private TelegramBotRESTHandler.OrderType orderType = PRODUCT_RATING;
     private TelegramBotRESTHandler.OrderTypeAscDesc orderTypeAscDesc = ASC;
-    private int offset;
-    private int limit;
+    private int offset = DEFAULT_OFFSET;
+    private int limit = DEFAULT_LIMIT;
     private Map<String, Integer> cart;
     private String currentProductId = "";
-
-    @PostConstruct
-    public void init() {
-        offset = DEFAULT_OFFSET;
-        limit = DEFAULT_LIMIT;
-    }
 
     /**
      * Сбрасывает все до стандартных значений

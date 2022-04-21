@@ -4,6 +4,7 @@ package ru.teamtwo.telegrambot.service;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -18,6 +19,8 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 public class TelegramBotSendMessageHandler {
     private static final Logger logger = LoggerFactory.getLogger(TelegramBotSendMessageHandler.class);
 
+    @Autowired
+    TelegramBot telegramBot;
     /**
      * Отправляет сообщение в указанный чат. Этот метод также указывает,
      * что нужно удалить меню у пользователя.
@@ -25,8 +28,8 @@ public class TelegramBotSendMessageHandler {
      * @param chatId ID чата
      * @param text Текст сообщения
      */
-    public void sendMessage(@NonNull TelegramLongPollingBot bot, @NonNull String chatId, @NonNull String text){
-        sendMessage(bot, chatId, text, new ReplyKeyboardRemove(true));
+    public void sendMessage(@NonNull String chatId, @NonNull String text){
+        sendMessage(chatId, text, new ReplyKeyboardRemove(true));
     }
 
     /**
@@ -36,7 +39,7 @@ public class TelegramBotSendMessageHandler {
      * @param text Текст сообщения
      * @param replyMarkup Меню/клавиатура
      */
-    public void sendMessage(@NonNull TelegramLongPollingBot bot, @NonNull String chatId, @NonNull String text, @NonNull ReplyKeyboard replyMarkup){
+    public void sendMessage(@NonNull String chatId, @NonNull String text, @NonNull ReplyKeyboard replyMarkup){
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
         sendMessage.setText(text);
@@ -45,7 +48,7 @@ public class TelegramBotSendMessageHandler {
         logger.debug("Отправляю сообщение {}: {}",chatId,text);
 
         try {
-            bot.execute(sendMessage);
+            telegramBot.execute(sendMessage);
         } catch (TelegramApiException e) {
             logger.error("Не смог отправить сообщение {}, {}, {}: {}",chatId,text,replyMarkup.toString(),e.getMessage());
 
