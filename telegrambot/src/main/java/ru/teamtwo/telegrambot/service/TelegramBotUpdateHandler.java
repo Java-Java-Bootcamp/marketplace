@@ -16,8 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TelegramBotUpdateHandler {
     final UserStateHandler userStateHandler;
-    final TelegramBotSendMessageHandler sendMessageHandler;
-    final TelegramBotSearchQueryHandler queryResultHandler;
     final List<ContextHandler> handlers;
 
     public void handle(TelegramLongPollingBot bot,  Update update) {
@@ -33,10 +31,7 @@ public class TelegramBotUpdateHandler {
                     message,
                     chatId,
                     user,
-                    userState,
-                    sendMessageHandler,
-                    queryResultHandler,
-                    userStateHandler
+                    userState
             );
 
             for (ContextHandler handler : handlers) {

@@ -1,15 +1,19 @@
 package ru.teamtwo.telegrambot.service.context_handlers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.teamtwo.telegrambot.configuration.TelegramBotMenus;
 import ru.teamtwo.telegrambot.model.UserState;
-import ru.teamtwo.telegrambot.service.ContextHandler;
-import ru.teamtwo.telegrambot.service.ProcessingContext;
+import ru.teamtwo.telegrambot.service.*;
 
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class ShowMoreSortParameterHandler implements ContextHandler {
+    final UserStateHandler userStateHandler;
+    final TelegramBotSendMessageHandler sendMessageHandler;
+    final TelegramBotSearchQueryHandler queryResultHandler;
 
     @Override
     public boolean shouldRun(ProcessingContext context) {
@@ -19,11 +23,11 @@ public class ShowMoreSortParameterHandler implements ContextHandler {
 
     @Override
     public void execute(ProcessingContext context) {
-        context.getUserState().setOffset(context.getUserStateHandler().get(context.getUser()).getOffset()+1);
-        List<String> queryResultList = context.getQueryResultHandler().getSearchResult(context.getUserStateHandler().get(context.getUser()).getSearchQuery(), context.getUser());
+        context.getUserState().setOffset(userStateHandler.get(context.getUser()).getOffset()+1);
+        List<String> queryResultList = queryResultHandler.getSearchResult(userStateHandler.get(context.getUser()).getSearchQuery(), context.getUser());
         for (String product : queryResultList) {
-            context.getSendMessageHandler().sendMessage(context.getBot(), context.getChatId(), product);
+            sendMessageHandler.sendMessage(context.getBot(), context.getChatId(), product);
         }
-        context.getSendMessageHandler().sendMessage(context.getBot(), context.getChatId(), "Выберите тип сортировки", TelegramBotMenus.getSortByFieldOffsetKeyboard());
+        sendMessageHandler.sendMessage(context.getBot(), context.getChatId(), "Выберите тип сортировки", TelegramBotMenus.getSortByFieldOffsetKeyboard());
     }
 }

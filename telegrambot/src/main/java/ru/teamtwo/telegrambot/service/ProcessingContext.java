@@ -16,7 +16,4 @@ public class ProcessingContext {
     private final String chatId;
     private final User user;
     private final UserState userState;
-    private final TelegramBotSendMessageHandler sendMessageHandler;
-    private final TelegramBotSearchQueryHandler queryResultHandler;
-    private final UserStateHandler userStateHandler;
 }
