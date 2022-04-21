@@ -6,10 +6,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.telegram.telegrambots.meta.api.objects.User;
+import ru.teamtwo.telegrambot.dtos.ProductDTO;
 import ru.teamtwo.telegrambot.service.TelegramBotRESTHandler;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static ru.teamtwo.telegrambot.service.TelegramBotRESTHandler.OrderType.PRODUCT_RATING;
 import static ru.teamtwo.telegrambot.service.TelegramBotRESTHandler.OrderTypeAscDesc.ASC;
@@ -46,8 +52,9 @@ public class UserState {
     private TelegramBotRESTHandler.OrderTypeAscDesc orderTypeAscDesc = ASC;
     private int offset = DEFAULT_OFFSET;
     private int limit = DEFAULT_LIMIT;
-    private Map<String, Integer> cart;
+    private Map<String, Integer> cart = new HashMap<>();
     private String currentProductId = "";
+    private List<ProductDTO> queryResult = new ArrayList<>();
 
     /**
      * Сбрасывает все до стандартных значений
@@ -59,5 +66,6 @@ public class UserState {
         this.setOffset(DEFAULT_OFFSET);
         this.setLimit(DEFAULT_LIMIT);
         this.setCurrentProductId("");
+        this.getQueryResult().clear();
     }
 }

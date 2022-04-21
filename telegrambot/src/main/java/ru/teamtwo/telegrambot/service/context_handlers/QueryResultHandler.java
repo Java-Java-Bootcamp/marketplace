@@ -17,22 +17,27 @@ import java.util.List;
 public class QueryResultHandler implements ContextHandler {
 
     final TelegramBotSendMessageHandler sendMessageHandler;
-    final TelegramBotSearchQueryHandler queryResultHandler;
+    final Tel queryResultHandler;
 
     @Override
     public boolean shouldRun(ProcessingContext context) {
-        List<String> queryResult = queryResultHandler.getSearchResult(context.getMessage(), context.getUser());
-        return context.getUserState().getState()==UserState.State.WAITING_FOR_SEARCH_QUERY &&
-                queryResult != null;
+        return context.getUserState().getState()==UserState.State.WAITING_FOR_SEARCH_QUERY;
     }
 
     @Override
     public void execute(ProcessingContext context) {
-        List<String> queryResultList = queryResultHandler.getSearchResult(context.getMessage(), context.getUser());
-        for (String product : queryResultList) {
-            sendMessageHandler.sendMessage(context.getBot(), context.getChatId(), product);
+        List<String> queryResult = queryResultHandler.getSearchResult(context.getMessage(),     context.getUser());
+
+        if(queryResult.isEmpty()){
+            sendMessageHandler.sendMessage(context.getChatId(),
+                    "По вашему запросу ничего не найдено. Введите другой запрос.");
+
+            context.getUserState().setState(UserState.State.WAITING_FOR_SEARCH_QUERY);
+            return;
         }
-        sendMessageHandler.sendMessage(context.getBot(), context.getChatId(), "Выберите тип сортировки", TelegramBotMenus.getSortByFieldOffsetKeyboard());
+
+        context.getUserState().setQueryResult(queryResult);
+        sendMessageHandler.sendMessage(context.getChatId(), "Выберите тип сортировки", TelegramBotMenus.getSortByFieldOffsetKeyboard());
 
         context.getUserState().setState(UserState.State.WAITING_FOR_SORTING_TYPE_FIELD);
         context.getUserState().setSearchQuery(context.getMessage());

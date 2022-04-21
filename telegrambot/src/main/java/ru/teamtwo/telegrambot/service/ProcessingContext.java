@@ -10,7 +10,6 @@ import ru.teamtwo.telegrambot.model.UserState;
 @AllArgsConstructor
 @Getter
 public class ProcessingContext {
-    private final TelegramLongPollingBot bot;
     private final Update update;
     private final String message;
     private final String chatId;

@@ -19,7 +19,7 @@ public class StartMessageHandler implements ContextHandler {
 
     @Override
     public void execute(ProcessingContext context) {
-        sendMessageHandler.sendMessage(context.getBot(), context.getChatId(), "Добро пожаловать в Маркетплейс!",
+        sendMessageHandler.sendMessage(context.getChatId(), "Добро пожаловать в Маркетплейс!",
                 TelegramBotMenus.getMainMenuKeyboard());
 
         context.getUserState().setState(UserState.State.WAITING_FOR_SEARCH_START);

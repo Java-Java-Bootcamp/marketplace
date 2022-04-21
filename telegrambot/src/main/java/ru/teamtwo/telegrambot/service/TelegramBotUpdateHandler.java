@@ -26,7 +26,6 @@ public class TelegramBotUpdateHandler {
             UserState userState = userStateHandler.get(user);
 
             ProcessingContext context = new ProcessingContext(
-                    bot,
                     update,
                     message,
                     chatId,

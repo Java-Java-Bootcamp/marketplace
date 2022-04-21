@@ -21,7 +21,7 @@ public class GoToMenuHandler implements ContextHandler {
 
     @Override
     public void execute(ProcessingContext context) {
-        sendMessageHandler.sendMessage(context.getBot(), context.getChatId(), "Вы в главном меню",
+        sendMessageHandler.sendMessage(context.getChatId(), "Вы в главном меню",
                 TelegramBotMenus.getMainMenuKeyboard());
 
         context.getUserState().setState(UserState.State.WAITING_FOR_SEARCH_START);
