@@ -23,18 +23,14 @@ public class OrderService {
         return new OrderDto(repository.getById(id));
     }
 
-    public ResponseEntity<Integer> addOrder(OrderDto dto){
+    public Integer addOrder(OrderDto dto){
         log.debug("post: {}", dto.toString());
-        try {
-            Order order = new Order();
-            Customer customer = customerRepository.getById(dto.getCustomerId());
-            order.setCustomer(customer);
-            //order.setCreatedOn(dto.getCreatedOn());
-            order = repository.save(order);
-            return ResponseEntity.status(HttpStatus.CREATED).body(order.getId());
-        }catch(Exception e){
-            log.debug("error: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+        Order order = new Order();
+        Customer customer = customerRepository.getById(dto.getCustomerId());
+        order.setCustomer(customer);
+        //order.setCreatedOn(dto.getCreatedOn());
+        order = repository.save(order);
+        Integer orderId = order.getId();
+        return orderId;
     }
 }

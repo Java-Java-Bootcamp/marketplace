@@ -27,9 +27,8 @@ public class OrderItemService {
         return new OrderItemDto(repository.getById(id));
     }
 
-    public ResponseEntity<?> addItem(OrderItemDto dto){
+    public Integer addItem(OrderItemDto dto){
         log.debug("post: {}", dto.toString());
-        try {
             OrderItem orderItem = new OrderItem();
             ProductOffer productOffer = productOfferRepository.getProductOfferById(dto.getProductOfferId());
             Order order = orderRepository.getById(dto.getOrderId());
@@ -37,10 +36,7 @@ public class OrderItemService {
             orderItem.setOrder(order);
             orderItem.setQuantity(dto.getQuantity());
             orderItem = repository.save(orderItem);
-            return ResponseEntity.status(HttpStatus.CREATED).body(orderItem.getId());
-        }catch(Exception e){
-            log.debug("error: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
-        }
+            Integer orderItemId = orderItem.getId();
+            return orderItemId;
     }
 }

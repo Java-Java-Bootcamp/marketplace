@@ -44,7 +44,8 @@ public class CartItemController {
     public ResponseEntity<?> saveCartState(@PathVariable Integer customerId, @RequestBody CartItemArrayDto cartItems) {
         try {
             cartItemService.saveState(customerId, cartItems);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error("saveCartState error: {}", e.toString());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
         }
@@ -55,8 +56,10 @@ public class CartItemController {
     @GetMapping("get_cart_state/{customerId}")
     public ResponseEntity<CartItemArrayDto> getCartState(@PathVariable Integer customerId) {
         try {
-            return cartItemService.getState(customerId);
-        } catch (Exception e) {
+            CartItemArrayDto body = cartItemService.getState(customerId);
+            return ResponseEntity.status(HttpStatus.OK).body(body);
+        }
+        catch (Exception e) {
             log.error("getCartState error: {}", e.toString());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

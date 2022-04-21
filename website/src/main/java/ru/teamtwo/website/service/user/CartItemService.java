@@ -47,15 +47,14 @@ public class CartItemService {
         repository.saveAll(cartItems1);
     }
 
-    public ResponseEntity<CartItemArrayDto> getState(Integer customerId) {
+    public CartItemArrayDto getState(Integer customerId) {
         log.debug("getCartState: {}", customerId);
         Set<CartItem> cartItems = repository.getCartItemsByCustomer_Id(customerId);
-
         CartItemArrayDto cartItemArrayDto = new CartItemArrayDto();
         cartItemArrayDto.setCartItemDtoList(cartItems
                 .stream()
                 .map(CartItemDto::new)
                 .collect(Collectors.toSet()));
-        return ResponseEntity.status(HttpStatus.OK).body(cartItemArrayDto);
+        return cartItemArrayDto;
     }
 }

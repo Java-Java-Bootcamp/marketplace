@@ -21,14 +21,8 @@ public class CustomerService {
         return new CustomerDto(repository.getById(id));
     }
 
-    public ResponseEntity<?> addCustomer(CustomerDto dto){
+    public Customer addCustomer(CustomerDto dto){
         log.debug("post: {}", dto.toString());
-        try {
-            Customer customer = repository.save(new Customer(dto));
-            return ResponseEntity.status(HttpStatus.CREATED).body(customer.getId());
-        }catch(Exception e){
-            log.debug("error: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
-        }
+        return repository.save(new Customer(dto));
     }
 }
