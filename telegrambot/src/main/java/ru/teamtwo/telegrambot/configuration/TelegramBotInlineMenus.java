@@ -1,8 +1,11 @@
 package ru.teamtwo.telegrambot.model.menus;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Хранит темплейты менюшек, отображающихся под постом
  */
+@Component
 public class TelegramBotInlineMenus {
 
     public static final String MENU_ORDER_DETAILS_TEXT = "Заказать";
@@ -36,7 +39,7 @@ public class TelegramBotInlineMenus {
      * с детальным описанием товара, под которым была нажата кнопка "заказать"
      */
     public TelegramBotInlineMenu createAddButton(String productId){
-        return createButton(MENU_ORDER_ADD_TEXT, CALLBACK_ORDER_FINISH_HEADER, productId);
+        return createButton(MENU_ORDER_ADD_TEXT, CALLBACK_ORDER_ADD_HEADER, productId);
     }
 
     /**

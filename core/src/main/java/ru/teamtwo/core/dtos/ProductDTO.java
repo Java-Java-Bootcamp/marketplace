@@ -1,9 +1,13 @@
 package ru.teamtwo.core.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.teamtwo.core.models.ProductOffer;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductDTO {
     private long id;
     private String name;

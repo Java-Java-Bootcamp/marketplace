@@ -32,7 +32,7 @@ public class RESTTests {
 
         restHandler.updateCustomerInfo(userState);
 
-        CustomerDto customerInfo = restHandler.getCustomerInfo(userState);
+        CustomerDto customerInfo = restHandler.getCustomerInfo(userState).orElseThrow();
 
         Map<Integer, Integer> cart = new HashMap<>();
         cart.put(1, 10);

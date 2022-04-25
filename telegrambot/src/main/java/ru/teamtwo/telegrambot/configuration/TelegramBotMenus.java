@@ -19,6 +19,7 @@ public class TelegramBotMenus {
     public static TelegramBotMenu getMainMenuKeyboard(){
         TelegramBotMenu keyboard = new TelegramBotMenu();
         keyboard.addRow("Поиск");
+        keyboard.addRow("Сбросить пользователя");
 
         return keyboard;
     }
@@ -33,7 +34,6 @@ public class TelegramBotMenus {
         sortFieldKeyboard.addRow("Цена");
         sortFieldKeyboard.addRow("Рейтинг товара");
         sortFieldKeyboard.addRow("Рейтинг продавца");
-        sortFieldKeyboard.addRow("Показать ещё");
 
         return sortFieldKeyboard;
     }
@@ -47,7 +47,6 @@ public class TelegramBotMenus {
         TelegramBotMenu sortAscDescKeyboard = new TelegramBotMenu();
         sortAscDescKeyboard.addRow("По возрастанию");
         sortAscDescKeyboard.addRow("По убыванию");
-        sortAscDescKeyboard.addRow("Показать ещё");
 
         return sortAscDescKeyboard;
     }
