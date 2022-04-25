@@ -1,4 +1,4 @@
-package ru.teamtwo.telegrambot.client;
+package ru.teamtwo.telegrambot.client.user;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;

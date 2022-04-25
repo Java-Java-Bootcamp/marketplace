@@ -5,8 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import ru.teamtwo.core.dtos.user.CartItemArrayDto;
@@ -15,24 +13,20 @@ import ru.teamtwo.core.dtos.user.CustomerDto;
 import ru.teamtwo.core.dtos.user.OrderDto;
 import ru.teamtwo.core.dtos.user.OrderItemDto;
 import ru.teamtwo.core.dtos.ProductDTO;
-import ru.teamtwo.core.models.user.OrderItem;
-import ru.teamtwo.telegrambot.client.CartItemController;
-import ru.teamtwo.telegrambot.client.CustomerController;
+import ru.teamtwo.telegrambot.client.user.CartItemController;
+import ru.teamtwo.telegrambot.client.user.CustomerController;
 import ru.teamtwo.telegrambot.client.MarketplaceController;
-import ru.teamtwo.telegrambot.client.OrderController;
-import ru.teamtwo.telegrambot.client.OrderItemController;
+import ru.teamtwo.telegrambot.client.user.OrderController;
+import ru.teamtwo.telegrambot.client.user.OrderItemController;
 import ru.teamtwo.telegrambot.client.ProductOfferController;
 import ru.teamtwo.telegrambot.model.UserState;
 
-import javax.annotation.PostConstruct;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 public class TelegramBotRESTHandler {
