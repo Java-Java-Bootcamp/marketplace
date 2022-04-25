@@ -1,4 +1,4 @@
-package ru.teamtwo.telegrambot.client;
+package ru.teamtwo.telegrambot.client.user;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import ru.teamtwo.core.dtos.user.CartItemArrayDto;
 import ru.teamtwo.core.dtos.user.CartItemDto;
 
 @FeignClient(url = "localhost:8081/marketplace/api/cart_item", name="cartItem")
-public interface CartItemController {
+public interface CartItemClient {
     @GetMapping("{id}")
     CartItemDto get(@PathVariable Integer id);
 

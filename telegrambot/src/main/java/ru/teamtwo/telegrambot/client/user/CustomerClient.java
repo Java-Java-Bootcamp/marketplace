@@ -1,4 +1,4 @@
-package ru.teamtwo.telegrambot.client;
+package ru.teamtwo.telegrambot.client.user;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ru.teamtwo.core.dtos.user.CustomerDto;
 
 @FeignClient(url = "localhost:8081/marketplace/api/customer", name="customer")
-public interface CustomerController {
+public interface CustomerClient {
     @GetMapping("{id}")
     public CustomerDto get(@PathVariable Integer id);;
 
