@@ -7,6 +7,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.teamtwo.telegrambot.model.UserState;
 
+import java.util.Map;
+
 @AllArgsConstructor
 @Getter
 public class ProcessingContext {
@@ -15,4 +17,6 @@ public class ProcessingContext {
     private final String chatId;
     private final User user;
     private final UserState userState;
+    private final String dataCallbackType;
+    private final  Map<String, String> dataCallbackArgs;
 }
