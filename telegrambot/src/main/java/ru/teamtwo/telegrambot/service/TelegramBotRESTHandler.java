@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -69,18 +70,30 @@ public class TelegramBotRESTHandler {
      * Виды сортировки по полям товара для запросов товаров
      */
     public enum OrderType{
-        PRODUCT_NAME,
-        PRODUCT_PRICE,
-        PRODUCT_RATING,
-        SELLER_RATING
+        PRODUCT_NAME("Название"),
+        PRODUCT_PRICE("Цена"),
+        PRODUCT_RATING("Рейтинг"),
+        SELLER_RATING("Рейтинг продавца");
+
+        public final String inputName;
+
+        OrderType(String inputName){
+            this.inputName = inputName;
+        }
     }
 
     /**
      * Виды сортировки - по убывающей/возрастающей
      */
     public enum OrderTypeAscDesc{
-        ASC,
-        DESC
+        ASC("По возрастанию"),
+        DESC("По убыванию");
+
+        public final String inputName;
+
+        OrderTypeAscDesc(String inputName){
+            this.inputName = inputName;
+        }
     }
 
     public void saveCartState(@NonNull UserState userState){
@@ -154,16 +167,20 @@ public class TelegramBotRESTHandler {
         });
     }
 
-    public CustomerDto getCustomerInfo(UserState userState){
+    public Optional<CustomerDto> getCustomerInfo(UserState userState){
         logger.debug("getCustomerInfo: {}", userState.getUser().getId());
+        Optional<CustomerDto> dto = Optional.empty();
 
-        CustomerDto customerDto = customerController.get(Math.toIntExact(userState.getUser().getId()));
+        try {
+            CustomerDto customerDto = customerController.get(Math.toIntExact(userState.getUser().getId()));
 
-        logger.debug("getCustomerInfo: {}", customerDto);
+            logger.debug("getCustomerInfo: {}", customerDto);
+            dto = Optional.of(customerDto);
+        }catch (Exception e){
+            logger.error("getCustomerInfo error: {}", e.getMessage());
+        }
 
-        userState.setAddress(customerDto.getAddress());
-
-        return customerDto;
+        return dto;
     }
 
     public void updateCustomerInfo(UserState userState){
@@ -175,7 +192,7 @@ public class TelegramBotRESTHandler {
         customerDto.setName(userState.getUser().getUserName());
 
         String status = customerController.post(customerDto).getBody().toString();
-        logger.debug("updateCustomerInfo: {}", status);
+        logger.debug("updateCustomerInfo finished: {}", status);
     }
 
     /**

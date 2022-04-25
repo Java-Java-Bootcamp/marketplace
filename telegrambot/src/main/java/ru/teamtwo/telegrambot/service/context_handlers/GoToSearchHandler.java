@@ -21,8 +21,7 @@ public class GoToSearchHandler implements ContextHandler {
 
     @Override
     public void execute(ProcessingContext context) {
-        sendMessageHandler.sendMessage(context.getBot(), context.getChatId(), "Введите запрос",
-                TelegramBotMenus.getSearchMenu());
+        sendMessageHandler.sendMessage(context.getChatId(), "Введите запрос");
 
         context.getUserState().setState(UserState.State.WAITING_FOR_SEARCH_QUERY);
     }
