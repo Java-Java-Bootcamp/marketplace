@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.core.dtos.user.OrderItemDto;
-import ru.teamtwo.core.models.ProductOffer;
-import ru.teamtwo.core.models.user.Order;
-import ru.teamtwo.core.models.user.OrderItem;
 import ru.teamtwo.website.service.user.OrderItemService;
 
 @Slf4j

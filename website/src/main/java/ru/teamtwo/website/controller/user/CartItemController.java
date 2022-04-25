@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.core.dtos.user.CartItemArrayDto;
 import ru.teamtwo.core.dtos.user.CartItemDto;
+import ru.teamtwo.website.exception.CartItemNotFoundException;
 import ru.teamtwo.website.service.user.CartItemService;
 
 @Slf4j
@@ -24,7 +25,12 @@ public class CartItemController {
 
     @GetMapping("{id}")
     public CartItemDto get(@PathVariable Integer id) {
-        return cartItemService.getItem(id);
+        try {
+            return cartItemService.getItem(id);
+        }
+        catch (Exception e) {
+            throw new CartItemNotFoundException("Not found cart item " + id);
+        }
     }
 
     @ResponseBody
