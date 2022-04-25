@@ -1,7 +1,7 @@
 package ru.teamtwo.telegrambot;
 
 import org.springframework.stereotype.Component;
-import ru.teamtwo.telegrambot.dtos.ProductDTO;
+import ru.teamtwo.core.dtos.ProductDTO;
 
 import java.util.ArrayList;
 import java.util.List;

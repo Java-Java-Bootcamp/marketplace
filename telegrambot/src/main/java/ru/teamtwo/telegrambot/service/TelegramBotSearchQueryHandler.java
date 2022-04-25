@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.teamtwo.telegrambot.SearchQueryResultFormatter;
-import ru.teamtwo.telegrambot.dtos.ProductDTO;
+import ru.teamtwo.core.dtos.ProductDTO;
 import ru.teamtwo.telegrambot.model.UserState;
 
 import java.util.List;

@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.teamtwo.telegrambot.service.TelegramBotRESTHandler;
 
@@ -46,8 +45,9 @@ public class UserState {
     private TelegramBotRESTHandler.OrderTypeAscDesc orderTypeAscDesc = ASC;
     private int offset = DEFAULT_OFFSET;
     private int limit = DEFAULT_LIMIT;
-    private Map<String, Integer> cart;
+    private Map<Integer, Integer> cart;
     private String currentProductId = "";
+    private String address = "";
 
     /**
      * Сбрасывает все до стандартных значений
