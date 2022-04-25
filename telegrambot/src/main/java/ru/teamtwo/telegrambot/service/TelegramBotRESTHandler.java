@@ -13,12 +13,12 @@ import ru.teamtwo.core.dtos.user.CustomerDto;
 import ru.teamtwo.core.dtos.user.OrderDto;
 import ru.teamtwo.core.dtos.user.OrderItemDto;
 import ru.teamtwo.core.dtos.ProductDTO;
-import ru.teamtwo.telegrambot.client.user.CartItemController;
-import ru.teamtwo.telegrambot.client.user.CustomerController;
-import ru.teamtwo.telegrambot.client.MarketplaceController;
-import ru.teamtwo.telegrambot.client.user.OrderController;
-import ru.teamtwo.telegrambot.client.user.OrderItemController;
-import ru.teamtwo.telegrambot.client.ProductOfferController;
+import ru.teamtwo.telegrambot.client.user.CartItemClient;
+import ru.teamtwo.telegrambot.client.user.CustomerClient;
+import ru.teamtwo.telegrambot.client.MarketplaceClient;
+import ru.teamtwo.telegrambot.client.user.OrderClient;
+import ru.teamtwo.telegrambot.client.user.OrderItemClient;
+import ru.teamtwo.telegrambot.client.ProductOfferClient;
 import ru.teamtwo.telegrambot.model.UserState;
 
 import java.util.HashMap;
@@ -34,17 +34,17 @@ public class TelegramBotRESTHandler {
     private static final Logger logger = LoggerFactory.getLogger(TelegramBotRESTHandler.class);
 
     @Autowired
-    private CartItemController cartItemController;
+    private CartItemClient cartItemClient;
     @Autowired
-    private CustomerController customerController;
+    private CustomerClient customerClient;
     @Autowired
-    private MarketplaceController marketplaceController;
+    private MarketplaceClient marketplaceClient;
     @Autowired
-    private OrderController orderController;
+    private OrderClient orderClient;
     @Autowired
-    private OrderItemController orderItemController;
+    private OrderItemClient orderItemClient;
     @Autowired
-    private ProductOfferController productOfferController;
+    private ProductOfferClient productOfferClient;
 
     @Value("${telegrambot.rest.webClientUri}")
     private String WEB_CLIENT_URI;
@@ -103,7 +103,7 @@ public class TelegramBotRESTHandler {
             cartItemArrayDto.getCartItemDtoList().add(dto);
         });
 
-        ResponseEntity<?> responseEntity = cartItemController.saveCartState(Math.toIntExact(userState.getUser().getId()), cartItemArrayDto);
+        ResponseEntity<?> responseEntity = cartItemClient.saveCartState(Math.toIntExact(userState.getUser().getId()), cartItemArrayDto);
 
         logger.debug("saveCartState: {}", responseEntity.getStatusCode());
     }
@@ -114,7 +114,7 @@ public class TelegramBotRESTHandler {
         Map<Integer, Integer> map = new HashMap<>();
 
         //чё
-        ((CartItemArrayDto) Objects.requireNonNull(cartItemController.getCartState(Math.toIntExact(userId))
+        ((CartItemArrayDto) Objects.requireNonNull(cartItemClient.getCartState(Math.toIntExact(userId))
                 .getBody()))
                 .getCartItemDtoList()
                 .forEach(item -> {
@@ -131,7 +131,7 @@ public class TelegramBotRESTHandler {
 
         Map<Integer, Integer> map = new HashMap<>();
 
-        ProductDTO productDTO = productOfferController.get(id);
+        ProductDTO productDTO = productOfferClient.get(id);
 
         logger.debug("getProductById: {}", productDTO);
 
@@ -146,7 +146,7 @@ public class TelegramBotRESTHandler {
         orderDto.setCustomerId(Math.toIntExact(userState.getUser().getId()));
         //orderDto.setCreatedOn(LocalDate.of(2000,10,10));
 
-        Integer newOrderId = Integer.valueOf(Objects.requireNonNull(orderController.post(orderDto).getBody()).toString());
+        Integer newOrderId = Integer.valueOf(Objects.requireNonNull(orderClient.post(orderDto).getBody()).toString());
         logger.debug("postNewOrder - order: {}", newOrderId);
 
         userState.getCart().entrySet().forEach(entry->{
@@ -155,7 +155,7 @@ public class TelegramBotRESTHandler {
             orderItemDto.setProductOfferId(entry.getKey());
             orderItemDto.setQuantity(entry.getValue());
 
-            Integer itemStatus = Integer.valueOf(Objects.requireNonNull(orderItemController.post(orderItemDto).getBody()).toString());
+            Integer itemStatus = Integer.valueOf(Objects.requireNonNull(orderItemClient.post(orderItemDto).getBody()).toString());
 
             logger.debug("postNewOrder - item: {}", itemStatus);
         });
@@ -166,7 +166,7 @@ public class TelegramBotRESTHandler {
         Optional<CustomerDto> dto = Optional.empty();
 
         try {
-            CustomerDto customerDto = customerController.get(Math.toIntExact(userState.getUser().getId()));
+            CustomerDto customerDto = customerClient.get(Math.toIntExact(userState.getUser().getId()));
 
             logger.debug("getCustomerInfo: {}", customerDto);
             dto = Optional.of(customerDto);
@@ -185,7 +185,7 @@ public class TelegramBotRESTHandler {
         customerDto.setAddress(userState.getAddress());
         customerDto.setName(userState.getUser().getUserName());
 
-        String status = customerController.post(customerDto).getBody().toString();
+        String status = customerClient.post(customerDto).getBody().toString();
         logger.debug("updateCustomerInfo finished: {}", status);
     }
 
@@ -201,7 +201,7 @@ public class TelegramBotRESTHandler {
     public List<ProductDTO> getSortedProductsByFilterWithOffsetAndLimit(String filter, OrderType orderType, OrderTypeAscDesc ascDesc, int offset, int limit){
         logger.debug("getSortedProductsByFilterWithOffset({},{},{},{},{})",filter,orderType,ascDesc,offset,limit);
 
-        List<ProductDTO> productList = marketplaceController.getProductOffersByProductName(filter, offset, limit, ascDesc+"_"+orderType.toString().replace("_", "."));
+        List<ProductDTO> productList = marketplaceClient.getProductOffersByProductName(filter, offset, limit, ascDesc+"_"+orderType.toString().replace("_", "."));
 
         logger.debug("getSortedProductsByFilterWithOffset received DTOs: {}", productList.size());
         productList.forEach(product -> {
