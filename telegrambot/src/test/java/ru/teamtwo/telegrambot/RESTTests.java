@@ -42,13 +42,13 @@ public class RESTTests {
 
         restHandler.saveCartState(customerState);
 
-        Map<Integer, Integer> cartState = restHandler.getCartState(1L);
+        restHandler.getCartState(customerState);
 
-        cartState.forEach((key, value) ->
+        customerState.getCart().forEach((key, value) ->
             log.debug("{}, {}", key, value)
         );
 
-        cartState.forEach((key, value) ->
+        customerState.getCart().forEach((key, value) ->
                 log.debug("{}, {}", key, restHandler.getProductDTOById(key))
         );
 

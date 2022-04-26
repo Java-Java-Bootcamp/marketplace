@@ -30,8 +30,6 @@ public class CustomerStateHandler {
 
             Optional<CustomerDto> customerDto = restHandler.getCustomerInfo(customerState);
             if(customerDto.isPresent()) {
-                Map<Integer, Integer> cartState = restHandler.getCartState(user.getId());
-                customerState.setCart(cartState);
                 customerState.setAddress(customerDto.get().getAddress());
             }
         }
