@@ -8,5 +8,5 @@ import ru.teamtwo.core.dtos.ProductDTO;
 @FeignClient(url = "localhost:8081/marketplace/api/product_offer", name="productOffer")
 public interface ProductOfferClient {
     @GetMapping("{id}")
-    public ProductDTO get(@PathVariable Integer id);
+    ProductDTO get(@PathVariable Integer id);
 }

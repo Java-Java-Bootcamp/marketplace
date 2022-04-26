@@ -6,9 +6,9 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.telegram.telegrambots.meta.api.objects.User;
-import ru.teamtwo.core.dtos.user.CustomerDto;
-import ru.teamtwo.telegrambot.model.UserState;
-import ru.teamtwo.telegrambot.service.TelegramBotRESTHandler;
+import ru.teamtwo.core.dtos.customer.CustomerDto;
+import ru.teamtwo.telegrambot.model.customer.CustomerState;
+import ru.teamtwo.telegrambot.service.bot.handlers.RESTHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ import java.util.Map;
 public class RESTTests {
 
     @Autowired
-    TelegramBotRESTHandler restHandler;
+    RESTHandler restHandler;
 
     @Test
     public void cartStateTest(){
@@ -26,21 +26,21 @@ public class RESTTests {
         Mockito.when(user.getId()).thenReturn(12345L);
         Mockito.when(user.getUserName()).thenReturn("user12345");
 
-        UserState userState = new UserState();
-        userState.setUser(user);
-        userState.setAddress("address 12345");
+        CustomerState customerState = new CustomerState();
+        customerState.setUser(user);
+        customerState.setAddress("address 12345");
 
-        restHandler.updateCustomerInfo(userState);
+        restHandler.updateCustomerInfo(customerState);
 
-        CustomerDto customerInfo = restHandler.getCustomerInfo(userState).orElseThrow();
+        CustomerDto customerInfo = restHandler.getCustomerInfo(customerState).orElseThrow();
 
         Map<Integer, Integer> cart = new HashMap<>();
         cart.put(1, 10);
         cart.put(2, 5);
         cart.put(3, 100);
-        userState.setCart(cart);
+        customerState.setCart(cart);
 
-        restHandler.saveCartState(userState);
+        restHandler.saveCartState(customerState);
 
         Map<Integer, Integer> cartState = restHandler.getCartState(1L);
 
@@ -52,6 +52,6 @@ public class RESTTests {
                 log.debug("{}, {}", key, restHandler.getProductDTOById(key))
         );
 
-        restHandler.postNewOrderFromUserCart(userState);
+        restHandler.postNewOrderFromUserCart(customerState);
     }
 }
