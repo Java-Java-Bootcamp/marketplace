@@ -14,10 +14,22 @@ public class ControllerAdvisor {
     public ResponseEntity<ErrorMessage> itemDoesntExistExceptionHandler (
             ItemNotFoundException e) {
         ErrorMessage message = new ErrorMessage(
-                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.NOT_FOUND.value(),
                 new Date(),
                 e.getMessage(),
                 "Item does not exist");
+
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UnableToAddItemException.class)
+    public ResponseEntity<ErrorMessage> CantAddItemExceptionHandler (
+            ItemNotFoundException e) {
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.BAD_REQUEST.value(),
+                new Date(),
+                e.getMessage(),
+                "Unable to add item");
 
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.core.dtos.customer.OrderItemDto;
 import ru.teamtwo.website.exception.ItemNotFoundException;
+import ru.teamtwo.website.exception.UnableToAddItemException;
 import ru.teamtwo.website.service.customer.OrderItemService;
 
 @Slf4j
@@ -40,8 +41,7 @@ public class OrderItemController {
             return ResponseEntity.status(HttpStatus.CREATED).body(orderItemId);
         }
         catch(Exception e){
-            log.debug("error: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+            throw new UnableToAddItemException("Unable to add order item " + dto.toString());
         }
     }
 }

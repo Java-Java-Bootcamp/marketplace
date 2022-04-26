@@ -1,7 +1,6 @@
 package ru.teamtwo.website.exception;
 
 import lombok.Getter;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 

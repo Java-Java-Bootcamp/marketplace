@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.core.dtos.customer.CustomerDto;
 import ru.teamtwo.core.models.customer.Customer;
 import ru.teamtwo.website.exception.ItemNotFoundException;
+import ru.teamtwo.website.exception.UnableToAddItemException;
 import ru.teamtwo.website.service.customer.CustomerService;
 
 @Slf4j
@@ -41,8 +42,7 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.CREATED).body(customer.getId());
         }
         catch(Exception e){
-            log.debug("error: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+            throw new UnableToAddItemException("Unable to add customer " + dto.toString());
         }
     }
 }

@@ -1,4 +1,4 @@
-package ru.teamtwo.website.controller.user;
+package ru.teamtwo.website.controller.customer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +65,7 @@ public class CartItemController {
             return ResponseEntity.status(HttpStatus.OK).body(body);
         }
         catch (Exception e) {
-            log.error("getCartState error: {}", e.toString());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            throw new ItemNotFoundException("Customers " + customerId + " cart not found");
         }
     }
 }
