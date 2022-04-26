@@ -10,8 +10,11 @@ import ru.teamtwo.telegrambot.service.TelegramBotUpdateHandler;
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
 
-    @Autowired
-    TelegramBotUpdateHandler telegramBotUpdateHandler;
+    final TelegramBotUpdateHandler telegramBotUpdateHandler;
+
+    public TelegramBot(TelegramBotUpdateHandler telegramBotUpdateHandler) {
+        this.telegramBotUpdateHandler = telegramBotUpdateHandler;
+    }
 
     @Override
     public String getBotUsername() {

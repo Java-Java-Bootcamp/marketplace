@@ -3,11 +3,11 @@ package ru.teamtwo.telegrambot.service.context_handlers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.teamtwo.core.dtos.ProductDTO;
-import ru.teamtwo.telegrambot.configuration.TelegramBotMenus;
 import ru.teamtwo.telegrambot.model.UserState;
 import ru.teamtwo.telegrambot.model.menus.TelegramBotInlineMenus;
 import ru.teamtwo.telegrambot.service.ContextHandler;
 import ru.teamtwo.telegrambot.service.ProcessingContext;
+import ru.teamtwo.telegrambot.service.SortingTypeAscDesc;
 import ru.teamtwo.telegrambot.service.TelegramBotRESTHandler;
 import ru.teamtwo.telegrambot.service.TelegramBotSendMessageHandler;
 import ru.teamtwo.telegrambot.service.UserStateHandler;
@@ -30,17 +30,17 @@ public class SortAscDescHandler implements ContextHandler {
 
     @Override
     public void execute(ProcessingContext context) {
-        for(TelegramBotRESTHandler.OrderTypeAscDesc type : TelegramBotRESTHandler.OrderTypeAscDesc.values()){
+        for(SortingTypeAscDesc type : SortingTypeAscDesc.values()){
             if(type.inputName.equals(context.getMessage())){
-                context.getUserState().setOrderTypeAscDesc(type);
+                context.getUserState().setSortingTypeAscDesc(type);
             }
         }
-        if(context.getUserState().getOrderTypeAscDesc() == null) return;
+        if(context.getUserState().getSortingTypeAscDesc() == null) return;
 
         List<ProductDTO> products = restHandler.getSortedProductsByFilterWithOffsetAndLimit(
                 context.getUserState().getSearchQuery(),
-                context.getUserState().getOrderType(),
-                context.getUserState().getOrderTypeAscDesc(),
+                context.getUserState().getSortingType(),
+                context.getUserState().getSortingTypeAscDesc(),
                 context.getUserState().getOffset(),
                 context.getUserState().getLimit());
 

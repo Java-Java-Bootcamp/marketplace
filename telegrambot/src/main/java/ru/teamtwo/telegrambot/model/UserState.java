@@ -2,18 +2,18 @@ package ru.teamtwo.telegrambot.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.teamtwo.core.dtos.ProductDTO;
-import ru.teamtwo.telegrambot.service.TelegramBotRESTHandler;
+import ru.teamtwo.telegrambot.service.SortingType;
+import ru.teamtwo.telegrambot.service.SortingTypeAscDesc;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static ru.teamtwo.telegrambot.service.TelegramBotRESTHandler.OrderType.PRODUCT_RATING;
-import static ru.teamtwo.telegrambot.service.TelegramBotRESTHandler.OrderTypeAscDesc.ASC;
+import static ru.teamtwo.telegrambot.service.SortingType.PRODUCT_RATING;
+import static ru.teamtwo.telegrambot.service.SortingTypeAscDesc.ASC;
 
 /**
  * Хранит в себе информацию о состоянии
@@ -42,8 +42,8 @@ public class UserState {
     private String chatId = "";
     private State state = State.WAITING_FOR_SEARCH_START;
     private String searchQuery = "";
-    private TelegramBotRESTHandler.OrderType orderType = PRODUCT_RATING;
-    private TelegramBotRESTHandler.OrderTypeAscDesc orderTypeAscDesc = ASC;
+    private SortingType sortingType = PRODUCT_RATING;
+    private SortingTypeAscDesc sortingTypeAscDesc = ASC;
     private int offset = DEFAULT_OFFSET;
     private int limit = DEFAULT_LIMIT;
     private Map<Integer, Integer> cart = new HashMap<>();

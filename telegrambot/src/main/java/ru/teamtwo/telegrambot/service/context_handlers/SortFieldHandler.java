@@ -6,12 +6,10 @@ import ru.teamtwo.telegrambot.configuration.TelegramBotMenus;
 import ru.teamtwo.telegrambot.model.UserState;
 import ru.teamtwo.telegrambot.service.ContextHandler;
 import ru.teamtwo.telegrambot.service.ProcessingContext;
+import ru.teamtwo.telegrambot.service.SortingType;
 import ru.teamtwo.telegrambot.service.TelegramBotRESTHandler;
-import ru.teamtwo.telegrambot.service.TelegramBotSearchQueryHandler;
 import ru.teamtwo.telegrambot.service.TelegramBotSendMessageHandler;
 import ru.teamtwo.telegrambot.service.UserStateHandler;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -28,12 +26,12 @@ public class SortFieldHandler implements ContextHandler {
 
     @Override
     public void execute(ProcessingContext context) {
-        for(TelegramBotRESTHandler.OrderType type : TelegramBotRESTHandler.OrderType.values()){
+        for(SortingType type : SortingType.values()){
             if(type.inputName.equals(context.getMessage())){
-                context.getUserState().setOrderType(type);
+                context.getUserState().setSortingType(type);
             }
         }
-        if(context.getUserState().getOrderType() == null) return;
+        if(context.getUserState().getSortingType() == null) return;
 
         sendMessageHandler.sendMessage( context.getChatId(), "По убыванию/возрастанию?", TelegramBotMenus.getSortByAscDescOffsetKeyboard());
         context.getUserState().setState(UserState.State.WAITING_FOR_SORTING_TYPE_ASCDESC);

@@ -1,12 +1,8 @@
 package ru.teamtwo.telegrambot.service;
 
 import lombok.NonNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import ru.teamtwo.core.dtos.user.CartItemArrayDto;
@@ -15,7 +11,6 @@ import ru.teamtwo.core.dtos.user.CustomerDto;
 import ru.teamtwo.core.dtos.user.OrderDto;
 import ru.teamtwo.core.dtos.user.OrderItemDto;
 import ru.teamtwo.core.dtos.ProductDTO;
-import ru.teamtwo.core.models.user.OrderItem;
 import ru.teamtwo.telegrambot.client.CartItemController;
 import ru.teamtwo.telegrambot.client.CustomerController;
 import ru.teamtwo.telegrambot.client.MarketplaceController;
@@ -24,81 +19,23 @@ import ru.teamtwo.telegrambot.client.OrderItemController;
 import ru.teamtwo.telegrambot.client.ProductOfferController;
 import ru.teamtwo.telegrambot.model.UserState;
 
-import javax.annotation.PostConstruct;
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
+@Slf4j
 public class TelegramBotRESTHandler {
-
-    private static final Logger logger = LoggerFactory.getLogger(TelegramBotRESTHandler.class);
-
-    @Autowired
-    private CartItemController cartItemController;
-    @Autowired
-    private CustomerController customerController;
-    @Autowired
-    private MarketplaceController marketplaceController;
-    @Autowired
-    private OrderController orderController;
-    @Autowired
-    private OrderItemController orderItemController;
-    @Autowired
-    private ProductOfferController productOfferController;
-
-    @Value("${telegrambot.rest.webClientUri}")
-    private String WEB_CLIENT_URI;
-    private static final String PRODUCT_OFFERS_URI = "/product-offers";
-    private static final String FILTER_PARAMETER = "filter";
-    private static final String OFFSET_PARAMETER = "offset";
-    private static final String LIMIT_PARAMETER = "limit";
-    private static final String ORDER_PARAMETER = "order";
-    private static final String ORDER_URI = "/order/";
-    private static final String ORDER_ITEM_URI = "/order_item/";
-    private static final String GET_CART_STATE_URI = "/cart_item/get_cart_state/";
-    private static final String POST_CART_STATE_URI = "/cart_item/save_cart_state/";
-    private static final String PRODUCT_OFFER_URI = "/product_offer/";
-    private static final String CUSTOMER_URI = "/customer/";
-
-    /**
-     * Виды сортировки по полям товара для запросов товаров
-     */
-    public enum OrderType{
-        PRODUCT_NAME("Название"),
-        PRODUCT_PRICE("Цена"),
-        PRODUCT_RATING("Рейтинг"),
-        SELLER_RATING("Рейтинг продавца");
-
-        public final String inputName;
-
-        OrderType(String inputName){
-            this.inputName = inputName;
-        }
-    }
-
-    /**
-     * Виды сортировки - по убывающей/возрастающей
-     */
-    public enum OrderTypeAscDesc{
-        ASC("По возрастанию"),
-        DESC("По убыванию");
-
-        public final String inputName;
-
-        OrderTypeAscDesc(String inputName){
-            this.inputName = inputName;
-        }
-    }
+    private final CartItemController cartItemController;
+    private final CustomerController customerController;
+    private final MarketplaceController marketplaceController;
+    private final OrderController orderController;
+    private final OrderItemController orderItemController;
+    private final ProductOfferController productOfferController;
 
     public void saveCartState(@NonNull UserState userState){
-        logger.debug("saveCartState: {}", userState);
-
         CartItemArrayDto cartItemArrayDto = new CartItemArrayDto();
         cartItemArrayDto.setCartItemDtoList(new HashSet<>());
 
@@ -110,109 +47,79 @@ public class TelegramBotRESTHandler {
         });
 
         ResponseEntity<?> responseEntity = cartItemController.saveCartState(Math.toIntExact(userState.getUser().getId()), cartItemArrayDto);
-
-        logger.debug("saveCartState: {}", responseEntity.getStatusCode());
-    }
-
-    public Map<Integer, Integer> getCartState(Long userId){
-        logger.debug("getCartState: {}", userId);
-
-        Map<Integer, Integer> map = new HashMap<>();
-
-        //чё
-        ((CartItemArrayDto) Objects.requireNonNull(cartItemController.getCartState(Math.toIntExact(userId))
-                .getBody()))
-                .getCartItemDtoList()
-                .forEach(item -> {
-                    map.put(item.getProductId(), item.getQuantity());
-                });
-
-        logger.debug("getCartState: {}", map.size());
-
-        return map;
-    }
-
-    public ProductDTO getProductById(Integer id){
-        logger.debug("getProductById: {}", id);
-
-        Map<Integer, Integer> map = new HashMap<>();
-
-        ProductDTO productDTO = productOfferController.get(id);
-
-        logger.debug("getProductById: {}", productDTO);
-
-        return productDTO;
     }
 
     /**
-     * Отправить POST с новым заказом
+     * Запрашивает тележку пользователя и сразу вводит её в userState.
+     */
+    public void getCartState(UserState userState){
+        ((CartItemArrayDto) Objects.requireNonNull(cartItemController.getCartState(Math.toIntExact(userState.getUser().getId()))
+                .getBody()))
+                .getCartItemDtoList()
+                .forEach(item -> {
+                    userState.getCart().put(item.getProductId(), item.getQuantity());
+                });
+    }
+
+    /**
+     * Запрашивает ProductDTO на сервере, не производя над ним никаких действий.
+     */
+    public ProductDTO getProductDTOById(Integer id){
+        return productOfferController.get(id);
+    }
+
+    /**
+     * Берет тележку пользователя и отправляет её на сервер в виде заказа.
      */
     public void postNewOrderFromUserCart(UserState userState){
         OrderDto orderDto = new OrderDto();
         orderDto.setCustomerId(Math.toIntExact(userState.getUser().getId()));
-        //orderDto.setCreatedOn(LocalDate.of(2000,10,10));
+        //orderDto.setCreatedOn(LocalDate.of(2000,10,10)); //TODO: подчинить дату
 
         Integer newOrderId = Integer.valueOf(Objects.requireNonNull(orderController.post(orderDto).getBody()).toString());
-        logger.debug("postNewOrder - order: {}", newOrderId);
 
-        userState.getCart().entrySet().forEach(entry->{
+        userState.getCart().forEach((key, value) -> {
             OrderItemDto orderItemDto = new OrderItemDto();
             orderItemDto.setOrderId(newOrderId);
-            orderItemDto.setProductOfferId(entry.getKey());
-            orderItemDto.setQuantity(entry.getValue());
-
-            Integer itemStatus = Integer.valueOf(Objects.requireNonNull(orderItemController.post(orderItemDto).getBody()).toString());
-
-            logger.debug("postNewOrder - item: {}", itemStatus);
+            orderItemDto.setProductOfferId(key);
+            orderItemDto.setQuantity(value);
         });
     }
 
     public Optional<CustomerDto> getCustomerInfo(UserState userState){
-        logger.debug("getCustomerInfo: {}", userState.getUser().getId());
         Optional<CustomerDto> dto = Optional.empty();
 
         try {
             CustomerDto customerDto = customerController.get(Math.toIntExact(userState.getUser().getId()));
 
-            logger.debug("getCustomerInfo: {}", customerDto);
             dto = Optional.of(customerDto);
         }catch (Exception e){
-            logger.error("getCustomerInfo error: {}", e.getMessage());
+            log.error("getCustomerInfo error: {}", e.getMessage());
         }
 
         return dto;
     }
 
     public void updateCustomerInfo(UserState userState){
-        logger.debug("updateCustomerInfo: {}", userState.getUser().getId());
-
         CustomerDto customerDto = new CustomerDto();
         customerDto.setId(Math.toIntExact(userState.getUser().getId()));
         customerDto.setAddress(userState.getAddress());
         customerDto.setName(userState.getUser().getUserName());
 
         String status = customerController.post(customerDto).getBody().toString();
-        logger.debug("updateCustomerInfo finished: {}", status);
     }
 
     /**
      * Запрашивает список товаров через REST API с указанными параметрами.
      * @param filter Текстовый фильтр
-     * @param orderType Поле по которому будет сортировка
+     * @param sortingType Поле по которому будет сортировка
      * @param ascDesc Сортировка по возрастающей/убывающей
      * @param offset Сдвиг от первого товара в результатах поиска
      * @param limit Максимальное кол-во товаров в листе
      * @return Отсортированный, отфильтрованный список товаров
      */
-    public List<ProductDTO> getSortedProductsByFilterWithOffsetAndLimit(String filter, OrderType orderType, OrderTypeAscDesc ascDesc, int offset, int limit){
-        logger.debug("getSortedProductsByFilterWithOffset({},{},{},{},{})",filter,orderType,ascDesc,offset,limit);
-
-        List<ProductDTO> productList = marketplaceController.getProductOffersByProductName(filter, offset, limit, ascDesc+"_"+orderType.toString().replace("_", "."));
-
-        logger.debug("getSortedProductsByFilterWithOffset received DTOs: {}", productList.size());
-        productList.forEach(product -> {
-            logger.debug("productDTO: id:{} name:{} seller:{}", product.getId(), product.getName(), product.getSellerName());
-        });
+    public List<ProductDTO> getSortedProductsByFilterWithOffsetAndLimit(String filter, SortingType sortingType, SortingTypeAscDesc ascDesc, int offset, int limit){
+        List<ProductDTO> productList = marketplaceController.getProductOffersByProductName(filter, offset, limit, ascDesc+"_"+ sortingType.toString().replace("_", "."));
 
         return productList;
     }

@@ -30,7 +30,7 @@ public class AddressHandler implements ContextHandler {
 
         StringBuilder b = new StringBuilder("Ваш заказ добавлен\n");
         context.getUserState().getCart().forEach((s, integer) -> {
-            ProductDTO product = restHandler.getProductById(Integer.valueOf(s));
+            ProductDTO product = restHandler.getProductDTOById(Integer.valueOf(s));
             b.append(product.toString());
             b.append("\n");
         });

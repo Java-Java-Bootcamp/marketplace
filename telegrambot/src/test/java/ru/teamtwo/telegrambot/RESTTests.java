@@ -49,7 +49,7 @@ public class RESTTests {
         );
 
         cartState.forEach((key, value) ->
-                log.debug("{}, {}", key, restHandler.getProductById(key))
+                log.debug("{}, {}", key, restHandler.getProductDTOById(key))
         );
 
         restHandler.postNewOrderFromUserCart(userState);
