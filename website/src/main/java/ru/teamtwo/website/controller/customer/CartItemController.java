@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.core.dtos.customer.CartItemArrayDto;
 import ru.teamtwo.core.dtos.customer.CartItemDto;
+import ru.teamtwo.website.exception.ItemNotFoundException;
+import ru.teamtwo.website.exception.UnableToAddItemException;
 import ru.teamtwo.website.service.customer.CartItemService;
 
 @Slf4j
@@ -24,17 +26,21 @@ public class CartItemController {
 
     @GetMapping("{id}")
     public CartItemDto get(@PathVariable Integer id) {
-        return cartItemService.getItem(id);
+        try {
+            return cartItemService.getItem(id);
+        }
+        catch (Exception e) {
+            throw new ItemNotFoundException("Can't get cart item " + id);
+        }
     }
 
     @ResponseBody
     @PostMapping("")
     public ResponseEntity<?> post(CartItemDto dto) {
-        log.debug("post: {}", dto.toString());
         try {
             //repository.save(new CartItem(dto));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+            throw new UnableToAddItemException("Unable to save item " + dto.toString());
         }
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -46,8 +52,7 @@ public class CartItemController {
             cartItemService.saveState(customerId, cartItems);
         }
         catch (Exception e) {
-            log.error("saveCartState error: {}", e.toString());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+            throw new UnableToAddItemException("Unable to save cart state for customer " + customerId);
         }
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -60,8 +65,7 @@ public class CartItemController {
             return ResponseEntity.status(HttpStatus.OK).body(body);
         }
         catch (Exception e) {
-            log.error("getCartState error: {}", e.toString());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            throw new ItemNotFoundException("Customers " + customerId + " cart not found");
         }
     }
 }

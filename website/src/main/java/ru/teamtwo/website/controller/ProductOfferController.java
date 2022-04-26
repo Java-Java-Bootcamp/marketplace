@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.core.dtos.ProductDTO;
+import ru.teamtwo.website.exception.ItemNotFoundException;
 import ru.teamtwo.website.repository.ProductOfferRepository;
 
 @Slf4j
@@ -17,9 +18,13 @@ public class ProductOfferController {
     @Autowired
     private ProductOfferRepository repository;
 
+
     @GetMapping("{id}")
-    public ProductDTO get(@PathVariable Integer id){
-        log.debug("get: {}", id);
-        return new ProductDTO(repository.getProductOfferById(id));
+    public ProductDTO get(@PathVariable Integer id) {
+        try {
+            return new ProductDTO(repository.getProductOfferById(id));
+        } catch (Exception e) {
+            throw new ItemNotFoundException("Can't get product offer " + id);
+        }
     }
 }

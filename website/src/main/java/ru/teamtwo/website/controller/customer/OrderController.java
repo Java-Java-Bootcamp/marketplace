@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.core.dtos.customer.OrderDto;
+import ru.teamtwo.website.exception.ItemNotFoundException;
+import ru.teamtwo.website.exception.UnableToAddItemException;
 import ru.teamtwo.website.service.customer.OrderService;
 
 @Slf4j
@@ -22,8 +24,13 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("{id}")
-    public OrderDto get(@PathVariable Integer id){
-        return orderService.getId(id);
+    public OrderDto get(@PathVariable Integer id) {
+        try {
+            return orderService.getId(id);
+        }
+        catch (Exception e) {
+            throw new ItemNotFoundException("Can't get order " + id);
+        }
     }
 
     @ResponseBody
@@ -34,8 +41,7 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.CREATED).body(orderId);
         }
         catch(Exception e){
-            log.debug("error: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            throw new UnableToAddItemException("Unable to add order " + dto.toString());
         }
     }
 }
