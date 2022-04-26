@@ -10,7 +10,7 @@ import java.util.List;
 @FeignClient(url = "localhost:8081/marketplace/api/product-offers", name="productOffers")
 public interface MarketplaceClient {
     @GetMapping("")
-    public List<ProductDTO> getProductOffersByProductName(@RequestParam(value = "filter", required = true) String filter,
+    List<ProductDTO> getProductOffersByProductName(@RequestParam(value = "filter", required = true) String filter,
                                                             @RequestParam(value = "offset", defaultValue = "0") int offset,
                                                             @RequestParam(value = "limit", defaultValue = "20") int limit,
                                                             @RequestParam(value = "order", defaultValue = "desc_price") String order);

@@ -3,7 +3,7 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{mm:ss.S} %-5level %logger{20} - %msg%n</pattern>
+            <pattern>%d{mm:ss.SSS} %-5level %logger{20} - %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -15,10 +15,18 @@
         </encoder>
     </appender>
 
+    <appender name="LOGASPECT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{mm:ss.S} %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <root level="error">
         <appender-ref ref="STDOUT" />
     </root>
 
-    <logger name="ru.teamtwo.telegrambot" level="TRACE" />
+    <logger name="ru.teamtwo.telegrambot.service.logging.LoggingAspect" level="TRACE" additivity="false">
+        <appender-ref ref="LOGASPECT" />
+    </logger>
 
 </configuration>
