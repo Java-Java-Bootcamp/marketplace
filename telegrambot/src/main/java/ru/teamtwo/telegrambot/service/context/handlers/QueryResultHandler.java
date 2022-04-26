@@ -4,11 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.teamtwo.telegrambot.configuration.TelegramBotMenus;
 import ru.teamtwo.telegrambot.model.customer.CustomerState;
+import ru.teamtwo.telegrambot.service.bot.handlers.RESTHandler;
+import ru.teamtwo.telegrambot.service.bot.handlers.SendMessageHandler;
 import ru.teamtwo.telegrambot.service.context.ContextHandler;
 import ru.teamtwo.telegrambot.service.context.ProcessingContext;
-import ru.teamtwo.telegrambot.service.bot.handlers.RESTHandler;
-import ru.teamtwo.telegrambot.service.TelegramBotSearchQueryHandler;
-import ru.teamtwo.telegrambot.service.bot.handlers.SendMessageHandler;
 
 @Component
 @RequiredArgsConstructor
