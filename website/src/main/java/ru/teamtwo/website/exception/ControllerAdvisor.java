@@ -17,13 +17,14 @@ import java.util.Date;
 public class ControllerAdvisor {
 
     @ExceptionHandler(CartItemNotFoundException.class)
-    public ResponseEntity<ErrorMessage> resourceNotFoundException(CartItemNotFoundException e, WebRequest request) {
+    public ResponseEntity<ErrorMessage> itemDoesntExistExceptionHandler (
+            CartItemNotFoundException e) {
         ErrorMessage message = new ErrorMessage(
                 HttpStatus.BAD_REQUEST.value(),
                 new Date(),
                 e.getMessage(),
-                request.getDescription(false));
+                "Item does not exist");
 
-        return new ResponseEntity<ErrorMessage>(message, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 }
