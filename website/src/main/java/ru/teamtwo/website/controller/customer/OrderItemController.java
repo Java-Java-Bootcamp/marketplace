@@ -29,7 +29,7 @@ public class OrderItemController {
             return orderItemService.getItem(id);
         }
         catch (Exception e) {
-            throw new ItemNotFoundException("Order item " + id + " does not exist");
+            throw new ItemNotFoundException("Can't get order item " + id);
         }
     }
 

@@ -30,7 +30,7 @@ public class CustomerController {
             return customerService.getId(id);
         }
         catch (Exception e) {
-            throw new ItemNotFoundException("Customer " + id + " does not exist");
+            throw new ItemNotFoundException("Can't get customer " + id);
         }
     }
 

@@ -30,7 +30,7 @@ public class CartItemController {
             return cartItemService.getItem(id);
         }
         catch (Exception e) {
-            throw new ItemNotFoundException("Cart item " + id + " does not exist");
+            throw new ItemNotFoundException("Can't get cart item " + id);
         }
     }
 

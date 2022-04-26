@@ -17,7 +17,7 @@ public class ControllerAdvisor {
                 HttpStatus.NOT_FOUND.value(),
                 new Date(),
                 e.getMessage(),
-                "Item does not exist");
+                "Unable to retrieve item");
 
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }

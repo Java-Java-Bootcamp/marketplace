@@ -24,7 +24,7 @@ public class ProductOfferController {
         try {
             return new ProductDTO(repository.getProductOfferById(id));
         } catch (Exception e) {
-            throw new ItemNotFoundException("Product offer " + id + " does not exist");
+            throw new ItemNotFoundException("Can't get product offer " + id);
         }
     }
 }
