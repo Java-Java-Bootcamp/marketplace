@@ -22,6 +22,9 @@ jobs:
           java-version: 17
           distribution: 'temurin'
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+      - name: Maven Package Core
+        run: mvn -f core/pom.xml clean install -Dmaven.test.skip=true
+
       - name: Maven Package Telegrambot
         run: mvn -f telegrambot/pom.xml clean package -Dmaven.test.skip=true
 
