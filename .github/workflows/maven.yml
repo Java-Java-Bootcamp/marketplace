@@ -3,10 +3,10 @@ name: Build
 on:
   pull_request:
     branches:
-      - '*'
+      - 'telegram-bot-sprint1-cicd'
   push:
     branches:
-      - 'main'
+      - 'telegram-bot-sprint1-cicd'
 
 jobs:
   build:
