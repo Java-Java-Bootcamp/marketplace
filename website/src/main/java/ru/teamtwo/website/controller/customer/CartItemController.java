@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.core.dtos.customer.CartItemArrayDto;
 import ru.teamtwo.core.dtos.customer.CartItemDto;
 import ru.teamtwo.website.exception.ItemNotFoundException;
+import ru.teamtwo.website.exception.UnableToAddItemException;
 import ru.teamtwo.website.service.customer.CartItemService;
 
 @Slf4j
@@ -39,7 +40,7 @@ public class CartItemController {
         try {
             //repository.save(new CartItem(dto));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+            throw new UnableToAddItemException("Unable to save item " + dto.toString());
         }
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -51,8 +52,7 @@ public class CartItemController {
             cartItemService.saveState(customerId, cartItems);
         }
         catch (Exception e) {
-            log.error("saveCartState error: {}", e.toString());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+            throw new UnableToAddItemException("Unable to save cart state for customer " + customerId);
         }
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
