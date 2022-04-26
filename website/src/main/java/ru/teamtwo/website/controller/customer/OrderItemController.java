@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.core.dtos.customer.OrderItemDto;
+import ru.teamtwo.website.exception.ItemNotFoundException;
 import ru.teamtwo.website.service.customer.OrderItemService;
 
 @Slf4j
@@ -22,8 +23,13 @@ public class OrderItemController {
     private OrderItemService orderItemService;
 
     @GetMapping("{id}")
-    public OrderItemDto get(@PathVariable Integer id){
-        return orderItemService.getItem(id);
+    public OrderItemDto get(@PathVariable Integer id) {
+        try {
+            return orderItemService.getItem(id);
+        }
+        catch (Exception e) {
+            throw new ItemNotFoundException("Order item " + id + " does not exist");
+        }
     }
 
     @ResponseBody

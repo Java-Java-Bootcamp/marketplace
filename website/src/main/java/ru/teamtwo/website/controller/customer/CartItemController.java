@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.core.dtos.customer.CartItemArrayDto;
 import ru.teamtwo.core.dtos.customer.CartItemDto;
-import ru.teamtwo.website.exception.CartItemNotFoundException;
+import ru.teamtwo.website.exception.ItemNotFoundException;
 import ru.teamtwo.website.service.customer.CartItemService;
 
 @Slf4j
@@ -29,14 +29,13 @@ public class CartItemController {
             return cartItemService.getItem(id);
         }
         catch (Exception e) {
-            throw new CartItemNotFoundException("Cart item " + id + " does not exist");
+            throw new ItemNotFoundException("Cart item " + id + " does not exist");
         }
     }
 
     @ResponseBody
     @PostMapping("")
     public ResponseEntity<?> post(CartItemDto dto) {
-        log.debug("post: {}", dto.toString());
         try {
             //repository.save(new CartItem(dto));
         } catch (Exception e) {

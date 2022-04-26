@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.core.dtos.customer.CustomerDto;
 import ru.teamtwo.core.models.customer.Customer;
+import ru.teamtwo.website.exception.ItemNotFoundException;
 import ru.teamtwo.website.service.customer.CustomerService;
 
 @Slf4j
@@ -23,8 +24,13 @@ public class CustomerController {
     CustomerService customerService;
 
     @GetMapping("{id}")
-    public CustomerDto get(@PathVariable Integer id){
-        return customerService.getId(id);
+    public CustomerDto get(@PathVariable Integer id) {
+        try {
+            return customerService.getId(id);
+        }
+        catch (Exception e) {
+            throw new ItemNotFoundException("Customer " + id + " does not exist");
+        }
     }
 
     @ResponseBody
