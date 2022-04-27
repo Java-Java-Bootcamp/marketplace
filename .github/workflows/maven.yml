@@ -75,7 +75,7 @@ jobs:
           host: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          script: docker build telegrambot teamtwo/telegrambot:latest
+          script: docker build telegrambot -t teamtwo/telegrambot:latest
 
       - name: SSH Run Docker Website
         uses: appleboy/ssh-action@master
