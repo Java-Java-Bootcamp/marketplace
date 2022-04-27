@@ -99,5 +99,5 @@ jobs:
           host: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          script: docker run -d -p 8080:8080 --rm --name teamtwo_telegrambot teamtwo/telegrambot &
+          script: docker run -d --rm --name teamtwo_telegrambot teamtwo/telegrambot &
 
