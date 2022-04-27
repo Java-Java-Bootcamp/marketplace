@@ -3,10 +3,10 @@ name: Build
 on:
   pull_request:
     branches:
-      - 'telegram-bot-sprint1-cicd'
+      - 'telegram-bot-sprint1'
   push:
     branches:
-      - 'telegram-bot-sprint1-cicd'
+      - 'telegram-bot-sprint1'
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
           java-version: 17
           distribution: 'temurin'
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-      - name: Maven Package Core
+      - name: Maven Install Core
         run: mvn -f core/pom.xml clean install -Dmaven.test.skip=true
 
       - name: Maven Package Telegrambot
@@ -35,13 +35,40 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Build image and push to Docker Hub and GitHub Container Registry
+      - name: Build Telegrambot Docker Image
         uses: docker/build-push-action@v2
         with:
-          # relative path to the place where source code with Dockerfile is located
           context: ./telegrambot
-          # Note: tags has to be all lower-case
           tags: |
             ru.teamtwo.telegrambot:latest
-          # build on feature branches, push only on main branch
-          # push: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: Build Website Docker Image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./website
+          tags: |
+            ru.teamtwo.website:latest
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: 62.109.17.193
+          username: teamtwo
+          password: teamtwo
+
+      - name: SSH Run Docker Website
+        uses: appleboy/ssh-action@master
+        with:
+          host: 62.109.17.193
+          username: teamtwo
+          password: teamtwo
+          script: docker run --publish 8000:8000 website
+
+      - name: SSH Run Docker Telegrambot
+        uses: appleboy/ssh-action@master
+        with:
+          host: 62.109.17.193
+          username: teamtwo
+          password: teamtwo
+          script: docker run --publish 8000:8000 telegrambot
+
