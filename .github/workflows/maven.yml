@@ -37,14 +37,18 @@ jobs:
           server: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          local-dir: website/target/
+          local-dir: website/
           server-dir: website/
           exclude: |
             **/maven-archiver/**
             **/classes/**
             **/maven-status/**
             **/generated-sources/**
+            **/src/**
             *.original
+            .gitignore
+            HELP.md
+            pom.xml
 
       - name: FTP Deploy Telegrambot
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
@@ -52,14 +56,18 @@ jobs:
           server: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          local-dir: telegrambot/target/
+          local-dir: telegrambot/
           server-dir: telegrambot/
           exclude: |
             **/maven-archiver/**
             **/classes/**
             **/maven-status/**
             **/generated-sources/**
+            **/src/**
             *.original
+            .gitignore
+            HELP.md
+            pom.xml
 
       - name: SSH Build Docker Website
         uses: appleboy/ssh-action@master
