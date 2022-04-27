@@ -5,11 +5,11 @@ import org.springframework.stereotype.Component;
 import ru.teamtwo.core.dtos.ProductDTO;
 import ru.teamtwo.telegrambot.model.customer.CustomerState;
 import ru.teamtwo.telegrambot.model.menus.TelegramBotInlineMenus;
-import ru.teamtwo.telegrambot.service.context.ContextHandler;
-import ru.teamtwo.telegrambot.service.context.ProcessingContext;
 import ru.teamtwo.telegrambot.model.sorting.SortingTypeAscDesc;
 import ru.teamtwo.telegrambot.service.bot.handlers.RESTHandler;
 import ru.teamtwo.telegrambot.service.bot.handlers.SendMessageHandler;
+import ru.teamtwo.telegrambot.service.context.ContextHandler;
+import ru.teamtwo.telegrambot.service.context.ProcessingContext;
 import ru.teamtwo.telegrambot.service.customer.CustomerStateHandler;
 
 import java.util.List;
