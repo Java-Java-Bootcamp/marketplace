@@ -7,7 +7,7 @@ import ru.teamtwo.core.dtos.ProductDTO;
 
 import java.util.List;
 
-@FeignClient(url = "localhost:8081/marketplace/api/product-offers", name="productOffers")
+@FeignClient(url = "${telegrambot.rest.webClientUri}/marketplace/api/product-offers", name="productOffers")
 public interface MarketplaceClient {
     @GetMapping("")
     List<ProductDTO> getProductOffersByProductName(@RequestParam(value = "filter", required = true) String filter,

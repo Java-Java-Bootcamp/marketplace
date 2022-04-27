@@ -91,7 +91,7 @@ jobs:
           host: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          script: docker run teamtwo/website:latest -name teamtwo_website &
+          script: docker run -d -p 8080:8080 --rm --name teamtwo_website teamtwo/website
 
       - name: SSH Run Docker Telegrambot
         uses: appleboy/ssh-action@master
@@ -99,5 +99,5 @@ jobs:
           host: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          script: docker run teamtwo/telegrambot:latest -name teamtwo_telegrambot &
+          script: docker run -d -p 8080:8080 --rm --name teamtwo_telegrambot teamtwo/telegrambot &
 

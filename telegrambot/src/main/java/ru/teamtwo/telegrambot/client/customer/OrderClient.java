@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.teamtwo.core.dtos.customer.OrderDto;
 
-@FeignClient(url = "localhost:8081/marketplace/api/order", name="order")
+@FeignClient(url = "${telegrambot.rest.webClientUri}/marketplace/api/order", name="order")
 public interface OrderClient {
     @GetMapping("{id}")
     OrderDto get(@PathVariable Integer id);

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ru.teamtwo.core.dtos.customer.CartItemArrayDto;
 import ru.teamtwo.core.dtos.customer.CartItemDto;
 
-@FeignClient(url = "localhost:8081/marketplace/api/cart_item", name="cartItem")
+@FeignClient(url = "${telegrambot.rest.webClientUri}/marketplace/api/cart_item", name="cartItem")
 public interface CartItemClient {
     @GetMapping("{id}")
     CartItemDto get(@PathVariable Integer id);
