@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 # JPA
 spring:
   main:
@@ -19,7 +19,7 @@ spring:
   #    password: password
 
   datasource:
-    url: jdbc:postgresql://host.docker.internal:5432/dbmarketplace
+    url: jdbc:postgresql://62.109.17.193:5432/dbmarketplace
     username: postgres
     password: admin
   sql:
