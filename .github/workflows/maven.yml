@@ -31,30 +31,51 @@ jobs:
       - name: Maven Package Website
         run: mvn -f website/pom.xml clean package -Dmaven.test.skip=true
 
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Build Telegrambot Docker Image
-        uses: docker/build-push-action@v2
-        with:
-          context: ./telegrambot
-          tags: |
-            ru.teamtwo.telegrambot:latest
-
-      - name: Build Website Docker Image
-        uses: docker/build-push-action@v2
-        with:
-          context: ./website
-          tags: |
-            ru.teamtwo.website:latest
-
-      - name: FTP Deploy
+      - name: FTP Deploy Website
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server: 62.109.17.193
           username: teamtwo
           password: teamtwo
+          local-dir: /website/target/
+          server-dir: /website/
+          exclude: |
+            **/maven-archiver/**
+            **/classes/**
+            **/maven-status/**
+            **/generated-sources/**
+            *.original
+
+      - name: FTP Deploy Telegrambot
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: 62.109.17.193
+          username: teamtwo
+          password: teamtwo
+          local-dir: /telegrambot/target/
+          server-dir: /telegrambot/
+          exclude: |
+            **/maven-archiver/**
+            **/classes/**
+            **/maven-status/**
+            **/generated-sources/**
+            *.original
+
+      - name: SSH Build Docker Website
+        uses: appleboy/ssh-action@master
+        with:
+          host: 62.109.17.193
+          username: teamtwo
+          password: teamtwo
+          script: docker build website -t teamtwo/website:latest
+
+      - name: SSH Build Docker Telegrambot
+        uses: appleboy/ssh-action@master
+        with:
+          host: 62.109.17.193
+          username: teamtwo
+          password: teamtwo
+          script: docker build telegrambot teamtwo/telegrambot:latest
 
       - name: SSH Run Docker Website
         uses: appleboy/ssh-action@master
@@ -62,7 +83,7 @@ jobs:
           host: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          script: docker run --publish 8000:8000 website
+          script: docker run teamtwo/website:latest
 
       - name: SSH Run Docker Telegrambot
         uses: appleboy/ssh-action@master
@@ -70,5 +91,5 @@ jobs:
           host: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          script: docker run --publish 8000:8000 telegrambot
+          script: docker run teamtwo/telegrambot:latest
 
