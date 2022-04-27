@@ -37,8 +37,8 @@ jobs:
           server: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          local-dir: /website/target/
-          server-dir: /website/
+          local-dir: website/target/
+          server-dir: website/
           exclude: |
             **/maven-archiver/**
             **/classes/**
@@ -52,8 +52,8 @@ jobs:
           server: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          local-dir: /telegrambot/target/
-          server-dir: /telegrambot/
+          local-dir: telegrambot/target/
+          server-dir: telegrambot/
           exclude: |
             **/maven-archiver/**
             **/classes/**
