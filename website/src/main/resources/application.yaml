@@ -19,7 +19,7 @@ spring:
   #    password: password
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/dbmarketplace2
+    url: jdbc:postgresql://host.docker.internal:5432/dbmarketplace
     username: postgres
     password: admin
   sql:
