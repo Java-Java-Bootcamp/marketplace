@@ -37,9 +37,9 @@ public class SortAscDescHandler implements ContextHandler {
         }
         if(context.getCustomerState().getSortingTypeAscDesc() == null) return;
 
-        List<ProductDTO> products = restHandler.getSortedProductsByFilterWithOffsetAndLimit(
+        List<ProductDTO> products = restHandler.searchProducts(
                 context.getCustomerState().getSearchQuery(),
-                context.getCustomerState().getSortingType(),
+                context.getCustomerState().getSortingTypeField(),
                 context.getCustomerState().getSortingTypeAscDesc(),
                 context.getCustomerState().getOffset(),
                 context.getCustomerState().getLimit());

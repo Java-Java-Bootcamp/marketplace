@@ -3,7 +3,7 @@ package ru.teamtwo.telegrambot.model.sorting;
 /**
  * Виды сортировки по полям товара.
  */
-public enum SortingType {
+public enum SortingTypeField {
     PRODUCT_NAME("Название"),
     PRODUCT_PRICE("Цена"),
     PRODUCT_RATING("Рейтинг"),
@@ -11,7 +11,7 @@ public enum SortingType {
 
     public final String inputName;
 
-    SortingType(String inputName) {
+    SortingTypeField(String inputName) {
         this.inputName = inputName;
     }
 }

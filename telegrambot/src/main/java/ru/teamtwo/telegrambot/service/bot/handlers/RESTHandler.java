@@ -18,8 +18,8 @@ import ru.teamtwo.telegrambot.client.customer.CustomerClient;
 import ru.teamtwo.telegrambot.client.customer.OrderClient;
 import ru.teamtwo.telegrambot.client.customer.OrderItemClient;
 import ru.teamtwo.telegrambot.model.customer.CustomerState;
-import ru.teamtwo.telegrambot.model.sorting.SortingType;
 import ru.teamtwo.telegrambot.model.sorting.SortingTypeAscDesc;
+import ru.teamtwo.telegrambot.model.sorting.SortingTypeField;
 
 import java.util.HashSet;
 import java.util.List;
@@ -54,7 +54,7 @@ public class RESTHandler {
     /**
      * Запрашивает тележку пользователя и сразу вводит её в userState.
      */
-    public void getCartState(CustomerState customerState){
+    public void updateCustomerCartFromServer(CustomerState customerState){
         ((CartItemArrayDto) Objects.requireNonNull(cartItemClient.getCartState(Math.toIntExact(customerState.getUser().getId()))
                 .getBody()))
                 .getCartItemDtoList()
@@ -88,7 +88,7 @@ public class RESTHandler {
         });
     }
 
-    public Optional<CustomerDto> getCustomerInfo(CustomerState customerState){
+    public Optional<CustomerDto> getCustomerDTO(CustomerState customerState){
         Optional<CustomerDto> dto = Optional.empty();
 
         try {
@@ -102,7 +102,10 @@ public class RESTHandler {
         return dto;
     }
 
-    public void updateCustomerInfo(CustomerState customerState){
+    /**
+     * Отправляет CustomerState на сервер.
+     */
+    public void updateCustomerInfoFromServer(CustomerState customerState){
         CustomerDto customerDto = new CustomerDto();
         customerDto.setId(Math.toIntExact(customerState.getUser().getId()));
         customerDto.setAddress(customerState.getAddress());
@@ -114,14 +117,14 @@ public class RESTHandler {
     /**
      * Запрашивает список товаров через REST API с указанными параметрами.
      * @param filter Текстовый фильтр
-     * @param sortingType Поле по которому будет сортировка
+     * @param sortingTypeField Поле по которому будет сортировка
      * @param ascDesc Сортировка по возрастающей/убывающей
      * @param offset Сдвиг от первого товара в результатах поиска
      * @param limit Максимальное кол-во товаров в листе
      * @return Отсортированный, отфильтрованный список товаров
      */
-    public List<ProductDTO> getSortedProductsByFilterWithOffsetAndLimit(String filter, SortingType sortingType, SortingTypeAscDesc ascDesc, int offset, int limit){
-        List<ProductDTO> productList = marketplaceClient.getProductOffersByProductName(filter, offset, limit, ascDesc+"_"+ sortingType.toString().replace("_", "."));
+    public List<ProductDTO> searchProducts(String filter, SortingTypeField sortingTypeField, SortingTypeAscDesc ascDesc, int offset, int limit){
+        List<ProductDTO> productList = marketplaceClient.getProductOffersByProductName(filter, offset, limit, ascDesc+"_"+ sortingTypeField.toString().replace("_", "."));
 
         return productList;
     }

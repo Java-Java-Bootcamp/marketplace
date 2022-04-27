@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.teamtwo.telegrambot.configuration.TelegramBotMenus;
 import ru.teamtwo.telegrambot.model.customer.CustomerState;
-import ru.teamtwo.telegrambot.model.sorting.SortingType;
+import ru.teamtwo.telegrambot.model.sorting.SortingTypeField;
 import ru.teamtwo.telegrambot.service.bot.handlers.RESTHandler;
 import ru.teamtwo.telegrambot.service.bot.handlers.SendMessageHandler;
 import ru.teamtwo.telegrambot.service.context.ContextHandler;
@@ -26,12 +26,12 @@ public class SortFieldHandler implements ContextHandler {
 
     @Override
     public void execute(ProcessingContext context) {
-        for(SortingType type : SortingType.values()){
+        for(SortingTypeField type : SortingTypeField.values()){
             if(type.inputName.equals(context.getMessage())){
-                context.getCustomerState().setSortingType(type);
+                context.getCustomerState().setSortingTypeField(type);
             }
         }
-        if(context.getCustomerState().getSortingType() == null) return;
+        if(context.getCustomerState().getSortingTypeField() == null) return;
 
         sendMessageHandler.sendMessage( context.getChatId(), "По убыванию/возрастанию?", TelegramBotMenus.getSortByAscDescOffsetKeyboard());
         context.getCustomerState().setState(CustomerState.State.WAITING_FOR_SORTING_TYPE_ASCDESC);

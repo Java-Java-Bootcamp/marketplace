@@ -4,16 +4,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.teamtwo.core.dtos.ProductDTO;
-import ru.teamtwo.telegrambot.model.sorting.SortingType;
 import ru.teamtwo.telegrambot.model.sorting.SortingTypeAscDesc;
+import ru.teamtwo.telegrambot.model.sorting.SortingTypeField;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static ru.teamtwo.telegrambot.model.sorting.SortingType.PRODUCT_RATING;
 import static ru.teamtwo.telegrambot.model.sorting.SortingTypeAscDesc.ASC;
+import static ru.teamtwo.telegrambot.model.sorting.SortingTypeField.PRODUCT_RATING;
 
 /**
  * Хранит в себе информацию о состоянии
@@ -42,7 +42,7 @@ public class CustomerState {
     private String chatId = "";
     private State state = State.WAITING_FOR_SEARCH_START;
     private String searchQuery = "";
-    private SortingType sortingType = PRODUCT_RATING;
+    private SortingTypeField sortingTypeField = PRODUCT_RATING;
     private SortingTypeAscDesc sortingTypeAscDesc = ASC;
     private int offset = DEFAULT_OFFSET;
     private int limit = DEFAULT_LIMIT;

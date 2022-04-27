@@ -50,7 +50,7 @@ public class UpdateHandler {
                 }
             }
 
-            restHandler.updateCustomerInfo(customerState);
+            restHandler.updateCustomerInfoFromServer(customerState);
         }
 
         if(update.hasCallbackQuery() && !update.getCallbackQuery().getData().isEmpty()){
@@ -85,7 +85,7 @@ public class UpdateHandler {
                 }
             }
 
-            restHandler.updateCustomerInfo(state);
+            restHandler.updateCustomerInfoFromServer(state);
         }
     }
 }

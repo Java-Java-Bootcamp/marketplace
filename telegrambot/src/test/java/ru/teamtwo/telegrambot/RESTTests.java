@@ -30,9 +30,9 @@ public class RESTTests {
         customerState.setUser(user);
         customerState.setAddress("address 12345");
 
-        restHandler.updateCustomerInfo(customerState);
+        restHandler.updateCustomerInfoFromServer(customerState);
 
-        CustomerDto customerInfo = restHandler.getCustomerInfo(customerState).orElseThrow();
+        CustomerDto customerInfo = restHandler.getCustomerDTO(customerState).orElseThrow();
 
         Map<Integer, Integer> cart = new HashMap<>();
         cart.put(1, 10);
@@ -42,7 +42,7 @@ public class RESTTests {
 
         restHandler.saveCartState(customerState);
 
-        restHandler.getCartState(customerState);
+        restHandler.updateCustomerCartFromServer(customerState);
 
         customerState.getCart().forEach((key, value) ->
             log.debug("{}, {}", key, value)

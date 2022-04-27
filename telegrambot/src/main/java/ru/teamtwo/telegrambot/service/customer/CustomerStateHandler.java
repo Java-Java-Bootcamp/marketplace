@@ -28,8 +28,9 @@ public class CustomerStateHandler {
             customerState.setUser(user);
             map.put(user, customerState);
 
-            Optional<CustomerDto> customerDto = restHandler.getCustomerInfo(customerState);
+            Optional<CustomerDto> customerDto = restHandler.getCustomerDTO(customerState);
             if(customerDto.isPresent()) {
+                restHandler.updateCustomerCartFromServer(customerState);
                 customerState.setAddress(customerDto.get().getAddress());
             }
         }
