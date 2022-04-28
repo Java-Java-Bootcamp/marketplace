@@ -4,7 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.transaction.annotation.Transactional;
 import ru.teamtwo.core.dtos.customer.CustomerDto;
 import ru.teamtwo.core.models.customer.Customer;
@@ -13,9 +14,10 @@ import ru.teamtwo.website.service.customer.CustomerService;
 
 import java.util.List;
 
-@SpringBootTest
 @Slf4j
-class WebsiteApplicationTests {
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+public class CustomerServiceTests {
 
     @Autowired
     CustomerService customerService;
