@@ -18,7 +18,7 @@ public class OrderService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public OrderDto getId(Integer id){
+    public OrderDto getOrderById(Integer id){
         log.debug("get: {}", id);
         return new OrderDto(repository.getById(id));
     }
