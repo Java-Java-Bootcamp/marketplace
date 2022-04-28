@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS marketplace.customer (
 CREATE TABLE IF NOT EXISTS marketplace.cart_item (
     id SERIAL PRIMARY KEY,
     customer integer NOT NULL REFERENCES  marketplace.customer (id),
-    product integer NOT NULL REFERENCES marketplace.product (id),
+    product integer NOT NULL REFERENCES marketplace.product_offer (id),
     quantity integer NOT NULL
 );
 
