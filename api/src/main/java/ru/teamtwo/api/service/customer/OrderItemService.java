@@ -1,26 +1,28 @@
 package ru.teamtwo.api.service.customer;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.teamtwo.api.repository.ProductOfferRepository;
+import ru.teamtwo.api.repository.customer.OrderItemRepository;
+import ru.teamtwo.api.repository.customer.OrderRepository;
 import ru.teamtwo.core.dtos.customer.OrderItemDto;
 import ru.teamtwo.core.models.ProductOffer;
 import ru.teamtwo.core.models.customer.Order;
 import ru.teamtwo.core.models.customer.OrderItem;
-import ru.teamtwo.api.repository.ProductOfferRepository;
-import ru.teamtwo.api.repository.customer.OrderItemRepository;
-import ru.teamtwo.api.repository.customer.OrderRepository;
 
 @Slf4j
 @Service
 public class OrderItemService {
 
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private OrderItemRepository repository;
-    @Autowired
-    private ProductOfferRepository productOfferRepository;
+    private final OrderRepository orderRepository;
+    private final OrderItemRepository repository;
+    private final ProductOfferRepository productOfferRepository;
+
+    public OrderItemService(OrderRepository orderRepository, OrderItemRepository repository, ProductOfferRepository productOfferRepository) {
+        this.orderRepository = orderRepository;
+        this.repository = repository;
+        this.productOfferRepository = productOfferRepository;
+    }
 
     public OrderItemDto getItem(Integer id){
         log.debug("get: {}", id);

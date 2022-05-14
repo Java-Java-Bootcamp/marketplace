@@ -1,7 +1,6 @@
 package ru.teamtwo.api.controller.customer;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,18 +10,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.teamtwo.core.dtos.customer.CustomerDto;
-import ru.teamtwo.core.models.customer.Customer;
 import ru.teamtwo.api.exception.ItemNotFoundException;
 import ru.teamtwo.api.exception.UnableToAddItemException;
 import ru.teamtwo.api.service.customer.CustomerService;
+import ru.teamtwo.core.dtos.customer.CustomerDto;
+import ru.teamtwo.core.models.customer.Customer;
 
 @Slf4j
 @RestController
 @RequestMapping("/marketplace/api/customer")
 public class CustomerController {
-    @Autowired
-    CustomerService customerService;
+    final CustomerService customerService;
+
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     @GetMapping("{id}")
     public CustomerDto get(@PathVariable Integer id) {
