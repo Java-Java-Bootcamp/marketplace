@@ -28,17 +28,17 @@ jobs:
       - name: Maven Package Telegrambot
         run: mvn -f telegrambot/pom.xml clean package -Dmaven.test.skip=true
 
-      - name: Maven Package Website
-        run: mvn -f website/pom.xml clean package -Dmaven.test.skip=true
+      - name: Maven Package api
+        run: mvn -f api/pom.xml clean package -Dmaven.test.skip=true
 
-      - name: FTP Deploy Website
+      - name: FTP Deploy api
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          local-dir: website/
-          server-dir: website/
+          local-dir: api/
+          server-dir: api/
           exclude: |
             **/maven-archiver/**
             **/classes/**
@@ -69,13 +69,13 @@ jobs:
             HELP.md
             pom.xml
 
-      - name: SSH Build Docker Website
+      - name: SSH Build Docker API
         uses: appleboy/ssh-action@master
         with:
           host: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          script: docker build website -t teamtwo/website:latest
+          script: docker build api -t teamtwo/api:latest
 
       - name: SSH Build Docker Telegrambot
         uses: appleboy/ssh-action@master
@@ -85,13 +85,13 @@ jobs:
           password: teamtwo
           script: docker build telegrambot -t teamtwo/telegrambot:latest
 
-      - name: SSH Run Docker Website
+      - name: SSH Run Docker API
         uses: appleboy/ssh-action@master
         with:
           host: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          script: docker run -d -p 8080:8080 --rm --name teamtwo_website teamtwo/website
+          script: docker run -d -p 8080:8080 --rm --name teamtwo_api teamtwo/api
 
       - name: SSH Run Docker Telegrambot
         uses: appleboy/ssh-action@master
