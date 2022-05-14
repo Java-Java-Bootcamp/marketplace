@@ -32,10 +32,12 @@ public class OrderItem {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "\"order\"", nullable = false)
+    @ToString.Exclude
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_offer", nullable = false)
+    @ToString.Exclude
     private ProductOffer productOffer;
 
     @Column(name = "quantity", nullable = false)

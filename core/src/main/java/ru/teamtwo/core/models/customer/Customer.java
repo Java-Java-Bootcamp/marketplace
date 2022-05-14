@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ru.teamtwo.core.dtos.customer.CustomerDto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,14 +33,10 @@ public class Customer {
     private String address;
 
     @OneToMany(mappedBy = "customer")
+    @ToString.Exclude
     private Set<Order> orders = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "customer")
+    @ToString.Exclude
     private Set<CartItem> cartItems = new LinkedHashSet<>();
-
-    public Customer(CustomerDto dto){
-        this.id = dto.getId();
-        this.name = dto.getName();
-        this.address = dto.getAddress();
-    }
 }
