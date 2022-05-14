@@ -1,26 +1,102 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
-name: Java CI with Maven
+name: Build
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches:
+      - 'telegram-bot-sprint1'
+  push:
+    branches:
+      - 'telegram-bot-sprint1'
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      packages: write
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      - uses: actions/checkout@v3
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+      - name: Maven Install Core
+        run: mvn -f core/pom.xml clean install -Dmaven.test.skip=true
+
+      - name: Maven Package Telegrambot
+        run: mvn -f telegrambot/pom.xml clean package -Dmaven.test.skip=true
+
+      - name: Maven Package Website
+        run: mvn -f website/pom.xml clean package -Dmaven.test.skip=true
+
+      - name: FTP Deploy Website
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: 62.109.17.193
+          username: teamtwo
+          password: teamtwo
+          local-dir: website/
+          server-dir: website/
+          exclude: |
+            **/maven-archiver/**
+            **/classes/**
+            **/maven-status/**
+            **/generated-sources/**
+            **/src/**
+            *.original
+            .gitignore
+            HELP.md
+            pom.xml
+
+      - name: FTP Deploy Telegrambot
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: 62.109.17.193
+          username: teamtwo
+          password: teamtwo
+          local-dir: telegrambot/
+          server-dir: telegrambot/
+          exclude: |
+            **/maven-archiver/**
+            **/classes/**
+            **/maven-status/**
+            **/generated-sources/**
+            **/src/**
+            *.original
+            .gitignore
+            HELP.md
+            pom.xml
+
+      - name: SSH Build Docker Website
+        uses: appleboy/ssh-action@master
+        with:
+          host: 62.109.17.193
+          username: teamtwo
+          password: teamtwo
+          script: docker build website -t teamtwo/website:latest
+
+      - name: SSH Build Docker Telegrambot
+        uses: appleboy/ssh-action@master
+        with:
+          host: 62.109.17.193
+          username: teamtwo
+          password: teamtwo
+          script: docker build telegrambot -t teamtwo/telegrambot:latest
+
+      - name: SSH Run Docker Website
+        uses: appleboy/ssh-action@master
+        with:
+          host: 62.109.17.193
+          username: teamtwo
+          password: teamtwo
+          script: docker run -d -p 8080:8080 --rm --name teamtwo_website teamtwo/website
+
+      - name: SSH Run Docker Telegrambot
+        uses: appleboy/ssh-action@master
+        with:
+          host: 62.109.17.193
+          username: teamtwo
+          password: teamtwo
+          script: docker run -d --rm --name teamtwo_telegrambot teamtwo/telegrambot &

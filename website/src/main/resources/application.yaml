@@ -1,7 +1,9 @@
 server:
-  port: 8081
+  port: 8080
 # JPA
 spring:
+  main:
+    banner-mode: off
   jpa:
     defer-datasource-initialization: true
     show-sql: true
@@ -20,6 +22,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/dbmarketplace2
     username: postgres
     password: admin
+    driver-class-name: org.postgresql.Driver
   sql:
     init:
       mode: always

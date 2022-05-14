@@ -1,9 +1,13 @@
-package ru.teamtwo.website.dtos;
+package ru.teamtwo.core.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import ru.teamtwo.website.model.ProductOffer;
+import lombok.NoArgsConstructor;
+import ru.teamtwo.core.models.ProductOffer;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductDTO {
     private long id;
     private String name;
@@ -23,9 +27,7 @@ public class ProductDTO {
         this.description = productOffer.getProduct().getDescription();
         this.category = productOffer.getProduct().getCategory();
         this.rating = productOffer.getProduct().getRating();
-
-        this.price = 0; //TODO: добавить в Product поле price
-
+        this.price = productOffer.getProduct().getPrice();
         this.sellerName = productOffer.getStore().getName();
         this.sellerRating = productOffer.getStore().getRating();
         this.quantity = productOffer.getQuantity();
