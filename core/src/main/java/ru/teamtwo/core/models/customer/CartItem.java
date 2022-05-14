@@ -32,10 +32,12 @@ public class CartItem {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer", nullable = false)
+    @ToString.Exclude
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product", nullable = false)
+    @ToString.Exclude
     private Product product;
 
     @Column(name = "quantity", nullable = false)
