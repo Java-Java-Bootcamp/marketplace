@@ -35,11 +35,13 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer", nullable = false)
+    @ToString.Exclude
     private Customer customer;
 
-    @Column(name = "created_on", nullable = true)
+    @Column(name = "created_on")
     private Instant createdOn;
 
     @OneToMany(mappedBy = "order")
+    @ToString.Exclude
     private Set<OrderItem> orderItems = new LinkedHashSet<>();
 }
