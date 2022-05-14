@@ -1,6 +1,5 @@
 package ru.teamtwo.telegrambot.service.customer;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.teamtwo.core.dtos.customer.CustomerDto;
@@ -15,8 +14,11 @@ import java.util.Optional;
 public class CustomerStateHandler {
 
     private Map<User, CustomerState> map = new HashMap<>();
-    @Autowired
-    private RESTHandler restHandler;
+    private final RESTHandler restHandler;
+
+    public CustomerStateHandler(RESTHandler restHandler) {
+        this.restHandler = restHandler;
+    }
 
     /**
      * Возвращает State пользователя, если нет локально, запрашивает у сервера

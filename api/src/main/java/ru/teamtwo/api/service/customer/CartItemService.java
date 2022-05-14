@@ -1,14 +1,13 @@
 package ru.teamtwo.api.service.customer;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.teamtwo.core.dtos.customer.CartItemArrayDto;
-import ru.teamtwo.core.dtos.customer.CartItemDto;
-import ru.teamtwo.core.models.customer.CartItem;
 import ru.teamtwo.api.repository.ProductRepository;
 import ru.teamtwo.api.repository.customer.CartItemRepository;
 import ru.teamtwo.api.repository.customer.CustomerRepository;
+import ru.teamtwo.core.dtos.customer.CartItemArrayDto;
+import ru.teamtwo.core.dtos.customer.CartItemDto;
+import ru.teamtwo.core.models.customer.CartItem;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,12 +15,15 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class CartItemService {
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private CustomerRepository customerRepository;
-    @Autowired
-    private CartItemRepository repository;
+    private final ProductRepository productRepository;
+    private final CustomerRepository customerRepository;
+    private final CartItemRepository repository;
+
+    public CartItemService(ProductRepository productRepository, CustomerRepository customerRepository, CartItemRepository repository) {
+        this.productRepository = productRepository;
+        this.customerRepository = customerRepository;
+        this.repository = repository;
+    }
 
     public CartItemDto getItem(Integer id){
         log.debug("get: {}", id);

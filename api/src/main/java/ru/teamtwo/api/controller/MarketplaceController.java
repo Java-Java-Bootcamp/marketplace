@@ -1,15 +1,14 @@
 package ru.teamtwo.api.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.teamtwo.core.dtos.ProductDTO;
 import ru.teamtwo.api.repository.ProductOfferRepository;
+import ru.teamtwo.core.dtos.ProductDTO;
 
 import java.util.List;
 import java.util.Locale;
@@ -19,8 +18,11 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/marketplace/api/product-offers")
 public class MarketplaceController {
-    @Autowired
-    private ProductOfferRepository repository;
+    private final ProductOfferRepository repository;
+
+    public MarketplaceController(ProductOfferRepository repository) {
+        this.repository = repository;
+    }
 
     @GetMapping("")
     public List<ProductDTO> getProductOffersByProductName(@RequestParam(value = "filter", required = true) String filter,
