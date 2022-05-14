@@ -19,9 +19,10 @@ spring:
   #    password: password
 
   datasource:
-    url: jdbc:postgresql://62.109.17.193:5432/dbmarketplace
+    url: jdbc:postgresql://localhost:5432/dbmarketplace2
     username: postgres
     password: admin
+    driver-class-name: org.postgresql.Driver
   sql:
     init:
       mode: always

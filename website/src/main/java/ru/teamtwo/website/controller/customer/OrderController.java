@@ -26,7 +26,7 @@ public class OrderController {
     @GetMapping("{id}")
     public OrderDto get(@PathVariable Integer id) {
         try {
-            return orderService.getId(id);
+            return orderService.getOrderById(id);
         }
         catch (Exception e) {
             throw new ItemNotFoundException("Can't get order " + id);
