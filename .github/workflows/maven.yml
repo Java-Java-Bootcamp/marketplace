@@ -100,4 +100,3 @@ jobs:
           username: teamtwo
           password: teamtwo
           script: docker run -d --rm --name teamtwo_telegrambot teamtwo/telegrambot &
-
