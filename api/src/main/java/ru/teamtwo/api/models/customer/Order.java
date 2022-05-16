@@ -1,4 +1,4 @@
-package ru.teamtwo.core.models.product;
+package ru.teamtwo.api.models.customer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +14,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,23 +26,22 @@ import javax.persistence.Table;
 @Setter
 @ToString
 @Entity
-@Table(name = "product_offer", schema = "marketplace")
-public class ProductOffer {
+@Table(name = "\"order\"", schema = "marketplace")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product", nullable = false)
+    @JoinColumn(name = "customerId", nullable = false)
     @ToString.Exclude
-    private Product product;
+    private Customer customer;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "store", nullable = false)
+    @Column(name = "created_on")
+    private Instant createdOn;
+
+    @OneToMany(mappedBy = "order")
     @ToString.Exclude
-    private Store store;
-
-    @Column(name = "quantity", nullable = false)
-    private Integer quantity;
+    private Set<OrderItem> orderItems = new LinkedHashSet<>();
 }

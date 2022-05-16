@@ -1,8 +1,8 @@
-package ru.teamtwo.core.mappers.customer;
+package ru.teamtwo.api.mappers.customer;
 
 import org.mapstruct.Mapper;
+import ru.teamtwo.api.models.customer.Customer;
 import ru.teamtwo.core.dtos.customer.CustomerDto;
-import ru.teamtwo.core.models.customer.Customer;
 
 @Mapper(componentModel = "spring")
 public interface CustomerMapper {

@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.teamtwo.api.repository.customer.CustomerRepository;
 import ru.teamtwo.api.service.customer.CustomerService;
 import ru.teamtwo.core.dtos.customer.CustomerDto;
-import ru.teamtwo.core.models.customer.Customer;
+import ru.teamtwo.api.models.customer.Customer;
 
 import java.util.List;
 

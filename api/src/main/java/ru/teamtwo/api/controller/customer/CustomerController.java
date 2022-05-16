@@ -14,7 +14,7 @@ import ru.teamtwo.api.exception.ItemNotFoundException;
 import ru.teamtwo.api.exception.UnableToAddItemException;
 import ru.teamtwo.api.service.customer.CustomerService;
 import ru.teamtwo.core.dtos.customer.CustomerDto;
-import ru.teamtwo.core.models.customer.Customer;
+import ru.teamtwo.api.models.customer.Customer;
 
 @Slf4j
 @RestController

@@ -14,10 +14,10 @@ import ru.teamtwo.api.repository.customer.CustomerRepository;
 import ru.teamtwo.api.service.customer.CartItemService;
 import ru.teamtwo.core.dtos.customer.CartItemArrayDto;
 import ru.teamtwo.core.dtos.customer.CartItemDto;
-import ru.teamtwo.core.models.product.Product;
-import ru.teamtwo.core.models.product.ProductOffer;
-import ru.teamtwo.core.models.product.Store;
-import ru.teamtwo.core.models.customer.Customer;
+import ru.teamtwo.api.models.product.Product;
+import ru.teamtwo.api.models.product.ProductOffer;
+import ru.teamtwo.api.models.product.Store;
+import ru.teamtwo.api.models.customer.Customer;
 
 import java.util.HashSet;
 import java.util.Set;

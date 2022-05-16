@@ -1,4 +1,4 @@
-package ru.teamtwo.core.models.product;
+package ru.teamtwo.api.models.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

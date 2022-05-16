@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.teamtwo.api.repository.customer.CustomerRepository;
 import ru.teamtwo.api.repository.customer.OrderRepository;
 import ru.teamtwo.core.dtos.customer.OrderDto;
-import ru.teamtwo.core.models.customer.Customer;
-import ru.teamtwo.core.models.customer.Order;
+import ru.teamtwo.api.models.customer.Customer;
+import ru.teamtwo.api.models.customer.Order;
 
 @Slf4j
 @Service

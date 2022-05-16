@@ -1,11 +1,10 @@
-package ru.teamtwo.core.models.customer;
+package ru.teamtwo.api.models.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ru.teamtwo.core.models.product.Product;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,22 +22,22 @@ import javax.persistence.Table;
 @Setter
 @ToString
 @Entity
-@Table(name = "cart_item", schema = "marketplace")
-public class CartItem {
+@Table(name = "product_offer", schema = "marketplace")
+public class ProductOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "customerId", nullable = false)
-    @ToString.Exclude
-    private Customer customer;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product", nullable = false)
     @ToString.Exclude
     private Product product;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "store", nullable = false)
+    @ToString.Exclude
+    private Store store;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;

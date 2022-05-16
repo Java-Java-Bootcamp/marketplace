@@ -7,7 +7,7 @@ import ru.teamtwo.api.repository.customer.CartItemRepository;
 import ru.teamtwo.api.repository.customer.CustomerRepository;
 import ru.teamtwo.core.dtos.customer.CartItemArrayDto;
 import ru.teamtwo.core.dtos.customer.CartItemDto;
-import ru.teamtwo.core.models.customer.CartItem;
+import ru.teamtwo.api.models.customer.CartItem;
 
 import java.util.Set;
 import java.util.stream.Collectors;
