@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.api.repository.ProductOfferRepository;
-import ru.teamtwo.core.dtos.ProductDto;
+import ru.teamtwo.core.dtos.product.ProductDto;
 
 import java.util.List;
 import java.util.Locale;

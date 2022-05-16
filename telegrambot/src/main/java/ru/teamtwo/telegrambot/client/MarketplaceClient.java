@@ -3,7 +3,7 @@ package ru.teamtwo.telegrambot.client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.teamtwo.core.dtos.ProductDto;
+import ru.teamtwo.core.dtos.product.ProductDto;
 
 import java.util.List;
 

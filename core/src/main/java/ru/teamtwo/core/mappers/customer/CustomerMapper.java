@@ -1,4 +1,4 @@
-package ru.teamtwo.core.mappers;
+package ru.teamtwo.core.mappers.customer;
 
 import org.mapstruct.Mapper;
 import ru.teamtwo.core.dtos.customer.CustomerDto;

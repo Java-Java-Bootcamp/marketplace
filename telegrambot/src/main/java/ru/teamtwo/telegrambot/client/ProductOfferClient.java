@@ -3,7 +3,7 @@ package ru.teamtwo.telegrambot.client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import ru.teamtwo.core.dtos.ProductDto;
+import ru.teamtwo.core.dtos.product.ProductDto;
 
 @FeignClient(url = "${telegrambot.rest.webClientUri}/marketplace/api/product_offer", name="productOffer")
 public interface ProductOfferClient {

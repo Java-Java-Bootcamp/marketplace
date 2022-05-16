@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.api.exception.ItemNotFoundException;
 import ru.teamtwo.api.repository.ProductOfferRepository;
-import ru.teamtwo.core.dtos.ProductDto;
+import ru.teamtwo.core.dtos.product.ProductDto;
 
 @Slf4j
 @RestController

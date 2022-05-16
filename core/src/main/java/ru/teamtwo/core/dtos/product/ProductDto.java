@@ -1,4 +1,4 @@
-package ru.teamtwo.core.dtos;
+package ru.teamtwo.core.dtos.product;
 
 public record ProductDto (
         Integer id,

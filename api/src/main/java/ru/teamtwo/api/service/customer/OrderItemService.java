@@ -6,7 +6,7 @@ import ru.teamtwo.api.repository.ProductOfferRepository;
 import ru.teamtwo.api.repository.customer.OrderItemRepository;
 import ru.teamtwo.api.repository.customer.OrderRepository;
 import ru.teamtwo.core.dtos.customer.OrderItemDto;
-import ru.teamtwo.core.models.ProductOffer;
+import ru.teamtwo.core.models.product.ProductOffer;
 import ru.teamtwo.core.models.customer.Order;
 import ru.teamtwo.core.models.customer.OrderItem;
 

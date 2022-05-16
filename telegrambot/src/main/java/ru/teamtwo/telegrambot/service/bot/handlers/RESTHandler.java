@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import ru.teamtwo.core.dtos.ProductDto;
+import ru.teamtwo.core.dtos.product.ProductDto;
 import ru.teamtwo.core.dtos.customer.CartItemArrayDto;
 import ru.teamtwo.core.dtos.customer.CartItemDto;
 import ru.teamtwo.core.dtos.customer.CustomerDto;

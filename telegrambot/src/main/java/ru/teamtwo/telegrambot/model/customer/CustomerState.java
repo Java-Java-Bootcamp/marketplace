@@ -3,7 +3,7 @@ package ru.teamtwo.telegrambot.model.customer;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.User;
-import ru.teamtwo.core.dtos.ProductDto;
+import ru.teamtwo.core.dtos.product.ProductDto;
 import ru.teamtwo.telegrambot.model.sorting.SortingTypeAscDesc;
 import ru.teamtwo.telegrambot.model.sorting.SortingTypeField;
 

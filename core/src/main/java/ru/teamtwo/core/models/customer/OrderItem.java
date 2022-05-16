@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ru.teamtwo.core.models.ProductOffer;
+import ru.teamtwo.core.models.product.ProductOffer;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

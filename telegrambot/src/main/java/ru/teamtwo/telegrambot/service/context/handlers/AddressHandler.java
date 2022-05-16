@@ -2,7 +2,7 @@ package ru.teamtwo.telegrambot.service.context.handlers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.teamtwo.core.dtos.ProductDto;
+import ru.teamtwo.core.dtos.product.ProductDto;
 import ru.teamtwo.telegrambot.model.customer.CustomerState;
 import ru.teamtwo.telegrambot.service.bot.handlers.RESTHandler;
 import ru.teamtwo.telegrambot.service.bot.handlers.SendMessageHandler;
