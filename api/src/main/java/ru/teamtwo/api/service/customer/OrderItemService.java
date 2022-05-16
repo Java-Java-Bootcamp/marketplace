@@ -2,13 +2,13 @@ package ru.teamtwo.api.service.customer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.teamtwo.api.repository.ProductOfferRepository;
-import ru.teamtwo.api.repository.customer.OrderItemRepository;
-import ru.teamtwo.api.repository.customer.OrderRepository;
-import ru.teamtwo.core.dtos.customer.OrderItemDto;
-import ru.teamtwo.api.models.product.ProductOffer;
 import ru.teamtwo.api.models.customer.Order;
 import ru.teamtwo.api.models.customer.OrderItem;
+import ru.teamtwo.api.models.product.ProductOffer;
+import ru.teamtwo.api.repository.customer.OrderItemRepository;
+import ru.teamtwo.api.repository.customer.OrderRepository;
+import ru.teamtwo.api.repository.product.ProductOfferRepository;
+import ru.teamtwo.core.dtos.customer.OrderItemDto;
 
 @Slf4j
 @Service

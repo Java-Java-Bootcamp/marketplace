@@ -1,4 +1,4 @@
-package ru.teamtwo.api.repository;
+package ru.teamtwo.api.repository.product;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

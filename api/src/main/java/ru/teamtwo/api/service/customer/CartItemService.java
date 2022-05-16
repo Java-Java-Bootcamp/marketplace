@@ -2,12 +2,12 @@ package ru.teamtwo.api.service.customer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.teamtwo.api.repository.ProductRepository;
+import ru.teamtwo.api.models.customer.CartItem;
 import ru.teamtwo.api.repository.customer.CartItemRepository;
 import ru.teamtwo.api.repository.customer.CustomerRepository;
+import ru.teamtwo.api.repository.product.ProductRepository;
 import ru.teamtwo.core.dtos.customer.CartItemArrayDto;
 import ru.teamtwo.core.dtos.customer.CartItemDto;
-import ru.teamtwo.api.models.customer.CartItem;
 
 import java.util.Set;
 import java.util.stream.Collectors;

@@ -1,4 +1,4 @@
-package ru.teamtwo.api.controller;
+package ru.teamtwo.api.controller.product;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.api.exception.ItemNotFoundException;
-import ru.teamtwo.api.repository.ProductOfferRepository;
+import ru.teamtwo.api.repository.product.ProductOfferRepository;
 import ru.teamtwo.core.dtos.product.ProductDto;
 
 @Slf4j
