@@ -3,7 +3,7 @@ package ru.teamtwo.telegrambot.model.customer;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.User;
-import ru.teamtwo.core.dtos.ProductDTO;
+import ru.teamtwo.core.dtos.ProductDto;
 import ru.teamtwo.telegrambot.model.sorting.SortingTypeAscDesc;
 import ru.teamtwo.telegrambot.model.sorting.SortingTypeField;
 
@@ -48,7 +48,7 @@ public class CustomerState {
     private int limit = DEFAULT_LIMIT;
     private Map<Integer, Integer> cart = new HashMap<>();
     private Integer currentProductId;
-    private List<ProductDTO> queryResult = new ArrayList<>();
+    private List<ProductDto> queryResult = new ArrayList<>();
 
     /**
      * Сбрасывает все до стандартных значений

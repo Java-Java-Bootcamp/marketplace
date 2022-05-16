@@ -2,7 +2,7 @@ package ru.teamtwo.telegrambot.service.context.handlers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.teamtwo.core.dtos.ProductDTO;
+import ru.teamtwo.core.dtos.ProductDto;
 import ru.teamtwo.telegrambot.model.customer.CustomerState;
 import ru.teamtwo.telegrambot.service.bot.handlers.RESTHandler;
 import ru.teamtwo.telegrambot.service.bot.handlers.SendMessageHandler;
@@ -30,7 +30,7 @@ public class AddressHandler implements ContextHandler {
 
         StringBuilder b = new StringBuilder("Ваш заказ добавлен\n");
         context.getCustomerState().getCart().forEach((s, integer) -> {
-            ProductDTO product = restHandler.getProductDTOById(Integer.valueOf(s));
+            ProductDto product = restHandler.getProductDTOById(Integer.valueOf(s));
             b.append(product.toString());
             b.append("\n");
         });

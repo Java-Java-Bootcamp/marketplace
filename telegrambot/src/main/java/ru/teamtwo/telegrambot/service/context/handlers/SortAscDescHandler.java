@@ -2,7 +2,7 @@ package ru.teamtwo.telegrambot.service.context.handlers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.teamtwo.core.dtos.ProductDTO;
+import ru.teamtwo.core.dtos.ProductDto;
 import ru.teamtwo.telegrambot.model.customer.CustomerState;
 import ru.teamtwo.telegrambot.model.menus.TelegramBotInlineMenus;
 import ru.teamtwo.telegrambot.model.sorting.SortingTypeAscDesc;
@@ -37,7 +37,7 @@ public class SortAscDescHandler implements ContextHandler {
         }
         if(context.getCustomerState().getSortingTypeAscDesc() == null) return;
 
-        List<ProductDTO> products = restHandler.searchProducts(
+        List<ProductDto> products = restHandler.searchProducts(
                 context.getCustomerState().getSearchQuery(),
                 context.getCustomerState().getSortingTypeField(),
                 context.getCustomerState().getSortingTypeAscDesc(),

@@ -32,7 +32,7 @@ public class CustomerController {
             return customerService.getId(id);
         }
         catch (Exception e) {
-            throw new ItemNotFoundException("Can't get customer " + id);
+            throw new ItemNotFoundException("Can't get customerId " + id);
         }
     }
 
@@ -44,7 +44,7 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.CREATED).body(customer.getId());
         }
         catch(Exception e){
-            throw new UnableToAddItemException("Unable to add customer " + dto.toString());
+            throw new UnableToAddItemException("Unable to add customerId " + dto.toString());
         }
     }
 }

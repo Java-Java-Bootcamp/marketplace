@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.api.repository.ProductOfferRepository;
-import ru.teamtwo.core.dtos.ProductDTO;
+import ru.teamtwo.core.dtos.ProductDto;
 
 import java.util.List;
 import java.util.Locale;
@@ -25,10 +25,10 @@ public class MarketplaceController {
     }
 
     @GetMapping("")
-    public List<ProductDTO> getProductOffersByProductName(@RequestParam(value = "filter", required = true) String filter,
-                                                            @RequestParam(value = "offset", defaultValue = "0") int offset,
-                                                            @RequestParam(value = "limit", defaultValue = "20") int limit,
-                                                            @RequestParam(value = "order", defaultValue = "desc_price") String order) {
+    public List<ProductDto> getProductOffersByProductName(@RequestParam(value = "filter", required = true) String filter,
+                                                          @RequestParam(value = "offset", defaultValue = "0") int offset,
+                                                          @RequestParam(value = "limit", defaultValue = "20") int limit,
+                                                          @RequestParam(value = "order", defaultValue = "desc_price") String order) {
         log.info("MarketPlaceController /product-offers @GET ({},{},{},{})",filter,offset,limit,order);
 
         Sort.Direction sortType = mapParamToDirection(order);
@@ -41,7 +41,7 @@ public class MarketplaceController {
         return repository.getProductOffersByProductName(filter, pageRequest)
                 .getContent()
                 .stream()
-                .map(ProductDTO::new)
+                .map(ProductDto::new)
                 .collect(Collectors.toList());
     }
 

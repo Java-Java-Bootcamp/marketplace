@@ -54,7 +54,7 @@ public class CartItemController {
             cartItemService.saveState(customerId, cartItems);
         }
         catch (Exception e) {
-            throw new UnableToAddItemException("Unable to save cart state for customer " + customerId);
+            throw new UnableToAddItemException("Unable to save cart state for customerId " + customerId);
         }
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import ru.teamtwo.core.dtos.ProductDTO;
+import ru.teamtwo.core.dtos.ProductDto;
 import ru.teamtwo.core.dtos.customer.CartItemArrayDto;
 import ru.teamtwo.core.dtos.customer.CartItemDto;
 import ru.teamtwo.core.dtos.customer.CustomerDto;
@@ -66,7 +66,7 @@ public class RESTHandler {
     /**
      * Запрашивает ProductDTO на сервере, не производя над ним никаких действий.
      */
-    public ProductDTO getProductDTOById(Integer id){
+    public ProductDto getProductDTOById(Integer id){
         return productOfferClient.get(id);
     }
 
@@ -123,8 +123,8 @@ public class RESTHandler {
      * @param limit Максимальное кол-во товаров в листе
      * @return Отсортированный, отфильтрованный список товаров
      */
-    public List<ProductDTO> searchProducts(String filter, SortingTypeField sortingTypeField, SortingTypeAscDesc ascDesc, int offset, int limit){
-        List<ProductDTO> productList = marketplaceClient.getProductOffersByProductName(filter, offset, limit, ascDesc+"_"+ sortingTypeField.toString().replace("_", "."));
+    public List<ProductDto> searchProducts(String filter, SortingTypeField sortingTypeField, SortingTypeAscDesc ascDesc, int offset, int limit){
+        List<ProductDto> productList = marketplaceClient.getProductOffersByProductName(filter, offset, limit, ascDesc+"_"+ sortingTypeField.toString().replace("_", "."));
 
         return productList;
     }

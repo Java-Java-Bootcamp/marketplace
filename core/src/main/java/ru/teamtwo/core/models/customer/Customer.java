@@ -20,7 +20,7 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
-@Table(name = "customer", schema = "marketplace")
+@Table(name = "customerId", schema = "marketplace")
 public class Customer {
     @Id
     @Column(name = "id", nullable = false)
