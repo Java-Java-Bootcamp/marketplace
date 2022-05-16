@@ -31,7 +31,7 @@ public class CartItem {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "customer", nullable = false)
+    @JoinColumn(name = "customerId", nullable = false)
     @ToString.Exclude
     private Customer customer;
 
