@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.teamtwo.core.dtos.customer.OrderDto;
 import ru.teamtwo.core.dtos.product.ProductDto;
-import ru.teamtwo.telegrambot.model.sorting.SortingTypeAscDesc;
-import ru.teamtwo.telegrambot.model.sorting.SortingTypeField;
+import ru.teamtwo.telegrambot.service.api.product.ProductSearchHandler;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,7 +23,7 @@ import java.util.Set;
 @Builder
 public class CustomerState {
 
-    public enum State {
+    public enum Stage {
         WAITING_FOR_SEARCH_START,
         WAITING_FOR_SEARCH_QUERY,
         WAITING_FOR_SORTING_TYPE_FIELD,
@@ -39,14 +37,14 @@ public class CustomerState {
     private String name;
     private User user;
     private String chatId;
-    private State state;
+    private Stage stage;
     private String searchQuery;
-    private SortingTypeField sortingTypeField;
-    private SortingTypeAscDesc sortingTypeAscDesc;
+    private ProductSearchHandler.SortingTypeField sortingTypeField;
+    private ProductSearchHandler.SortingTypeAscDesc sortingTypeAscDesc;
     private int offset;
     private int limit;
     private Map<Integer, Integer> cart;
     private Integer currentProductId;
-    private List<ProductDto> queryResult;
+    private Set<ProductDto> queryResult;
     private Set<OrderDto> orderDtoSet;
 }
