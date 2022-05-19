@@ -3,7 +3,7 @@ package ru.teamtwo.telegrambot.service.impl.stages.handlers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.teamtwo.telegrambot.service.api.bot.SendMessageHandler;
-import ru.teamtwo.telegrambot.service.api.context.StageHandler;
+import ru.teamtwo.telegrambot.service.api.stage.StageHandler;
 import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 
 @Component
@@ -14,11 +14,11 @@ public class UserResetHandler implements StageHandler {
 
     @Override
     public boolean shouldRun(StageContext context) {
-        return context.getMessage().equals("Сбросить пользователя");
+        return context.message().equals("Сбросить пользователя");
     }
 
     @Override
     public void execute(StageContext context) {
-        //context.getCustomerState().reset();
+        //context.customerState().reset();
     }
 }

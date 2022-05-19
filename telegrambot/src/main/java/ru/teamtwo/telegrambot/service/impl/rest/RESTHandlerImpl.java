@@ -12,6 +12,7 @@ import ru.teamtwo.core.dtos.product.ProductDto;
 import ru.teamtwo.telegrambot.model.customer.CustomerState;
 import ru.teamtwo.telegrambot.service.api.product.ProductSearchHandler;
 import ru.teamtwo.telegrambot.service.api.rest.RESTHandler;
+import ru.teamtwo.telegrambot.service.api.stage.Stage;
 import ru.teamtwo.telegrambot.service.impl.rest.clients.MarketplaceClient;
 import ru.teamtwo.telegrambot.service.impl.rest.clients.customer.CartItemClient;
 import ru.teamtwo.telegrambot.service.impl.rest.clients.customer.CustomerClient;
@@ -53,7 +54,7 @@ public class RESTHandlerImpl implements RESTHandler {
         CustomerState customerState = CustomerState.builder()
                 .address(customerDto.address())
                 .chatId(customerDto.chatId())
-                .stage(CustomerState.Stage.valueOf(customerDto.state()))
+                .stage(Stage.valueOf(customerDto.state()))
                 .searchQuery(customerDto.searchQuery())
                 .sortingTypeField(ProductSearchHandler.SortingTypeField.valueOf(customerDto.sortingTypeField()))
                 .sortingTypeAscDesc(ProductSearchHandler.SortingTypeAscDesc.valueOf(customerDto.sortingTypeAscDesc()))

@@ -10,6 +10,7 @@ import ru.teamtwo.core.dtos.product.ProductDto;
 import ru.teamtwo.telegrambot.model.customer.CustomerState;
 import ru.teamtwo.telegrambot.service.api.product.ProductSearchHandler;
 import ru.teamtwo.telegrambot.service.api.rest.RESTHandler;
+import ru.teamtwo.telegrambot.service.api.stage.Stage;
 import ru.teamtwo.telegrambot.service.impl.rest.RESTHandlerImpl;
 import ru.teamtwo.telegrambot.service.impl.rest.clients.customer.CustomerClient;
 import ru.teamtwo.telegrambot.service.impl.rest.clients.product.ProductOfferClient;
@@ -46,7 +47,7 @@ class RESTHandlerImplTest {
                 .address("Address")
                 .user(user)
                 .chatId("12345")
-                .stage(CustomerState.Stage.WAITING_FOR_QUANTITY)
+                .stage(Stage.WAITING_FOR_QUANTITY)
                 .searchQuery("Search query")
                 .sortingTypeField(PRODUCT_RATING)
                 .sortingTypeAscDesc(ASC)

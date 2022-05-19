@@ -3,11 +3,11 @@ package ru.teamtwo.telegrambot.service.impl.stages.handlers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.teamtwo.telegrambot.model.bot.menus.TelegramBotMenus;
-import ru.teamtwo.telegrambot.model.customer.CustomerState;
 import ru.teamtwo.telegrambot.service.api.bot.SendMessageHandler;
-import ru.teamtwo.telegrambot.service.api.context.StageHandler;
 import ru.teamtwo.telegrambot.service.api.customer.CustomerStateHandler;
 import ru.teamtwo.telegrambot.service.api.product.ProductSearchHandler;
+import ru.teamtwo.telegrambot.service.api.stage.Stage;
+import ru.teamtwo.telegrambot.service.api.stage.StageHandler;
 import ru.teamtwo.telegrambot.service.impl.rest.RESTHandlerImpl;
 import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 
@@ -21,19 +21,19 @@ public class SortFieldHandler implements StageHandler {
 
     @Override
     public boolean shouldRun(StageContext context) {
-        return context.getCustomerState().getStage()== CustomerState.Stage.WAITING_FOR_SORTING_TYPE_FIELD;
+        return context.customerState().getStage() == Stage.WAITING_FOR_SORTING_TYPE_FIELD;
     }
 
     @Override
     public void execute(StageContext context) {
-        for(ProductSearchHandler.SortingTypeField type : ProductSearchHandler.SortingTypeField.values()){
-            if(type.inputName.equals(context.getMessage())){
-                context.getCustomerState().setSortingTypeField(type);
+        for (ProductSearchHandler.SortingTypeField type : ProductSearchHandler.SortingTypeField.values()) {
+            if (type.inputName.equals(context.message())) {
+                context.customerState().setSortingTypeField(type);
             }
         }
-        if(context.getCustomerState().getSortingTypeField() == null) return;
+        if (context.customerState().getSortingTypeField() == null) return;
 
-        sendMessageHandler.sendMessage( context.getChatId(), "По убыванию/возрастанию?", TelegramBotMenus.getSortByAscDescOffsetKeyboard());
-        context.getCustomerState().setStage(CustomerState.Stage.WAITING_FOR_SORTING_TYPE_ASCDESC);
+        sendMessageHandler.sendMessage(context.chatId(), "По убыванию/возрастанию?", TelegramBotMenus.getSortByAscDescOffsetKeyboard());
+        context.customerState().setStage(Stage.WAITING_FOR_SORTING_TYPE_ASCDESC);
     }
 }

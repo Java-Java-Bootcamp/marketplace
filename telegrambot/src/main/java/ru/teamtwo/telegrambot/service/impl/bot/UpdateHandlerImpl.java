@@ -8,8 +8,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.teamtwo.telegrambot.model.customer.CustomerState;
 import ru.teamtwo.telegrambot.service.api.bot.UpdateHandler;
-import ru.teamtwo.telegrambot.service.api.context.StageHandler;
 import ru.teamtwo.telegrambot.service.api.customer.CustomerStateHandler;
+import ru.teamtwo.telegrambot.service.api.stage.StageHandler;
 import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 
 import java.util.Arrays;
