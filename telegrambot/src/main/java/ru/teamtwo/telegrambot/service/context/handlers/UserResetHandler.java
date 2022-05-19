@@ -19,6 +19,6 @@ public class UserResetHandler implements ContextHandler {
 
     @Override
     public void execute(ProcessingContext context) {
-        context.getCustomerState().reset();
+        //context.getCustomerState().reset();
     }
 }

@@ -21,9 +21,9 @@ public interface CartItemClient {
 
     @ResponseBody
     @PostMapping("save_cart_state/{customerId}")
-    ResponseEntity<?> saveCartState(@PathVariable Integer customerId, @RequestBody CartItemArrayDto cartItems);
+    ResponseEntity<?> saveCartState(@PathVariable Long customerId, @RequestBody CartItemArrayDto cartItems);
 
     @ResponseBody
     @GetMapping("get_cart_state/{customerId}")
-    ResponseEntity<CartItemArrayDto> getCartState(@PathVariable Integer customerId);
+    ResponseEntity<CartItemArrayDto> getCartState(@PathVariable Long customerId);
 }

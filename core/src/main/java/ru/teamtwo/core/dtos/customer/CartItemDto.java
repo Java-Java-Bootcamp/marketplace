@@ -2,7 +2,7 @@ package ru.teamtwo.core.dtos.customer;
 
 public record CartItemDto(
     Integer id,
-    Integer customerId,
+    Long customerId,
     Integer productId,
     Integer quantity
 ){}

@@ -17,6 +17,7 @@ public class AddHandler implements ContextHandler {
     final SendMessageHandler sendMessageHandler;
     final CustomerStateHandler customerStateHandler;
 
+
     @Override
     public boolean shouldRun(ProcessingContext context) {
         return context.getCustomerState().getState() == CustomerState.State.WAITING_FOR_ADD_OR_FINISH
@@ -30,7 +31,7 @@ public class AddHandler implements ContextHandler {
             context.getCustomerState().setState(CustomerState.State.WAITING_FOR_QUANTITY);
 
             sendMessageHandler.sendMessage(context.getChatId(), "Введите количество");
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("AddHandler error: {}", e.getMessage());
         }
     }

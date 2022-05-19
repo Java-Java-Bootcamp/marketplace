@@ -12,7 +12,7 @@ import ru.teamtwo.core.dtos.customer.CustomerDto;
 @FeignClient(url = "${telegrambot.rest.webClientUri}/marketplace/api/customer", name="customerId")
 public interface CustomerClient {
     @GetMapping("{id}")
-    CustomerDto get(@PathVariable Integer id);;
+    CustomerDto get(@PathVariable Long id);
 
     @ResponseBody
     @PostMapping("")

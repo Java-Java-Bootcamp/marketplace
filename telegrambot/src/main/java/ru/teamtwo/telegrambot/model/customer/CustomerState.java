@@ -1,19 +1,18 @@
 package ru.teamtwo.telegrambot.model.customer;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.User;
+import ru.teamtwo.core.dtos.customer.OrderDto;
 import ru.teamtwo.core.dtos.product.ProductDto;
 import ru.teamtwo.telegrambot.model.sorting.SortingTypeAscDesc;
 import ru.teamtwo.telegrambot.model.sorting.SortingTypeField;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static ru.teamtwo.telegrambot.model.sorting.SortingTypeAscDesc.ASC;
-import static ru.teamtwo.telegrambot.model.sorting.SortingTypeField.PRODUCT_RATING;
+import java.util.Set;
 
 /**
  * Хранит в себе информацию о состоянии
@@ -21,13 +20,12 @@ import static ru.teamtwo.telegrambot.model.sorting.SortingTypeField.PRODUCT_RATI
  * он находится и т.д.
  */
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class CustomerState {
 
-    private int DEFAULT_OFFSET=0;
-    private int DEFAULT_LIMIT=5;
-
-    public enum State{
+    public enum State {
         WAITING_FOR_SEARCH_START,
         WAITING_FOR_SEARCH_QUERY,
         WAITING_FOR_SORTING_TYPE_FIELD,
@@ -37,30 +35,18 @@ public class CustomerState {
         WAITING_FOR_ADDRESS
     }
 
-    private String address = "";
+    private String address;
+    private String name;
     private User user;
-    private String chatId = "";
-    private State state = State.WAITING_FOR_SEARCH_START;
-    private String searchQuery = "";
-    private SortingTypeField sortingTypeField = PRODUCT_RATING;
-    private SortingTypeAscDesc sortingTypeAscDesc = ASC;
-    private int offset = DEFAULT_OFFSET;
-    private int limit = DEFAULT_LIMIT;
-    private Map<Integer, Integer> cart = new HashMap<>();
+    private String chatId;
+    private State state;
+    private String searchQuery;
+    private SortingTypeField sortingTypeField;
+    private SortingTypeAscDesc sortingTypeAscDesc;
+    private int offset;
+    private int limit;
+    private Map<Integer, Integer> cart;
     private Integer currentProductId;
-    private List<ProductDto> queryResult = new ArrayList<>();
-
-    /**
-     * Сбрасывает все до стандартных значений
-     */
-    public void reset(){
-        this.setState(State.WAITING_FOR_SEARCH_START);
-        this.setSearchQuery("");
-        this.getCart().clear();
-        this.setOffset(DEFAULT_OFFSET);
-        this.setLimit(DEFAULT_LIMIT);
-        this.setCurrentProductId(null);
-        this.getQueryResult().clear();
-        this.setAddress("");
-    }
+    private List<ProductDto> queryResult;
+    private Set<OrderDto> orderDtoSet;
 }

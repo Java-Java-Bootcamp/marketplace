@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.teamtwo.telegrambot.configuration.TelegramBotMenus;
 import ru.teamtwo.telegrambot.model.customer.CustomerState;
 import ru.teamtwo.telegrambot.model.sorting.SortingTypeField;
-import ru.teamtwo.telegrambot.service.bot.handlers.RESTHandler;
+import ru.teamtwo.telegrambot.service.bot.handlers.RESTHandlerImpl;
 import ru.teamtwo.telegrambot.service.bot.handlers.SendMessageHandler;
 import ru.teamtwo.telegrambot.service.context.ContextHandler;
 import ru.teamtwo.telegrambot.service.context.ProcessingContext;
@@ -17,7 +17,7 @@ public class SortFieldHandler implements ContextHandler {
 
     final CustomerStateHandler customerStateHandler;
     final SendMessageHandler sendMessageHandler;
-    final RESTHandler restHandler;
+    final RESTHandlerImpl restHandlerImpl;
 
     @Override
     public boolean shouldRun(ProcessingContext context) {

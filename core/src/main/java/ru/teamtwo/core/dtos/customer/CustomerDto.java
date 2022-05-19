@@ -1,7 +1,15 @@
 package ru.teamtwo.core.dtos.customer;
 
 public record CustomerDto(
-    Integer id,
+    Long userId,
     String name,
-    String address
+    String address,
+    String chatId,
+    String state,
+    String searchQuery,
+    String sortingTypeField,
+    String sortingTypeAscDesc,
+    Integer offset,
+    Integer limit,
+    Integer currentProductId
 ){}

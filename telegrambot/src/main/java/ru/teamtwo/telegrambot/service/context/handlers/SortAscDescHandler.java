@@ -6,6 +6,7 @@ import ru.teamtwo.core.dtos.product.ProductDto;
 import ru.teamtwo.telegrambot.model.customer.CustomerState;
 import ru.teamtwo.telegrambot.model.menus.TelegramBotInlineMenus;
 import ru.teamtwo.telegrambot.model.sorting.SortingTypeAscDesc;
+import ru.teamtwo.telegrambot.service.bot.handlers.ProductQuery;
 import ru.teamtwo.telegrambot.service.bot.handlers.RESTHandler;
 import ru.teamtwo.telegrambot.service.bot.handlers.SendMessageHandler;
 import ru.teamtwo.telegrambot.service.context.ContextHandler;
@@ -37,15 +38,18 @@ public class SortAscDescHandler implements ContextHandler {
         }
         if(context.getCustomerState().getSortingTypeAscDesc() == null) return;
 
-        List<ProductDto> products = restHandler.searchProducts(
+        ProductQuery productQuery = new ProductQuery(
                 context.getCustomerState().getSearchQuery(),
                 context.getCustomerState().getSortingTypeField(),
                 context.getCustomerState().getSortingTypeAscDesc(),
                 context.getCustomerState().getOffset(),
-                context.getCustomerState().getLimit());
+                context.getCustomerState().getLimit()
+        );
+
+        List<ProductDto> products = restHandler.queryProducts(productQuery);
 
         products.forEach(productDTO -> {
-            sendMessageHandler.sendMessage(context.getChatId(), productDTO.toString(), inlineMenus.createAddButton(String.valueOf(productDTO.getId())));
+            sendMessageHandler.sendMessage(context.getChatId(), productDTO.toString(), inlineMenus.createAddButton(String.valueOf(productDTO.id())));
         });
 
         context.getCustomerState().setState(CustomerState.State.WAITING_FOR_ADD_OR_FINISH);
