@@ -5,25 +5,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.teamtwo.core.dtos.customer.CartItemArrayDto;
+import ru.teamtwo.core.dtos.controller.customer.CartItemController;
 import ru.teamtwo.core.dtos.customer.CartItemDto;
 
-@FeignClient(url = "${telegrambot.rest.webClientUri}/marketplace/api/cart_item", name="cartItem")
-public interface CartItemClient {
-    @GetMapping("{id}")
-    CartItemDto get(@PathVariable Integer id);
+import java.util.Set;
 
+@FeignClient(url = "${telegrambot.rest.webClientUri}/marketplace/api/cart_item", name="cartItem")
+public interface CartItemClient extends CartItemController {
+    @Override
+    @GetMapping("{id}")
+    ResponseEntity<CartItemDto> get(@PathVariable Long id);
+
+    @Override
     @ResponseBody
     @PostMapping("")
-    ResponseEntity<?> post(CartItemDto dto);
+    ResponseEntity<Integer> save(CartItemDto dto);
 
+    @Override
     @ResponseBody
-    @PostMapping("save_cart_state/{customerId}")
-    ResponseEntity<?> saveCartState(@PathVariable Long customerId, @RequestBody CartItemArrayDto cartItems);
+    @PostMapping("byCustomer/{customerId}")
+    ResponseEntity<Set<CartItemDto>> getAllByCustomer(@PathVariable Long customerId);
 
+    @Override
     @ResponseBody
-    @GetMapping("get_cart_state/{customerId}")
-    ResponseEntity<CartItemArrayDto> getCartState(@PathVariable Long customerId);
+    @GetMapping("byCustomer/{customerId}")
+    ResponseEntity<Set<Integer>> saveAllByCustomer(@PathVariable Long customerId, Set<CartItemDto> objects);
 }

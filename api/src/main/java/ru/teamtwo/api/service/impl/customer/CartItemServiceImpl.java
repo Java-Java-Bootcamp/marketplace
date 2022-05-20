@@ -1,11 +1,15 @@
-package ru.teamtwo.api.service.customer;
+package ru.teamtwo.api.service.impl.customer;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
+import ru.teamtwo.api.mappers.customer.CartItemMapper;
 import ru.teamtwo.api.models.customer.CartItem;
 import ru.teamtwo.api.repository.customer.CartItemRepository;
 import ru.teamtwo.api.repository.customer.CustomerRepository;
 import ru.teamtwo.api.repository.product.ProductRepository;
+import ru.teamtwo.api.service.api.customer.CartItemService;
 import ru.teamtwo.core.dtos.customer.CartItemArrayDto;
 import ru.teamtwo.core.dtos.customer.CartItemDto;
 
@@ -14,23 +18,38 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class CartItemService {
+@RequiredArgsConstructor
+public class CartItemServiceImpl implements CartItemService {
     private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
     private final CartItemRepository repository;
 
-    public CartItemService(ProductRepository productRepository, CustomerRepository customerRepository, CartItemRepository repository) {
-        this.productRepository = productRepository;
-        this.customerRepository = customerRepository;
-        this.repository = repository;
+    @Override
+    public CartItemDto get(Long id) {
+        CartItemMapper mapper = Mappers.getMapper(CartItemMapper.class);
+        CartItemDto cartItemDto = mapper.convert(repository.getById(id));
+        return cartItemDto;
     }
 
-    public CartItemDto getItem(Integer id){
-        log.debug("get: {}", id);
-        return new CartItemDto(repository.getById(id));
+    @Override
+    public Integer save(CartItemDto dto) {
+        return null;
     }
 
-    public void saveState(Integer customerId, CartItemArrayDto cartItems) {
+    @Override
+    public Set<CartItemDto> getAllByCustomer(Long customerId) {
+        log.debug("getCartState: {}", customerId);
+        Set<CartItem> cartItems = repository.getCartItemsByCustomer_Id(customerId);
+        CartItemArrayDto cartItemArrayDto = new CartItemArrayDto();
+        cartItemArrayDto.setCartItemDtoList(cartItems
+                .stream()
+                .map(CartItemDto::new)
+                .collect(Collectors.toSet()));
+        return cartItemArrayDto;
+    }
+
+    @Override
+    public Set<Integer> saveAllByCustomer(Long customerId, Set<CartItemDto> objects) {
         log.debug("saveCartState: {}, {}", customerId, cartItems.toString());
         Set<CartItem> cartItems1 = cartItems
                 .getCartItemDtoList()
@@ -45,16 +64,5 @@ public class CartItemService {
                 })
                 .collect(Collectors.toSet());
         repository.saveAll(cartItems1);
-    }
-
-    public CartItemArrayDto getState(Integer customerId) {
-        log.debug("getCartState: {}", customerId);
-        Set<CartItem> cartItems = repository.getCartItemsByCustomer_Id(customerId);
-        CartItemArrayDto cartItemArrayDto = new CartItemArrayDto();
-        cartItemArrayDto.setCartItemDtoList(cartItems
-                .stream()
-                .map(CartItemDto::new)
-                .collect(Collectors.toSet()));
-        return cartItemArrayDto;
     }
 }

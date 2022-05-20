@@ -15,7 +15,7 @@ import ru.teamtwo.api.repository.customer.CustomerRepository;
 import ru.teamtwo.api.repository.product.ProductOfferRepository;
 import ru.teamtwo.api.repository.product.ProductRepository;
 import ru.teamtwo.api.repository.product.StoreRepository;
-import ru.teamtwo.api.service.customer.CartItemService;
+import ru.teamtwo.api.service.impl.customer.CartItemService;
 import ru.teamtwo.core.dtos.customer.CartItemArrayDto;
 import ru.teamtwo.core.dtos.customer.CartItemDto;
 

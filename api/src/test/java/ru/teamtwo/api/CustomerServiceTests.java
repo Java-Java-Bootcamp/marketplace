@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.transaction.annotation.Transactional;
-import ru.teamtwo.api.repository.customer.CustomerRepository;
-import ru.teamtwo.api.service.customer.CustomerService;
-import ru.teamtwo.core.dtos.customer.CustomerDto;
 import ru.teamtwo.api.models.customer.Customer;
+import ru.teamtwo.api.repository.customer.CustomerRepository;
+import ru.teamtwo.api.service.impl.customer.CustomerService;
+import ru.teamtwo.core.dtos.customer.CustomerDto;
 
 import java.util.List;
 

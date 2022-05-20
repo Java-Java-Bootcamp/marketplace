@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import ru.teamtwo.api.models.customer.Order;
 import ru.teamtwo.api.repository.customer.OrderRepository;
-import ru.teamtwo.api.service.customer.OrderService;
+import ru.teamtwo.api.service.impl.customer.OrderService;
 import ru.teamtwo.core.dtos.customer.CustomerDto;
 import ru.teamtwo.core.dtos.customer.OrderDto;
-import ru.teamtwo.api.models.customer.Order;
 
 import java.util.List;
 

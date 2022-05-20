@@ -2,28 +2,28 @@ package ru.teamtwo.telegrambot.service.impl.rest;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import ru.teamtwo.core.dtos.customer.CartItemArrayDto;
 import ru.teamtwo.core.dtos.customer.CartItemDto;
 import ru.teamtwo.core.dtos.customer.CustomerDto;
 import ru.teamtwo.core.dtos.customer.OrderDto;
+import ru.teamtwo.core.dtos.customer.OrderItemDto;
 import ru.teamtwo.core.dtos.product.ProductDto;
+import ru.teamtwo.telegrambot.model.customer.CustomerOrder;
 import ru.teamtwo.telegrambot.model.customer.CustomerState;
 import ru.teamtwo.telegrambot.service.api.product.ProductSearchHandler;
 import ru.teamtwo.telegrambot.service.api.rest.RESTHandler;
+import ru.teamtwo.telegrambot.service.api.rest.RESTHandlerException;
 import ru.teamtwo.telegrambot.service.api.stage.Stage;
-import ru.teamtwo.telegrambot.service.impl.rest.clients.MarketplaceClient;
 import ru.teamtwo.telegrambot.service.impl.rest.clients.customer.CartItemClient;
 import ru.teamtwo.telegrambot.service.impl.rest.clients.customer.CustomerClient;
 import ru.teamtwo.telegrambot.service.impl.rest.clients.customer.OrderClient;
 import ru.teamtwo.telegrambot.service.impl.rest.clients.customer.OrderItemClient;
 import ru.teamtwo.telegrambot.service.impl.rest.clients.product.ProductOfferClient;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 @Component
@@ -32,22 +32,29 @@ import java.util.Set;
 public class RESTHandlerImpl implements RESTHandler {
     private final CartItemClient cartItemClient;
     private final CustomerClient customerClient;
-    private final MarketplaceClient marketplaceClient;
     private final OrderClient orderClient;
     private final OrderItemClient orderItemClient;
     private final ProductOfferClient productOfferClient;
 
-    @Override
-    public CustomerState getCustomerState(Long userId) {
-        CustomerDto customerDto = customerClient.get(userId);
 
-        Map<Integer, Integer> cart = new HashMap<>();
-        (Objects.requireNonNull(cartItemClient.getCartState(userId)
-                .getBody()))
-                .cartItemDtoList()
-                .forEach(item -> {
-                    cart.put(item.productId(), item.quantity());
-                });
+
+    private <T> T fromResponseEntity(ResponseEntity<T> responseEntity) throws RESTHandlerException {
+        HttpStatus responseEntityStatusCode = responseEntity.getStatusCode();
+        if(responseEntityStatusCode != HttpStatus.OK){
+            throw new RESTHandlerException();
+        }
+    }
+
+    @Override
+    public CustomerState getCustomerState(Long userId) throws RESTHandlerException {
+        CustomerDto customerDto = fromResponseEntity(customerClient.get(userId));
+        Set<CartItemDto> cartItemsByCustomer = fromResponseEntity(cartItemClient.getAllByCustomer(userId));
+        Set<OrderDto> ordersByCustomer = fromResponseEntity(orderClient.getAllByCustomer(userId));
+        Set<CustomerOrder> customerOrders = new HashSet<>();
+        for (OrderDto orderDto : ordersByCustomer) {
+            Set<OrderItemDto> orderItemByOrder = fromResponseEntity(orderItemClient.getAllByOrder(orderDto.id()));
+            customerOrders.add(new CustomerOrder(orderDto, orderItemByOrder));
+        }
 
         Set<OrderDto> orderDtoSet = new HashSet<>();
 
@@ -60,7 +67,7 @@ public class RESTHandlerImpl implements RESTHandler {
                 .sortingTypeAscDesc(ProductSearchHandler.SortingTypeAscDesc.valueOf(customerDto.sortingTypeAscDesc()))
                 .offset(customerDto.offset())
                 .limit(customerDto.limit())
-                .cart(cart)
+                .cart(cartItemsByCustomer)
                 .currentProductId(customerDto.currentProductId())
                 .build();
 
@@ -96,18 +103,18 @@ public class RESTHandlerImpl implements RESTHandler {
             cartItemArrayDto.cartItemDtoList().add(dto);
         });
         customerState.getOrderDtoSet().forEach(orderDto -> {
-            orderClient.post(orderDto);
+            orderClient.save(orderDto);
         });
 
 
         ResponseEntity<?> responseEntity = cartItemClient.saveCartState(customerState.getUser().getId(), cartItemArrayDto);
 
-        String status = customerClient.post(customerDto).getBody().toString();
+        String status = customerClient.save(customerDto).getBody().toString();
     }
 
     @Override
     public Set<ProductDto> queryProducts(ProductSearchHandler.ProductQuery productQuery) {
-        Set<ProductDto> productList = marketplaceClient.getProductOffersByProductName(
+        Set<ProductDto> productList = productOfferClient.get(
                 productQuery.query(),
                 productQuery.offset(),
                 productQuery.limit(),

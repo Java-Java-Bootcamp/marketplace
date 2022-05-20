@@ -1,5 +1,6 @@
 package ru.teamtwo.api.controller.customer;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,22 +13,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.api.exception.ItemNotFoundException;
 import ru.teamtwo.api.exception.UnableToAddItemException;
-import ru.teamtwo.api.service.customer.CustomerService;
-import ru.teamtwo.core.dtos.customer.CustomerDto;
 import ru.teamtwo.api.models.customer.Customer;
+import ru.teamtwo.api.service.api.customer.CustomerService;
+import ru.teamtwo.core.dtos.controller.customer.CustomerController;
+import ru.teamtwo.core.dtos.customer.CustomerDto;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/marketplace/api/customer")
-public class CustomerController {
-    final CustomerService customerService;
+public class CustomerControllerImpl implements CustomerController {
+    private final CustomerService customerService;
 
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
+    @Override
     @GetMapping("{id}")
-    public CustomerDto get(@PathVariable Integer id) {
+    public ResponseEntity<CustomerDto> get(@PathVariable Long id) {
         try {
             return customerService.getId(id);
         }
@@ -36,9 +36,10 @@ public class CustomerController {
         }
     }
 
+    @Override
     @ResponseBody
     @PostMapping("")
-    public ResponseEntity<?> post(@RequestBody CustomerDto dto){
+    public ResponseEntity<Integer> save(@RequestBody CustomerDto dto){
         try {
             Customer customer = customerService.addCustomer(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(customer.getId());

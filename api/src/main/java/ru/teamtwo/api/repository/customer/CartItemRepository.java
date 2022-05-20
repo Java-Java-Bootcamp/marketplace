@@ -5,6 +5,6 @@ import ru.teamtwo.api.models.customer.CartItem;
 
 import java.util.Set;
 
-public interface CartItemRepository  extends JpaRepository<CartItem, Integer> {
-    Set<CartItem> getCartItemsByCustomer_Id(Integer customer_id);
+public interface CartItemRepository  extends JpaRepository<CartItem, Long> {
+    Set<CartItem> getCartItemsByCustomer_Id(Long customer_id);
 }

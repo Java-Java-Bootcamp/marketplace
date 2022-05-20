@@ -73,7 +73,7 @@ class RESTHandlerImplTest {
     void saveCustomerState() {
         restHandler.saveCustomerState(filledCustomerState);
 
-        Mockito.verify(customerClient, Mockito.times(1)).post();
+        Mockito.verify(customerClient, Mockito.times(1)).save();
     }
 
     @Test
@@ -82,6 +82,6 @@ class RESTHandlerImplTest {
 
         Set<ProductDto> productQueryResult = restHandler.queryProducts(productQuery);
 
-        Mockito.verify(customerClient, Mockito.times(1)).post();
+        Mockito.verify(customerClient, Mockito.times(1)).save();
     }
 }

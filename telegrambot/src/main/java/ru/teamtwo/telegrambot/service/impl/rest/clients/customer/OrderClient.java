@@ -5,16 +5,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import ru.teamtwo.core.dtos.controller.customer.OrderController;
 import ru.teamtwo.core.dtos.customer.OrderDto;
 
-@FeignClient(url = "${telegrambot.rest.webClientUri}/marketplace/api/order", name="order")
-public interface OrderClient {
-    @GetMapping("{id}")
-    OrderDto get(@PathVariable Integer id);
+import java.util.Set;
 
+@FeignClient(url = "${telegrambot.rest.webClientUri}/marketplace/api/order", name="order")
+public interface OrderClient extends OrderController {
+    @Override
+    @GetMapping("{id}")
+    ResponseEntity<OrderDto> get(@PathVariable Long id);
+
+    @Override
     @ResponseBody
     @PostMapping("")
-    ResponseEntity<Integer> post(@RequestBody OrderDto dto);
+    ResponseEntity<Integer> save(OrderDto dto);
+
+    @Override
+    @ResponseBody
+    @PostMapping("byCustomer/{customerId}")
+    ResponseEntity<Set<OrderDto>> getAllByCustomer(@PathVariable Long customerId);
+
+    @Override
+    @ResponseBody
+    @GetMapping("byCustomer/{customerId}")
+    ResponseEntity<Set<Integer>> saveAllByCustomer(@PathVariable Long customerId, Set<OrderDto> objects);
 }
