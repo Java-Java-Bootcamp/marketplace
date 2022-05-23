@@ -52,7 +52,7 @@ public class LoggingAspect {
         stringBuilder.append(method.getName());
         if(!method.getReturnType().equals(Void.TYPE)){
             stringBuilder.append("=");
-            stringBuilder.append(returnValue!=null?returnValue.toString():"null");
+            stringBuilder.append(returnValue.toString());
         }
 
         log.trace(stringBuilder.toString());

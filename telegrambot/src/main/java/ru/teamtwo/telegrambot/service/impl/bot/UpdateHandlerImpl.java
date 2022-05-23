@@ -6,12 +6,15 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
+import ru.teamtwo.telegrambot.logging.LoggingUtils;
 import ru.teamtwo.telegrambot.model.customer.CustomerState;
 import ru.teamtwo.telegrambot.service.api.bot.UpdateHandler;
 import ru.teamtwo.telegrambot.service.api.customer.CustomerStateHandler;
+import ru.teamtwo.telegrambot.service.api.rest.RESTHandlerException;
 import ru.teamtwo.telegrambot.service.api.stage.StageHandler;
 import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 
+import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +22,7 @@ import java.util.Map;
 
 
 @Component
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor=@__(@Inject))
 @Slf4j
 public class UpdateHandlerImpl implements UpdateHandler {
     final CustomerStateHandler customerStateHandler;
@@ -33,11 +36,12 @@ public class UpdateHandlerImpl implements UpdateHandler {
         return update.hasCallbackQuery() && !update.getCallbackQuery().getData().isEmpty();
     }
 
-    private void handleTextMessage(Update update){
+    private void handleTextMessage(Update update) throws RESTHandlerException {
         String message = update.getMessage().getText();
         String chatId = String.valueOf(update.getMessage().getChatId());
         User user = update.getMessage().getFrom();
-        CustomerState customerState = customerStateHandler.get(user);
+        CustomerState customerState = null;
+        customerState = customerStateHandler.get(user);
         customerState.setChatId(chatId);
 
         StageContext context = new StageContext(
@@ -60,7 +64,7 @@ public class UpdateHandlerImpl implements UpdateHandler {
         customerStateHandler.save(customerState);
     }
 
-    private void handleCallbackQuery(Update update){
+    private void handleCallbackQuery(Update update) throws RESTHandlerException {
         CallbackQuery callbackQuery = update.getCallbackQuery();
         String data = callbackQuery.getData();
         User user = callbackQuery.getFrom();
@@ -96,10 +100,14 @@ public class UpdateHandlerImpl implements UpdateHandler {
     }
 
     public void handle(Update update) {
-        if (isTextMessage(update)) {
-            handleTextMessage(update);
-        }else if(isCallbackQuery(update)){
-            handleCallbackQuery(update);
+        try {
+            if (isTextMessage(update)) {
+                handleTextMessage(update);
+            } else if (isCallbackQuery(update)) {
+                handleCallbackQuery(update);
+            }
+        } catch (Exception e){
+            LoggingUtils.logException(log, e);
         }
     }
 }

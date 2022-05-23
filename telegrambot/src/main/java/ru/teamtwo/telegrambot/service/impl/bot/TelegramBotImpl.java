@@ -1,19 +1,18 @@
 package ru.teamtwo.telegrambot.service.impl.bot;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.teamtwo.telegrambot.service.api.bot.UpdateHandler;
 
+import javax.inject.Inject;
+
 
 @Component
-public class TelegramBot extends TelegramLongPollingBot implements ru.teamtwo.telegrambot.service.api.bot.TelegramBot {
-
-    final UpdateHandler updateHandler;
-
-    public TelegramBot(UpdateHandler updateHandler) {
-        this.updateHandler = updateHandler;
-    }
+@RequiredArgsConstructor(onConstructor=@__(@Inject))
+public class TelegramBotImpl extends TelegramLongPollingBot {
+    private final UpdateHandler updateHandler;
 
     @Override
     public String getBotUsername() {

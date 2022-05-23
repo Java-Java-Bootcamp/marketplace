@@ -30,7 +30,7 @@ public class AddButtonPressedHandler implements StageHandler {
             context.customerState().setCurrentProductId(Integer.valueOf(context.dataCallbackArgs().get(TelegramBotInlineMenus.CALLBACK_ORDER_ID_PARAM)));
             context.customerState().setStage(Stage.WAITING_FOR_QUANTITY);
 
-            sendMessageHandler.sendMessage(context.chatId(), "Введите количество");
+            sendMessageHandler.sendMessageDeleteKeyboard(context.chatId(), "Введите количество");
         } catch (Exception e) {
             log.error("AddHandler error: {}", e.getMessage());
         }

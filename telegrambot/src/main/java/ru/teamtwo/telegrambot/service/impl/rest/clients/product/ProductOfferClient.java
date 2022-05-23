@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ru.teamtwo.core.dtos.controller.product.ProductOfferController;
 import ru.teamtwo.core.dtos.product.ProductOfferDto;
 
+import java.util.Set;
+
 @FeignClient(url = "${telegrambot.rest.webClientUri}/marketplace/api/product_offer", name="productOffer")
 public interface ProductOfferClient extends ProductOfferController {
     @Override
@@ -19,4 +21,8 @@ public interface ProductOfferClient extends ProductOfferController {
     @ResponseBody
     @PostMapping("")
     ResponseEntity<Integer> save(ProductOfferDto dto);
+
+    @Override
+    @GetMapping("{id}")
+    ResponseEntity<Set<ProductOfferDto>> query(ProductQuery productQuery);
 }

@@ -5,12 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.User;
-import ru.teamtwo.core.dtos.customer.OrderDto;
+import ru.teamtwo.core.dtos.controller.product.ProductOfferController;
+import ru.teamtwo.core.dtos.customer.CartItemDto;
 import ru.teamtwo.core.dtos.product.ProductDto;
-import ru.teamtwo.telegrambot.service.api.product.ProductSearchHandler;
 import ru.teamtwo.telegrambot.service.api.stage.Stage;
 
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -23,21 +22,18 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 public class CustomerState {
-
-
-
     private String address;
     private String name;
     private User user;
     private String chatId;
     private Stage stage;
     private String searchQuery;
-    private ProductSearchHandler.SortingTypeField sortingTypeField;
-    private ProductSearchHandler.SortingTypeAscDesc sortingTypeAscDesc;
+    private ProductOfferController.SortingTypeField sortingTypeField;
+    private ProductOfferController.SortingTypeAscDesc sortingTypeAscDesc;
     private int offset;
     private int limit;
-    private Map<Integer, Integer> cart;
+    private Set<CartItemDto> cart;
     private Integer currentProductId;
     private Set<ProductDto> queryResult;
-    private Set<OrderDto> orderDtoSet;
+    private Set<CustomerOrder> orders;
 }

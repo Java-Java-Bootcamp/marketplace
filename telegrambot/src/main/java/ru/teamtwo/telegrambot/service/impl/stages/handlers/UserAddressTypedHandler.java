@@ -26,7 +26,7 @@ public class UserAddressTypedHandler implements StageHandler {
         if (context.message().isEmpty()) return;
         context.customerState().setAddress(context.message());
 
-        sendMessageHandler.sendMessage(context.chatId(), "Заказ добавлен");
+        sendMessageHandler.sendMessageDeleteKeyboard(context.chatId(), "Заказ добавлен");
         context.customerState().setStage(Stage.WAITING_FOR_SEARCH_START);
     }
 }

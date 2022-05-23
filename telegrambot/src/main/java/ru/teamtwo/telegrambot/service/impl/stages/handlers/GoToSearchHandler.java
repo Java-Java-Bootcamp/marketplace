@@ -20,7 +20,7 @@ public class GoToSearchHandler implements StageHandler {
 
     @Override
     public void execute(StageContext context) {
-        sendMessageHandler.sendMessage(context.chatId(), "Введите запрос");
+        sendMessageHandler.sendMessageDeleteKeyboard(context.chatId(), "Введите запрос");
 
         context.customerState().setStage(Stage.WAITING_FOR_SEARCH_QUERY);
     }

@@ -3,14 +3,15 @@ package ru.teamtwo.telegrambot.service.impl.bot;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.teamtwo.telegrambot.service.api.bot.SendMessageHandler;
-import ru.teamtwo.telegrambot.service.impl.bot.TelegramBot;
 
 /**
  * Содержит методы для отправки пользователю SendMessage с меню и без.
@@ -18,9 +19,11 @@ import ru.teamtwo.telegrambot.service.impl.bot.TelegramBot;
 @Component
 @Slf4j
 public class SendMessageHandlerImpl implements SendMessageHandler {
-    final TelegramBot telegramBot;
+    private final TelegramLongPollingBot telegramBot;
 
-    public SendMessageHandlerImpl(@Lazy TelegramBot telegramBot) {
+    @Autowired
+    @Lazy
+    SendMessageHandlerImpl(TelegramLongPollingBot telegramBot){
         this.telegramBot = telegramBot;
     }
 
@@ -28,11 +31,16 @@ public class SendMessageHandlerImpl implements SendMessageHandler {
         sendMessage(chatId, "", new ReplyKeyboardRemove(true));
     }
 
+    @Override
+    public void sendMessage(@NonNull String chatId, @NonNull String text) {
+        sendMessage(chatId, text);
+    }
+
     /**
      * Отправляет сообщение в указанный чат. Этот метод также указывает,
      * что нужно удалить меню у пользователя.
      */
-    public void sendMessage(@NonNull String chatId, @NonNull String text){
+    public void sendMessageDeleteKeyboard(@NonNull String chatId, @NonNull String text){
         sendMessage(chatId, text, new ReplyKeyboardRemove(true));
     }
 

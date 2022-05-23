@@ -21,7 +21,7 @@ public class MakeOrderHandler implements StageHandler {
 
     @Override
     public void execute(StageContext context) {
-        sendMessageHandler.sendMessage(context.chatId(), "Введите адрес");
+        sendMessageHandler.sendMessageDeleteKeyboard(context.chatId(), "Введите адрес");
 
         context.customerState().setStage(Stage.WAITING_FOR_ADDRESS);
     }

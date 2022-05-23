@@ -2,10 +2,10 @@ package ru.teamtwo.telegrambot.service.impl.stages.handlers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.teamtwo.core.dtos.controller.product.ProductOfferController;
 import ru.teamtwo.telegrambot.model.bot.menus.TelegramBotMenus;
 import ru.teamtwo.telegrambot.service.api.bot.SendMessageHandler;
 import ru.teamtwo.telegrambot.service.api.customer.CustomerStateHandler;
-import ru.teamtwo.telegrambot.service.api.product.ProductSearchHandler;
 import ru.teamtwo.telegrambot.service.api.stage.Stage;
 import ru.teamtwo.telegrambot.service.api.stage.StageHandler;
 import ru.teamtwo.telegrambot.service.impl.rest.RESTHandlerImpl;
@@ -26,11 +26,7 @@ public class SortFieldHandler implements StageHandler {
 
     @Override
     public void execute(StageContext context) {
-        for (ProductSearchHandler.SortingTypeField type : ProductSearchHandler.SortingTypeField.values()) {
-            if (type.inputName.equals(context.message())) {
-                context.customerState().setSortingTypeField(type);
-            }
-        }
+        context.customerState().setSortingTypeField(ProductOfferController.SortingTypeField.valueOf(context.message()));
         if (context.customerState().getSortingTypeField() == null) return;
 
         sendMessageHandler.sendMessage(context.chatId(), "По убыванию/возрастанию?", TelegramBotMenus.getSortByAscDescOffsetKeyboard());

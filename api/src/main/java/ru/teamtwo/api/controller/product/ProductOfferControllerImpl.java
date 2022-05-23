@@ -41,7 +41,7 @@ public class ProductOfferControllerImpl implements ProductOfferController {
 
     @Override
     @GetMapping("query/")
-    public Set<ProductOfferDto> query(ProductQuery productQuery) {
+    public ResponseEntity<Set<ProductOfferDto>> query(ProductQuery productQuery) {
         return null;
     }
 }

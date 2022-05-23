@@ -16,6 +16,7 @@ import java.util.StringJoiner;
 @Component
 @Slf4j
 public class LoggingAspect {
+
     @Before("within(ru.teamtwo.api..*)")
     public void logBefore(JoinPoint joinPoint) {
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();

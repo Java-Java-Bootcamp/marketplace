@@ -26,7 +26,7 @@ public class QueryResultHandler implements StageHandler {
         int resultCount = 1; //TODO:
 
         if (resultCount == 0) {
-            sendMessageHandler.sendMessage(context.chatId(),
+            sendMessageHandler.sendMessageDeleteKeyboard(context.chatId(),
                     "По вашему запросу ничего не найдено. Введите другой запрос.");
 
             context.customerState().setStage(Stage.WAITING_FOR_SEARCH_QUERY);

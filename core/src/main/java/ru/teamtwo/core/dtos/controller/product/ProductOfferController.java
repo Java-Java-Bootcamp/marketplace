@@ -1,5 +1,6 @@
 package ru.teamtwo.core.dtos.controller.product;
 
+import org.springframework.http.ResponseEntity;
 import ru.teamtwo.core.dtos.controller.BaseController;
 import ru.teamtwo.core.dtos.product.ProductOfferDto;
 
@@ -41,5 +42,5 @@ public interface ProductOfferController extends BaseController<ProductOfferDto> 
         }
     }
 
-    Set<ProductOfferDto> query(ProductQuery productQuery);
+    ResponseEntity<Set<ProductOfferDto>> query(ProductQuery productQuery);
 }
