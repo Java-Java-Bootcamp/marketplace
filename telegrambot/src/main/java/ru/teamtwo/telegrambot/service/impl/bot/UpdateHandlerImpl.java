@@ -2,6 +2,7 @@ package ru.teamtwo.telegrambot.service.impl.bot;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -14,7 +15,6 @@ import ru.teamtwo.telegrambot.service.api.rest.RESTHandlerException;
 import ru.teamtwo.telegrambot.service.api.stage.StageHandler;
 import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 
-import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.Map;
 
 
 @Component
-@RequiredArgsConstructor(onConstructor=@__(@Inject))
+@RequiredArgsConstructor(onConstructor=@__(@Autowired))
 @Slf4j
 public class UpdateHandlerImpl implements UpdateHandler {
     final CustomerStateHandler customerStateHandler;

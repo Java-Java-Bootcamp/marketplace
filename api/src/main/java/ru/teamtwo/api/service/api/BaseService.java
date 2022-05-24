@@ -1,6 +1,8 @@
 package ru.teamtwo.api.service.api;
 
+import java.util.Set;
+
 public interface BaseService<T> {
     T get(Long id);
-    Long save(T dto);
+    Set<Long> save(Set<T> dto);
 }

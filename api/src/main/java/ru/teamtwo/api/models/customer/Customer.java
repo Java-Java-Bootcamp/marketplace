@@ -4,27 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Lob;
 import javax.persistence.Table;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
-@AllArgsConstructor
-@NoArgsConstructor
+@Entity
 @Getter
 @Setter
-@ToString
-@Entity
-@Table(name = "customerId", schema = "marketplace")
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "customer", schema = "marketplace")
 public class Customer {
     @Id
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -32,11 +28,32 @@ public class Customer {
     @Column(name = "address", nullable = false)
     private String address;
 
-    @OneToMany(mappedBy = "customer")
-    @ToString.Exclude
-    private Set<Order> orders = new LinkedHashSet<>();
+    @Lob
+    @Column(name = "chat_id")
+    private String chatId;
 
-    @OneToMany(mappedBy = "customer")
-    @ToString.Exclude
-    private Set<CartItem> cartItems = new LinkedHashSet<>();
+    @Lob
+    @Column(name = "stage")
+    private String stage;
+
+    @Lob
+    @Column(name = "search_query")
+    private String searchQuery;
+
+    @Lob
+    @Column(name = "sorting_type_field")
+    private String sortingTypeField;
+
+    @Lob
+    @Column(name = "sorting_type_asc_desc")
+    private String sortingTypeAscDesc;
+
+    @Column(name = "\"offset\"")
+    private Integer offset;
+
+    @Column(name = "\"limit\"")
+    private Integer limit;
+
+    @Column(name = "current_product_id")
+    private Integer currentProductId;
 }

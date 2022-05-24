@@ -3,8 +3,8 @@ package ru.teamtwo.api.mappers.customer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import ru.teamtwo.core.dtos.customer.OrderItemDto;
 import ru.teamtwo.api.models.customer.OrderItem;
+import ru.teamtwo.core.dtos.customer.OrderItemDto;
 
 @Mapper(componentModel = "spring")
 public interface OrderItemMapper {

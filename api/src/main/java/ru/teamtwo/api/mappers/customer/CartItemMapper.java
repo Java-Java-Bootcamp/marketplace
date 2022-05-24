@@ -13,6 +13,5 @@ public interface CartItemMapper {
             @Mapping(target="productId", source="cartItem.product.id")
     })
     CartItemDto convert(CartItem cartItem);
-
     CartItem convert(CartItemDto cartItemDto);
 }

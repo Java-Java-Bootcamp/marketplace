@@ -33,7 +33,7 @@ public class CustomerState {
     private int offset;
     private int limit;
     private Set<CartItemDto> cart;
-    private Integer currentProductId;
+    private Long currentProductId;
     private Set<ProductDto> queryResult;
     private Set<CustomerOrder> orders;
 }

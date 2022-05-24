@@ -27,7 +27,7 @@ public class AddButtonPressedHandler implements StageHandler {
     @Override
     public void execute(StageContext context) {
         try {
-            context.customerState().setCurrentProductId(Integer.valueOf(context.dataCallbackArgs().get(TelegramBotInlineMenus.CALLBACK_ORDER_ID_PARAM)));
+            context.customerState().setCurrentProductId(Long.valueOf(context.dataCallbackArgs().get(TelegramBotInlineMenus.CALLBACK_ORDER_ID_PARAM)));
             context.customerState().setStage(Stage.WAITING_FOR_QUANTITY);
 
             sendMessageHandler.sendMessageDeleteKeyboard(context.chatId(), "Введите количество");

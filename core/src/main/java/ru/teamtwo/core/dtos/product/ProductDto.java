@@ -1,7 +1,7 @@
 package ru.teamtwo.core.dtos.product;
 
 public record ProductDto (
-        Integer id,
+        Long id,
         String name,
         String category,
         String model,

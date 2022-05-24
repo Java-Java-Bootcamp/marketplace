@@ -20,15 +20,10 @@ public interface CartItemClient extends CartItemController {
     @Override
     @ResponseBody
     @PostMapping("")
-    ResponseEntity<Integer> save(CartItemDto dto);
+    ResponseEntity<Set<Long>> save(Set<CartItemDto> dto);
 
     @Override
     @ResponseBody
     @PostMapping("byCustomer/{customerId}")
     ResponseEntity<Set<CartItemDto>> getAllByCustomer(@PathVariable Long customerId);
-
-    @Override
-    @ResponseBody
-    @GetMapping("byCustomer/{customerId}")
-    ResponseEntity<Set<Integer>> saveAllByCustomer(@PathVariable Long customerId, Set<CartItemDto> objects);
 }

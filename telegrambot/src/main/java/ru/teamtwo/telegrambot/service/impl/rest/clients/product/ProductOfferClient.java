@@ -20,7 +20,7 @@ public interface ProductOfferClient extends ProductOfferController {
     @Override
     @ResponseBody
     @PostMapping("")
-    ResponseEntity<Integer> save(ProductOfferDto dto);
+    ResponseEntity<Set<Long>> save(Set<ProductOfferDto> dto);
 
     @Override
     @GetMapping("{id}")

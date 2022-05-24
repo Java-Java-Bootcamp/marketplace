@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ru.teamtwo.core.dtos.controller.customer.CustomerController;
 import ru.teamtwo.core.dtos.customer.CustomerDto;
 
+import java.util.Set;
+
 @FeignClient(url = "${telegrambot.rest.webClientUri}/marketplace/api/customer", name="customerId")
 public interface CustomerClient extends CustomerController {
     @Override
@@ -18,5 +20,5 @@ public interface CustomerClient extends CustomerController {
     @Override
     @ResponseBody
     @PostMapping("")
-    ResponseEntity<Integer> save(CustomerDto dto);
+    ResponseEntity<Set<Long>> save(Set<CustomerDto> dto);
 }

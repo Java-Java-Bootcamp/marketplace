@@ -33,7 +33,11 @@ public class LoggingAspect {
 
         StringJoiner stringJoiner = new StringJoiner(",","(",")");
         for (int i = 0; i < parameters.length; i++) {
-            stringJoiner.add(parameters[i].getName()+"="+args[i].toString());
+            String argToString = "null";
+            try {
+                argToString = args[i].toString();
+            } catch (Exception ignored){}
+            stringJoiner.add(parameters[i].getName()+"="+argToString);
         }
         stringBuilder.append(stringJoiner);
 

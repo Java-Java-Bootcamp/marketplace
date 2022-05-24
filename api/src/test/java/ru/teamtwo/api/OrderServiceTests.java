@@ -1,23 +1,12 @@
 package ru.teamtwo.api;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
-import ru.teamtwo.api.models.customer.Order;
-import ru.teamtwo.api.repository.customer.OrderRepository;
-import ru.teamtwo.api.service.impl.customer.OrderService;
-import ru.teamtwo.core.dtos.customer.CustomerDto;
-import ru.teamtwo.core.dtos.customer.OrderDto;
-
-import java.util.List;
 
 @SpringBootTest
 @Slf4j
 class OrderServiceTests {
-
+/*
     @Autowired
     OrderService orderService;
 
@@ -49,4 +38,6 @@ class OrderServiceTests {
         Assertions.assertEquals(newOrder.getId(), ORDER_ID);
         Assertions.assertEquals(newOrder.getCustomerId(), CUSTOMER_ID);
     }
+
+ */
 }

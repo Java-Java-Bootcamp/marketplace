@@ -1,24 +1,14 @@
 package ru.teamtwo.api;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.transaction.annotation.Transactional;
-import ru.teamtwo.api.models.customer.Customer;
-import ru.teamtwo.api.repository.customer.CustomerRepository;
-import ru.teamtwo.api.service.impl.customer.CustomerService;
-import ru.teamtwo.core.dtos.customer.CustomerDto;
-
-import java.util.List;
 
 @Slf4j
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class CustomerServiceTests {
-
+/*
     @Autowired
     CustomerService customerService;
 
@@ -47,4 +37,6 @@ public class CustomerServiceTests {
         Assertions.assertEquals(customer.getAddress(), customerDtoGetId.getAddress());
         Assertions.assertEquals(customer.getName(), customerDtoGetId.getName());
     }
+
+ */
 }

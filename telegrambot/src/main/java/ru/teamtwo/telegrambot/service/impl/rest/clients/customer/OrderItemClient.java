@@ -20,15 +20,10 @@ public interface OrderItemClient extends OrderItemController {
     @Override
     @ResponseBody
     @PostMapping("")
-    ResponseEntity<Integer> save(OrderItemDto dto);
+    ResponseEntity<Set<Long>> save(Set<OrderItemDto> dto);
 
     @Override
     @ResponseBody
     @PostMapping("byCustomer/{customerId}")
-    ResponseEntity<Set<OrderItemDto>> getAllByOrder(@PathVariable Integer customerId);
-
-    @Override
-    @ResponseBody
-    @GetMapping("byCustomer/{customerId}")
-    ResponseEntity<Set<Integer>> saveAllByOrder(@PathVariable Integer customerId, Set<OrderItemDto> objects);
+    ResponseEntity<Set<OrderItemDto>> getAllByOrder(@PathVariable Long customerId);
 }
