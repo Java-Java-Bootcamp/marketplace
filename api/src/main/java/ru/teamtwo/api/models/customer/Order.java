@@ -14,11 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.Instant;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,8 +37,4 @@ public class Order {
 
     @Column(name = "created_on")
     private Instant createdOn;
-
-    @OneToMany(mappedBy = "order")
-    @ToString.Exclude
-    private Set<OrderItem> orderItems = new LinkedHashSet<>();
 }

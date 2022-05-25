@@ -25,7 +25,7 @@
         <appender-ref ref="STDOUT" />
     </root>
 
-    <logger name="ru.teamtwo.api.LoggingAspect" level="TRACE" additivity="false">
+    <logger name="ru.teamtwo.api.logging.LoggingAspect" level="TRACE" additivity="false">
         <appender-ref ref="LOGASPECT" />
     </logger>
 

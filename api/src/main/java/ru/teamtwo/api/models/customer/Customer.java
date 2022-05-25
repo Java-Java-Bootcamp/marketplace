@@ -22,7 +22,7 @@ public class Customer {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "\"name\"", nullable = false)
     private String name;
 
     @Column(name = "address", nullable = false)
@@ -55,5 +55,5 @@ public class Customer {
     private Integer limit;
 
     @Column(name = "current_product_id")
-    private Integer currentProductId;
+    private Long currentProductId;
 }

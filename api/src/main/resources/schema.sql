@@ -4,14 +4,14 @@ drop table if exists marketplace.product cascade;
 drop table if exists marketplace.store cascade;
 drop table if exists marketplace.product_offer cascade;
 drop table if exists marketplace.customer cascade;
-drop table if exists marketplace.order cascade;
+drop table if exists marketplace."order" cascade;
 drop table if exists marketplace.order_item cascade;
 drop table if exists marketplace.cart_item cascade;
 
 CREATE TABLE IF NOT EXISTS marketplace.product (
       id SERIAL PRIMARY KEY,
-      name varchar(255) NOT NULL,
-      category varchar(255) NOT NULL,
+      "name" varchar(255) NOT NULL,
+      "category" varchar(255) NOT NULL,
       model varchar(255) NOT NULL,
       manufacturer varchar(255) NOT NULL,
       description TEXT NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS marketplace.product (
 
 CREATE TABLE IF NOT EXISTS marketplace.store (
     id SERIAL PRIMARY KEY,
-    name varchar(255) NOT NULL,
+    "name" varchar(255) NOT NULL,
     rating integer NOT NULL
 );
 
@@ -34,18 +34,26 @@ CREATE TABLE IF NOT EXISTS marketplace.product_offer (
 
 CREATE TABLE IF NOT EXISTS marketplace.customer (
     id integer PRIMARY KEY,
-    name varchar(255) NOT NULL,
-    address varchar(255) NOT NULL
+    "name" varchar(255) NOT NULL,
+    address varchar(255) NOT NULL,
+    chat_id varchar(255),
+    stage varchar(255),
+    search_query varchar(255),
+    sorting_type_field varchar(255),
+    sorting_type_asc_desc varchar(255),
+    "offset" integer,
+    "limit" integer,
+    current_product_id integer
 );
 
 CREATE TABLE IF NOT EXISTS marketplace.cart_item (
     id SERIAL PRIMARY KEY,
     customer integer NOT NULL REFERENCES  marketplace.customer (id),
-    product integer NOT NULL REFERENCES marketplace.product_offer (id),
+    product_offer integer NOT NULL REFERENCES marketplace.product_offer (id),
     quantity integer NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS marketplace.order (
+CREATE TABLE IF NOT EXISTS marketplace."order" (
     id SERIAL PRIMARY KEY,
     customer integer NOT NULL REFERENCES marketplace.customer (id),
     created_on timestamp DEFAULT NOW()

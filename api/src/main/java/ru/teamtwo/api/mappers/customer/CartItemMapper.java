@@ -10,7 +10,7 @@ import ru.teamtwo.core.dtos.customer.CartItemDto;
 public interface CartItemMapper {
     @Mappings({
             @Mapping(target="customerId", source="cartItem.customer.id"),
-            @Mapping(target="productId", source="cartItem.product.id")
+            @Mapping(target="productId", source= "cartItem.productOffer.id")
     })
     CartItemDto convert(CartItem cartItem);
     CartItem convert(CartItemDto cartItemDto);

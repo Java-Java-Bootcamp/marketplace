@@ -7,8 +7,6 @@ import ru.teamtwo.api.exception.ItemNotFoundException;
 import ru.teamtwo.api.mappers.customer.OrderItemMapper;
 import ru.teamtwo.api.models.customer.OrderItem;
 import ru.teamtwo.api.repository.customer.OrderItemRepository;
-import ru.teamtwo.api.repository.customer.OrderRepository;
-import ru.teamtwo.api.repository.product.ProductOfferRepository;
 import ru.teamtwo.api.service.api.customer.OrderItemService;
 import ru.teamtwo.core.dtos.customer.OrderItemDto;
 
@@ -19,9 +17,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class OrderItemServiceImpl implements OrderItemService {
-    private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
-    private final ProductOfferRepository productOfferRepository;
     private final OrderItemMapper orderItemMapper;
 
     @Override
@@ -43,7 +39,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public Set<OrderItemDto> getAllByOrder(Long orderId) {
-        return orderItemRepository.findOrderItemsByOrder_Id(orderId)
+        return orderItemRepository.getOrderItemsByOrder_Id(orderId)
                 .stream()
                 .map(orderItemMapper::convert)
                 .collect(Collectors.toSet());

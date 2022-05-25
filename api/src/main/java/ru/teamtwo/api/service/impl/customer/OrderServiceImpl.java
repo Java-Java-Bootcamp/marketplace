@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import ru.teamtwo.api.exception.ItemNotFoundException;
 import ru.teamtwo.api.mappers.customer.OrderMapper;
 import ru.teamtwo.api.models.customer.Order;
-import ru.teamtwo.api.repository.customer.CustomerRepository;
 import ru.teamtwo.api.repository.customer.OrderRepository;
 import ru.teamtwo.api.service.api.customer.OrderService;
 import ru.teamtwo.core.dtos.customer.OrderDto;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
-    private final CustomerRepository customerRepository;
     private final OrderMapper orderMapper;
 
     @Override

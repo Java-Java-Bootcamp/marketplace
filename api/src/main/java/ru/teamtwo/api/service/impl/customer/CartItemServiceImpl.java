@@ -2,8 +2,12 @@ package ru.teamtwo.api.service.impl.customer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import ru.teamtwo.api.exception.ItemNotFoundException;
+import ru.teamtwo.api.exception.ServerRuntimeException;
+import ru.teamtwo.api.exception.UnableToAddItemException;
+import ru.teamtwo.api.logging.LoggingUtils;
 import ru.teamtwo.api.mappers.customer.CartItemMapper;
 import ru.teamtwo.api.models.customer.CartItem;
 import ru.teamtwo.api.repository.customer.CartItemRepository;
@@ -30,11 +34,18 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public Set<Long> save(Set<CartItemDto> dtos) {
-        return cartItemRepository
-                .saveAll(dtos.stream().map(cartItemMapper::convert).collect(Collectors.toSet()))
-                .stream()
-                .map(CartItem::getId)
-                .collect(Collectors.toSet());
+        try {
+            return cartItemRepository
+                    .saveAll(dtos.stream().map(cartItemMapper::convert).collect(Collectors.toSet()))
+                    .stream()
+                    .map(CartItem::getId)
+                    .collect(Collectors.toSet());
+        } catch (DataAccessException e) {
+            throw new UnableToAddItemException();
+        } catch (Exception e){
+            LoggingUtils.logException(log, e);
+            throw new ServerRuntimeException();
+        }
     }
 
     @Override

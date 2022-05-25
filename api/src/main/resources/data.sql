@@ -1,4 +1,4 @@
-INSERT INTO marketplace.product (name,category,model,manufacturer,description,price,rating)
+INSERT INTO marketplace.product ("name","category",model,manufacturer,description,price,rating)
 VALUES
     ('Hasad Dunn',39,'Emily Giles','Nec Ante Maecenas Corp.','vitae diam. Proin dolor. Nulla semper tellus id nunc',95,49),
     ('Byron Wade',96,'Zane Newman','Nulla Integer LLP','neque. Nullam ut nisi a odio semper cursus.',413,54),
@@ -22,7 +22,7 @@ VALUES
     ('Amelia Forbes',15,'Rose Cannon','Eros Turpis Non Incorporated','cursus a, enim. Suspendisse aliquet, sem',700,2);
 
 
-INSERT INTO marketplace.store (name,rating)
+INSERT INTO marketplace.store ("name",rating)
 VALUES
     ('Curabitur Egestas Ltd',83),
     ('Molestie Incorporated',97),
@@ -159,5 +159,5 @@ VALUES
     (10,17,80);
 
 INSERT INTO marketplace.customer(
-    id, name, address)
+    id, "name", address)
 VALUES (1, 'customer1', 'address1');

@@ -6,5 +6,5 @@ import ru.teamtwo.api.models.customer.OrderItem;
 import java.util.Set;
 
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
-    Set<OrderItem> findOrderItemsByOrder_Id(Long orderId);
+    Set<OrderItem> getOrderItemsByOrder_Id(Long orderId);
 }

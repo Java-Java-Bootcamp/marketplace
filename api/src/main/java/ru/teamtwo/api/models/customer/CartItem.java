@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ru.teamtwo.api.models.product.Product;
+import ru.teamtwo.api.models.product.ProductOffer;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,9 +36,9 @@ public class CartItem {
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product", nullable = false)
+    @JoinColumn(name = "product_offer", nullable = false)
     @ToString.Exclude
-    private Product product;
+    private ProductOffer productOffer;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;

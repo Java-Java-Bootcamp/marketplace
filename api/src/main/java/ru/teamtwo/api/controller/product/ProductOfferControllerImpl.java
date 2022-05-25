@@ -35,7 +35,7 @@ public class ProductOfferControllerImpl implements ProductOfferController {
     }
 
     @Override
-    @GetMapping("query/")
+    @PostMapping("query/")
     public ResponseEntity<Set<ProductOfferDto>> query(ProductQuery productQuery) {
         return ResponseEntity.ok(productOfferService.query(productQuery));
     }
