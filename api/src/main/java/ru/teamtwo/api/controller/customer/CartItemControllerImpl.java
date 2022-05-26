@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,7 @@ import java.util.Set;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/marketplace/api/cart_item")
+@RequestMapping("cart_item")
 public class CartItemControllerImpl implements CartItemController {
     private final CartItemService cartItemService;
 
@@ -31,7 +32,7 @@ public class CartItemControllerImpl implements CartItemController {
     @Override
     @ResponseBody
     @PostMapping("")
-    public ResponseEntity<Set<Long>> save(Set<CartItemDto> dto) {
+    public ResponseEntity<Set<Long>> save(@RequestBody Set<CartItemDto> dto) {
         return ResponseEntity.ok(cartItemService.save(dto));
     }
 

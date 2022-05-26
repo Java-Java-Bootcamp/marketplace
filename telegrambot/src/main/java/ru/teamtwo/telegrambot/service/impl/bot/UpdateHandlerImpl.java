@@ -39,9 +39,7 @@ public class UpdateHandlerImpl implements UpdateHandler {
         String message = update.getMessage().getText();
         String chatId = String.valueOf(update.getMessage().getChatId());
         User user = update.getMessage().getFrom();
-        CustomerState customerState = null;
-        customerState = customerStateHandler.get(user);
-        customerState.setChatId(chatId);
+        CustomerState customerState = customerStateHandler.get(user);
 
         StageContext context = new StageContext(
                 update,
@@ -67,6 +65,7 @@ public class UpdateHandlerImpl implements UpdateHandler {
         CallbackQuery callbackQuery = update.getCallbackQuery();
         String data = callbackQuery.getData();
         User user = callbackQuery.getFrom();
+        String chatId = String.valueOf(callbackQuery.getMessage().getChatId());
         CustomerState customerState = customerStateHandler.get(user);
 
         String dataCallbackType = data.substring(0, data.indexOf(","));
@@ -81,7 +80,7 @@ public class UpdateHandlerImpl implements UpdateHandler {
         StageContext context = new StageContext(
                 update,
                 "",
-                customerState.getChatId(),
+                chatId,
                 user,
                 customerState,
                 dataCallbackType,

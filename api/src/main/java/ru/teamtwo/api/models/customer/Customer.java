@@ -32,10 +32,6 @@ public class Customer implements BaseEntity {
     private String address;
 
     @Lob
-    @Column(name = "chat_id")
-    private String chatId;
-
-    @Lob
     @Column(name = "stage")
     private String stage;
 

@@ -11,7 +11,7 @@ import ru.teamtwo.core.dtos.customer.CartItemDto;
 
 import java.util.Set;
 
-@FeignClient(url = "${telegrambot.rest.webClientUri}/marketplace/api/cart_item", name="cartItem")
+@FeignClient(url = "${telegrambot.rest.webClientUri}cart_item", name="cartItem")
 public interface CartItemClient extends CartItemController {
     @Override
     @GetMapping("{id}")

@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.api.service.api.product.ProductOfferService;
 import ru.teamtwo.core.dtos.controller.product.ProductOfferController;
@@ -17,7 +19,7 @@ import java.util.Set;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/marketplace/api/product_offer")
+@RequestMapping("product_offer")
 public class ProductOfferControllerImpl implements ProductOfferController {
     private final ProductOfferService productOfferService;
 
@@ -28,8 +30,9 @@ public class ProductOfferControllerImpl implements ProductOfferController {
     }
 
     @Override
+    @ResponseBody
     @PostMapping("")
-    public ResponseEntity<Set<Long>> save(Set<ProductOfferDto> productOfferDto) {
+    public ResponseEntity<Set<Long>> save(@RequestBody  Set<ProductOfferDto> productOfferDto) {
         return ResponseEntity.ok(productOfferService.save(productOfferDto));
     }
 

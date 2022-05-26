@@ -19,7 +19,7 @@ import java.util.Set;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/marketplace/api/customer")
+@RequestMapping("customer")
 public class CustomerControllerImpl implements CustomerController {
     private final CustomerService customerService;
 

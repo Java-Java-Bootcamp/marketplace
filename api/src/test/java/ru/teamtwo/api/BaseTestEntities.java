@@ -1,7 +1,7 @@
 package ru.teamtwo.api;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.test.context.TestComponent;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.teamtwo.api.models.customer.CartItem;
 import ru.teamtwo.api.models.customer.Customer;
@@ -20,7 +20,7 @@ import ru.teamtwo.api.repository.product.StoreRepository;
 
 import static ru.teamtwo.api.TestUtils.UNIMPORTANT_ID;
 
-@TestComponent
+@Component
 @Transactional
 @RequiredArgsConstructor
 public class BaseTestEntities {

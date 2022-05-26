@@ -32,7 +32,6 @@ class CustomerRepositoryTest {
                 UNIMPORTANT_STRING,
                 UNIMPORTANT_STRING,
                 UNIMPORTANT_STRING,
-                UNIMPORTANT_STRING,
                 UNIMPORTANT_NUMBER,
                 UNIMPORTANT_NUMBER,
                 UNIMPORTANT_ID);
@@ -60,7 +59,6 @@ class CustomerRepositoryTest {
                 UNIMPORTANT_STRING,
                 UNIMPORTANT_STRING,
                 UNIMPORTANT_STRING,
-                UNIMPORTANT_STRING,
                 UNIMPORTANT_NUMBER,
                 UNIMPORTANT_NUMBER,
                 UNIMPORTANT_ID);
@@ -68,7 +66,6 @@ class CustomerRepositoryTest {
 
         //overwrite
         customer = new Customer(ID,
-                UNIMPORTANT_STRING,
                 UNIMPORTANT_STRING,
                 UNIMPORTANT_STRING,
                 UNIMPORTANT_STRING,

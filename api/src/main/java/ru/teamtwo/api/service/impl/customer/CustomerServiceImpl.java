@@ -2,10 +2,13 @@ package ru.teamtwo.api.service.impl.customer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.teamtwo.api.exception.ItemNotFoundException;
+import ru.teamtwo.api.exception.ServerRuntimeException;
+import ru.teamtwo.api.exception.UnableToAddItemException;
+import ru.teamtwo.api.logging.LoggingUtils;
 import ru.teamtwo.api.mappers.customer.CustomerMapper;
 import ru.teamtwo.api.models.customer.Customer;
 import ru.teamtwo.api.repository.customer.CustomerRepository;
@@ -25,18 +28,38 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto get(Long id) {
-        if(customerRepository.existsById(id))
+        if (customerRepository.existsById(id))
             return customerMapper.convert(customerRepository.getById(id));
-        else
-            throw new ItemNotFoundException();
+        else {
+            CustomerDto customerDto = new CustomerDto(
+                    id,
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    0,
+                    5,
+                    0L
+            );
+            return customerMapper.convert(customerRepository.save(customerMapper.convert(customerDto)));
+        }
     }
 
     @Override
     public Set<Long> save(Set<CustomerDto> dtos) {
-        return customerRepository
-                .saveAll(dtos.stream().map(customerMapper::convert).collect(Collectors.toSet()))
-                .stream()
-                .map(Customer::getId)
-                .collect(Collectors.toSet());
+        try {
+            return customerRepository
+                    .saveAll(dtos.stream().map(customerMapper::convert).collect(Collectors.toSet()))
+                    .stream()
+                    .map(Customer::getId)
+                    .collect(Collectors.toSet());
+        } catch (DataAccessException e) {
+            throw new UnableToAddItemException();
+        } catch (Exception e) {
+            LoggingUtils.logException(log, e);
+            throw new ServerRuntimeException();
+        }
     }
 }

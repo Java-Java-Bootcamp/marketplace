@@ -32,8 +32,7 @@ class CartItemRepositoryTest {
     void setUp() {
         customer = baseTestEntities.getCustomer();
         productOffer = baseTestEntities.getProductOffer();
-        setupCartItem = new CartItem(null,customer,productOffer,UNIMPORTANT_NUMBER);
-        setupCartItem = cartItemRepository.save(setupCartItem);
+        setupCartItem = baseTestEntities.getCartItem();
     }
 
     @Test

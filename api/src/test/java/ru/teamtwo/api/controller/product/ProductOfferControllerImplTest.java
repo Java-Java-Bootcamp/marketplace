@@ -1,35 +1,45 @@
 package ru.teamtwo.api.controller.product;
 
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.MvcResult;
+import ru.teamtwo.api.BaseTestEntities;
+import ru.teamtwo.api.controller.ControllerTestUtils;
+import ru.teamtwo.api.mappers.product.ProductOfferMapper;
+import ru.teamtwo.api.models.product.ProductOffer;
+import ru.teamtwo.core.dtos.product.ProductOfferDto;
 
-@Slf4j
-@WebMvcTest
+@SpringBootTest
+@AutoConfigureMockMvc
 class ProductOfferControllerImplTest {
-
+    String CONTROLLER_REQUEST_MAPPING = "product_offer";
     @Autowired
-    private MockMvc mockMvc;
-
+    BaseTestEntities baseTestEntities;
     @Autowired
-    ProductOfferControllerImpl productOfferController;
+    MockMvc mockMvc;
+    @Autowired
+    ProductOfferMapper productOfferMapper;
+    ProductOffer productOffer;
 
     @BeforeEach
     void setUp() {
+        productOffer = baseTestEntities.getProductOffer();
     }
 
     @Test
     void get() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("1")).andDo(MockMvcResultHandlers.print());
+        MvcResult result = mockMvc.perform(ControllerTestUtils.get(CONTROLLER_REQUEST_MAPPING, productOffer)).andReturn();
+        ControllerTestUtils.assertContentAndEntityEqual(result.getResponse(), ProductOfferDto.class, productOffer);
     }
 
     @Test
-    void save() {
+    void save() throws Exception {
+        MvcResult result = mockMvc.perform(ControllerTestUtils.post(CONTROLLER_REQUEST_MAPPING,productOfferMapper.convert(productOffer))).andReturn();
+        ControllerTestUtils.assertContentAndEntityIdsEqual(result.getResponse(), productOffer);
     }
 
     @Test

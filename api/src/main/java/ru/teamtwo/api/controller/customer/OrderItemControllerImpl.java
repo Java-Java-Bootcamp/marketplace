@@ -19,7 +19,7 @@ import java.util.Set;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/marketplace/api/order_item")
+@RequestMapping("order_item")
 public class OrderItemControllerImpl implements OrderItemController {
     private final OrderItemService orderItemService;
 

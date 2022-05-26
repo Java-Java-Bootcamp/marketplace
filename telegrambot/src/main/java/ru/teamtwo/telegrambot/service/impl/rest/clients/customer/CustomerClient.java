@@ -11,7 +11,7 @@ import ru.teamtwo.core.dtos.customer.CustomerDto;
 
 import java.util.Set;
 
-@FeignClient(url = "${telegrambot.rest.webClientUri}/marketplace/api/customer", name="customerId")
+@FeignClient(url = "${telegrambot.rest.webClientUri}customer", name="customerId")
 public interface CustomerClient extends CustomerController {
     @Override
     @GetMapping("{id}")

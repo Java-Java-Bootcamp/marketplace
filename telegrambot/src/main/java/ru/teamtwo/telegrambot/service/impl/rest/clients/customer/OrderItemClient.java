@@ -11,7 +11,7 @@ import ru.teamtwo.core.dtos.customer.OrderItemDto;
 
 import java.util.Set;
 
-@FeignClient(url = "${telegrambot.rest.webClientUri}/marketplace/api/order_item", name="orderItem")
+@FeignClient(url = "${telegrambot.rest.webClientUri}order_item", name="orderItem")
 public interface OrderItemClient extends OrderItemController {
     @Override
     @GetMapping("{id}")

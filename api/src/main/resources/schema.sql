@@ -36,7 +36,6 @@ CREATE TABLE IF NOT EXISTS marketplace.customer (
     id integer PRIMARY KEY,
     "name" varchar(255) NOT NULL,
     address varchar(255) NOT NULL,
-    chat_id varchar(255),
     stage varchar(255),
     search_query varchar(255),
     sorting_type_field varchar(255),
