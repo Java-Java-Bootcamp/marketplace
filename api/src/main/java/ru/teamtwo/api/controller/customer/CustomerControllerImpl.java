@@ -2,7 +2,6 @@ package ru.teamtwo.api.controller.customer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +18,7 @@ import java.util.Set;
 
 @Slf4j
 @RestController
-@RequiredArgsConstructor(onConstructor=@__(@Autowired))
+@RequiredArgsConstructor
 @RequestMapping("/marketplace/api/customer")
 public class CustomerControllerImpl implements CustomerController {
     private final CustomerService customerService;

@@ -1,7 +1,6 @@
 package ru.teamtwo.telegrambot.service.impl.bot;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -9,7 +8,7 @@ import ru.teamtwo.telegrambot.service.api.bot.UpdateHandler;
 
 
 @Component
-@RequiredArgsConstructor(onConstructor=@__(@Autowired))
+@RequiredArgsConstructor
 public class TelegramBotImpl extends TelegramLongPollingBot {
     private final UpdateHandler updateHandler;
 

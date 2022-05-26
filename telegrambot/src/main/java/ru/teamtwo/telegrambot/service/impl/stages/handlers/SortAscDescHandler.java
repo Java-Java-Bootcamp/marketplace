@@ -20,11 +20,10 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Slf4j
 public class SortAscDescHandler implements StageHandler {
-
-    final CustomerStateHandler customerStateHandler;
-    final SendMessageHandler sendMessageHandler;
-    final RESTHandler restHandler;
-    final TelegramBotInlineMenus inlineMenus;
+    private final CustomerStateHandler customerStateHandler;
+    private final SendMessageHandler sendMessageHandler;
+    private final RESTHandler restHandler;
+    private final TelegramBotInlineMenus inlineMenus;
 
     @Override
     public boolean shouldRun(StageContext context) {

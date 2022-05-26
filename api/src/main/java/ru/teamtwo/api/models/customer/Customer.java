@@ -1,9 +1,11 @@
 package ru.teamtwo.api.models.customer;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.teamtwo.api.models.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,13 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
+@Builder
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "customer", schema = "marketplace")
-public class Customer {
+public class Customer implements BaseEntity {
     @Id
     @Column(name = "id", nullable = false)
     private Long id;

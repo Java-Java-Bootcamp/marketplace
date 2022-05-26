@@ -1,10 +1,12 @@
 package ru.teamtwo.api.models.customer;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import ru.teamtwo.api.models.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.Instant;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -24,9 +27,9 @@ import java.time.Instant;
 @ToString
 @Entity
 @Table(name = "\"order\"", schema = "marketplace")
-public class Order {
+public class Order implements BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 

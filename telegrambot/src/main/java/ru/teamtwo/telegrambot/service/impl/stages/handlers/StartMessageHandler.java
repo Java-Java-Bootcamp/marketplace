@@ -12,7 +12,7 @@ import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 @RequiredArgsConstructor
 public class StartMessageHandler implements StageHandler {
 
-    final SendMessageHandler sendMessageHandler;
+    private final SendMessageHandler sendMessageHandler;
 
     @Override
     public boolean shouldRun(StageContext context) {
@@ -21,8 +21,7 @@ public class StartMessageHandler implements StageHandler {
 
     @Override
     public void execute(StageContext context) {
-        sendMessageHandler.sendMessage(context.chatId(), "Добро пожаловать в Маркетплейс!",
-                TelegramBotMenus.getMainMenuKeyboard());
+        sendMessageHandler.sendMessage(context.chatId(), "Добро пожаловать в Маркетплейс!", TelegramBotMenus.getMainMenuKeyboard());
 
         context.customerState().setStage(Stage.WAITING_FOR_SEARCH_START);
     }

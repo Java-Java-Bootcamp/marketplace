@@ -2,15 +2,13 @@ package ru.teamtwo.api.repository.customer;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataAccessException;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import ru.teamtwo.api.BaseTestEntities;
 import ru.teamtwo.api.models.customer.CartItem;
 import ru.teamtwo.api.models.customer.Customer;
 import ru.teamtwo.api.models.product.ProductOffer;
-import ru.teamtwo.api.repository.product.ProductOfferRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -21,29 +19,25 @@ import static ru.teamtwo.api.TestUtils.UNIMPORTANT_ID;
 import static ru.teamtwo.api.TestUtils.UNIMPORTANT_NUMBER;
 
 @DataJpaTest
-@ExtendWith(SpringExtension.class)
 class CartItemRepositoryTest {
     @Autowired
+    BaseTestEntities baseTestEntities;
+    @Autowired
     CartItemRepository cartItemRepository;
-    @Autowired
-    CustomerRepository customerRepository;
-    @Autowired
-    ProductOfferRepository productOfferRepository;
     CartItem cartItem;
     CartItem setupCartItem;
     Customer customer;
     ProductOffer productOffer;
     @BeforeEach
     void setUp() {
-        customer = customerRepository.getById(UNIMPORTANT_ID);
-        productOffer = productOfferRepository.getById(UNIMPORTANT_ID);
+        customer = baseTestEntities.getCustomer();
+        productOffer = baseTestEntities.getProductOffer();
         setupCartItem = new CartItem(null,customer,productOffer,UNIMPORTANT_NUMBER);
         setupCartItem = cartItemRepository.save(setupCartItem);
     }
 
     @Test
     void get(){
-        assertThat(cartItemRepository.existsById(null)).isFalse();
         assertThat(cartItemRepository.existsById(EMPTY_ID)).isFalse();
         assertThat(cartItemRepository.existsById(setupCartItem.getId())).isTrue();
         assertThat(cartItemRepository.getById(setupCartItem.getId())).isEqualTo(setupCartItem);

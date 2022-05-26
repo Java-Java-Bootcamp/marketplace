@@ -3,10 +3,10 @@ name: Build
 on:
   pull_request:
     branches:
-      - 'telegram-bot-sprint1'
+      - 'main'
   push:
     branches:
-      - 'telegram-bot-sprint1'
+      - 'main'
 
 jobs:
   build:
@@ -23,13 +23,13 @@ jobs:
           distribution: 'temurin'
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
       - name: Maven Install Core
-        run: mvn -f core/pom.xml clean install -Dmaven.test.skip=true
+        run: mvn -f core/pom.xml clean install
 
       - name: Maven Package Telegrambot
-        run: mvn -f telegrambot/pom.xml clean package -Dmaven.test.skip=true
+        run: mvn -f telegrambot/pom.xml clean package
 
       - name: Maven Package api
-        run: mvn -f api/pom.xml clean package -Dmaven.test.skip=true
+        run: mvn -f api/pom.xml clean package
 
       - name: FTP Deploy api
         uses: SamKirkland/FTP-Deploy-Action@4.3.0

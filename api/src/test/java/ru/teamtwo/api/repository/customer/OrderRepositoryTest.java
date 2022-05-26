@@ -2,11 +2,10 @@ package ru.teamtwo.api.repository.customer;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataAccessException;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import ru.teamtwo.api.BaseTestEntities;
 import ru.teamtwo.api.models.customer.Customer;
 import ru.teamtwo.api.models.customer.Order;
 import ru.teamtwo.api.models.product.ProductOffer;
@@ -19,8 +18,9 @@ import static ru.teamtwo.api.TestUtils.UNIMPORTANT_ID;
 import static ru.teamtwo.api.TestUtils.UNIMPORTANT_INSTANT;
 
 @DataJpaTest
-@ExtendWith(SpringExtension.class)
 class OrderRepositoryTest {
+    @Autowired
+    BaseTestEntities baseTestEntities;
     @Autowired
     OrderItemRepository orderItemRepository;
     @Autowired

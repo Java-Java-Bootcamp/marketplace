@@ -161,3 +161,15 @@ VALUES
 INSERT INTO marketplace.customer(
     id, "name", address)
 VALUES (1, 'customer1', 'address1');
+
+INSERT INTO marketplace."order"(
+    id, customer, created_on)
+VALUES (1, 1, '2016-06-01 00:00');
+
+INSERT INTO marketplace.order_item(
+    id, "order", product_offer, quantity)
+VALUES (1, 1, 1, 9);
+
+INSERT INTO marketplace.cart_item(
+    id, customer, product_offer, quantity)
+VALUES (1, 1, 1, 9);

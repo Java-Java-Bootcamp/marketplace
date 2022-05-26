@@ -14,10 +14,9 @@ import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 @Component
 @RequiredArgsConstructor
 public class SortFieldHandler implements StageHandler {
-
-    final CustomerStateHandler customerStateHandler;
-    final SendMessageHandler sendMessageHandler;
-    final RESTHandlerImpl restHandlerImpl;
+    private final CustomerStateHandler customerStateHandler;
+    private final SendMessageHandler sendMessageHandler;
+    private final RESTHandlerImpl restHandlerImpl;
 
     @Override
     public boolean shouldRun(StageContext context) {

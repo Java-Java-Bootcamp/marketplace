@@ -2,7 +2,6 @@ package ru.teamtwo.telegrambot.service.impl.rest;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -31,7 +30,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor(onConstructor=@__(@Autowired))
+@RequiredArgsConstructor
 public class RESTHandlerImpl implements RESTHandler {
     private final CartItemClient cartItemClient;
     private final CustomerClient customerClient;

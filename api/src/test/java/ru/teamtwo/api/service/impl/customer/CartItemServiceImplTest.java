@@ -25,12 +25,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static ru.teamtwo.api.TestUtils.SPECIFIC_ID;
+import static ru.teamtwo.api.TestUtils.UNIMPORTANT_ID;
+import static ru.teamtwo.api.TestUtils.UNIMPORTANT_NUMBER;
 
 @ExtendWith(SpringExtension.class)
 class CartItemServiceImplTest {
-    final long ITEM_ID = 100L;
-    final long CUSTOMER_ID = 123L;
-
     @Mock
     private CartItemRepository cartItemRepository;
     @Mock
@@ -42,25 +42,25 @@ class CartItemServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        cartItem = new CartItem(ITEM_ID, null, null, 1);
-        cartItemDto = new CartItemDto(ITEM_ID, 1L, 1L, 1);
+        cartItem = new CartItem(SPECIFIC_ID, null, null, UNIMPORTANT_NUMBER);
+        cartItemDto = new CartItemDto(UNIMPORTANT_ID, UNIMPORTANT_ID, UNIMPORTANT_ID, UNIMPORTANT_NUMBER);
     }
 
     @Test
     void get() {
         assertThatThrownBy(()-> {
-            cartItemService.get(ITEM_ID);
-            verify(cartItemRepository).existsById(ITEM_ID);
+            cartItemService.get(cartItem.getId());
+            verify(cartItemRepository).existsById(cartItem.getId());
         }).isInstanceOf(ItemNotFoundException.class);
 
         reset(cartItemRepository, cartItemMapper);
 
-        when(cartItemRepository.existsById(ITEM_ID)).thenReturn(true);
-        when(cartItemRepository.getById(ITEM_ID)).thenReturn(cartItem);
+        when(cartItemRepository.existsById(cartItem.getId())).thenReturn(true);
+        when(cartItemRepository.getById(cartItem.getId())).thenReturn(cartItem);
         when(cartItemMapper.convert(cartItem)).thenReturn(cartItemDto);
-        assertThat(cartItemService.get(ITEM_ID)).isEqualTo(cartItemDto);
-        verify(cartItemRepository).existsById(ITEM_ID);
-        verify(cartItemRepository).getById(ITEM_ID);
+        assertThat(cartItemService.get(cartItem.getId())).isEqualTo(cartItemDto);
+        verify(cartItemRepository).existsById(cartItem.getId());
+        verify(cartItemRepository).getById(cartItem.getId());
         verify(cartItemMapper).convert(cartItem);
     }
 
@@ -88,17 +88,17 @@ class CartItemServiceImplTest {
 
         when(cartItemMapper.convert(cartItemDto)).thenReturn(cartItem);
         when(cartItemRepository.saveAll(MockitoHamcrest.argThat(Matchers.hasItems(cartItem)))).thenReturn(Collections.singletonList(cartItem));
-        assertThat(cartItemService.save(Collections.singleton(cartItemDto))).isEqualTo(Collections.singleton(ITEM_ID));
+        assertThat(cartItemService.save(Collections.singleton(cartItemDto))).isEqualTo(Collections.singleton(cartItem.getId()));
         verify(cartItemMapper).convert(cartItemDto);
         verify(cartItemRepository).saveAll(MockitoHamcrest.argThat(Matchers.hasItems(cartItem)));
     }
 
     @Test
     void getAllByCustomer() {
-        when(cartItemRepository.getCartItemsByCustomer_Id(CUSTOMER_ID)).thenReturn(Collections.singleton(cartItem));
+        when(cartItemRepository.getCartItemsByCustomer_Id(UNIMPORTANT_ID)).thenReturn(Collections.singleton(cartItem));
         when(cartItemMapper.convert(cartItem)).thenReturn(cartItemDto);
-        assertThat(cartItemService.getAllByCustomer(CUSTOMER_ID)).contains(cartItemDto);
-        verify(cartItemRepository).getCartItemsByCustomer_Id(CUSTOMER_ID);
+        assertThat(cartItemService.getAllByCustomer(UNIMPORTANT_ID)).contains(cartItemDto);
+        verify(cartItemRepository).getCartItemsByCustomer_Id(UNIMPORTANT_ID);
         verify(cartItemMapper).convert(cartItem);
     }
 }

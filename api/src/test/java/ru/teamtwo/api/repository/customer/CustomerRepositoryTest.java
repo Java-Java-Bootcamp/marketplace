@@ -2,11 +2,9 @@ package ru.teamtwo.api.repository.customer;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataAccessException;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.teamtwo.api.models.customer.Customer;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +17,6 @@ import static ru.teamtwo.api.TestUtils.UNIMPORTANT_NUMBER;
 import static ru.teamtwo.api.TestUtils.UNIMPORTANT_STRING;
 
 @DataJpaTest
-@ExtendWith(SpringExtension.class)
 class CustomerRepositoryTest {
     final Long ID = 100L;
     @Autowired
@@ -78,8 +75,8 @@ class CustomerRepositoryTest {
                 UNIMPORTANT_STRING,
                 UNIMPORTANT_STRING,
                 UNIMPORTANT_STRING,
-                NEW_NUMBER,
                 UNIMPORTANT_NUMBER,
+                NEW_NUMBER,
                 UNIMPORTANT_ID);
         Customer newCustomer = customerRepository.save(customer);
         assertThat(newCustomer.getId()).isEqualTo(id);

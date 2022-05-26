@@ -1,10 +1,12 @@
 package ru.teamtwo.api.models.customer;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import ru.teamtwo.api.models.BaseEntity;
 import ru.teamtwo.api.models.product.ProductOffer;
 
 import javax.persistence.Column;
@@ -17,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -24,9 +27,9 @@ import javax.persistence.Table;
 @ToString
 @Entity
 @Table(name = "order_item", schema = "marketplace")
-public class OrderItem {
+public class OrderItem implements BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
