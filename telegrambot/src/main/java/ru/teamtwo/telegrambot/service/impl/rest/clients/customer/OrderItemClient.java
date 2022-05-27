@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import ru.teamtwo.core.dtos.controller.customer.OrderItemController;
 import ru.teamtwo.core.dtos.customer.OrderItemDto;
 
@@ -18,12 +18,10 @@ public interface OrderItemClient extends OrderItemController {
     ResponseEntity<OrderItemDto> get(@PathVariable Long id);
 
     @Override
-    @ResponseBody
     @PostMapping("")
-    ResponseEntity<Set<Long>> save(Set<OrderItemDto> dto);
+    ResponseEntity<Set<Long>> save(@RequestBody Set<OrderItemDto> dto);
 
     @Override
-    @ResponseBody
-    @PostMapping("byCustomer/{customerId}")
+    @GetMapping("byCustomer/{customerId}")
     ResponseEntity<Set<OrderItemDto>> getAllByOrder(@PathVariable Long customerId);
 }

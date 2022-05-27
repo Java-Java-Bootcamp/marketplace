@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import ru.teamtwo.core.dtos.controller.product.ProductOfferController;
 import ru.teamtwo.core.dtos.product.ProductOfferDto;
 
@@ -18,11 +18,10 @@ public interface ProductOfferClient extends ProductOfferController {
     ResponseEntity<ProductOfferDto> get(@PathVariable Long id);
 
     @Override
-    @ResponseBody
     @PostMapping("")
-    ResponseEntity<Set<Long>> save(Set<ProductOfferDto> dto);
+    ResponseEntity<Set<Long>> save(@RequestBody Set<ProductOfferDto> dto);
 
     @Override
-    @GetMapping("{id}")
-    ResponseEntity<Set<ProductOfferDto>> query(ProductQuery productQuery);
+    @GetMapping("query/")
+    ResponseEntity<Set<ProductOfferDto>> query(@RequestBody ProductQuery productQuery);
 }

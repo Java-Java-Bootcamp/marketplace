@@ -16,7 +16,6 @@ import static ru.teamtwo.api.TestUtils.assertDtoAndEntityEqual;
 
 @DataJpaTest
 class CartItemMapperTest {
-
     @Autowired
     CartItemMapper cartItemMapper;
     @Autowired

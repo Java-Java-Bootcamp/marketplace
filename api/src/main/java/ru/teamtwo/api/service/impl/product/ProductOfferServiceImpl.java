@@ -12,6 +12,7 @@ import ru.teamtwo.api.service.api.product.ProductOfferService;
 import ru.teamtwo.core.dtos.controller.product.ProductOfferController;
 import ru.teamtwo.core.dtos.product.ProductOfferDto;
 
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,7 +41,7 @@ public class ProductOfferServiceImpl implements ProductOfferService {
 
     @Override
     public Set<ProductOfferDto> query(ProductOfferController.ProductQuery productQuery) {
-        Sort sort = Sort.by(productQuery.sortingTypeField().name().replace("_","."));
+        Sort sort = Sort.by(productQuery.sortingTypeField().name().replace("_",".").toLowerCase(Locale.ROOT));
         if (productQuery.sortingTypeAscDesc().equals(ProductOfferController.SortingTypeAscDesc.ASC))
             sort.ascending();
         else
@@ -51,7 +52,7 @@ public class ProductOfferServiceImpl implements ProductOfferService {
                 sort);
 
         return productOfferRepository
-                .getProductOffersByProductName(productQuery.query(), pageRequest)
+                .getProductOffersByProduct_NameContains(productQuery.query(), pageRequest)
                 .get()
                 .map(productOfferMapper::convert)
                 .collect(Collectors.toSet());

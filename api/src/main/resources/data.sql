@@ -173,3 +173,10 @@ VALUES (1, 1, 1, 9);
 INSERT INTO marketplace.cart_item(
     id, customer, product_offer, quantity)
 VALUES (1, 1, 1, 9);
+
+select setval('marketplace.product_id_seq',  (SELECT MAX(id) FROM marketplace.product));
+select setval('marketplace.product_offer_id_seq',  (SELECT MAX(id) FROM marketplace.product_offer));
+select setval('marketplace.store_id_seq',  (SELECT MAX(id) FROM marketplace.store));
+select setval('marketplace.cart_item_id_seq',  (SELECT MAX(id) FROM marketplace.cart_item));
+select setval('marketplace.order_id_seq',  (SELECT MAX(id) FROM marketplace."order"));
+select setval('marketplace.order_item_id_seq',  (SELECT MAX(id) FROM marketplace.order_item));

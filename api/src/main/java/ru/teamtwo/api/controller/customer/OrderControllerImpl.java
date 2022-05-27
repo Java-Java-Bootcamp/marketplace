@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.api.service.api.customer.OrderService;
 import ru.teamtwo.core.dtos.controller.customer.OrderController;
@@ -30,7 +29,6 @@ public class OrderControllerImpl implements OrderController {
     }
 
     @Override
-    @ResponseBody
     @PostMapping("")
     public ResponseEntity<Set<Long>> save(@RequestBody Set<OrderDto> dtos){
         return ResponseEntity.ok(orderService.save(dtos));

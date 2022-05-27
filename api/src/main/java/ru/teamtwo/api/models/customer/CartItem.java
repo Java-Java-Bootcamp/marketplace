@@ -29,7 +29,7 @@ import javax.persistence.Table;
 @Table(name = "cart_item", schema = "marketplace")
 public class CartItem implements BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 

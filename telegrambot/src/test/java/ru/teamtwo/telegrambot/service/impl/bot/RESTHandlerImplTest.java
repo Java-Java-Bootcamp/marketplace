@@ -1,66 +1,84 @@
-package ru.teamtwo.telegrambot.service.bot.handlers;
+package ru.teamtwo.telegrambot.service.impl.bot;
 
+import org.assertj.core.api.Assertions;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.hamcrest.MockitoHamcrest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import ru.teamtwo.core.dtos.controller.product.ProductOfferController;
+import ru.teamtwo.core.dtos.customer.CartItemDto;
+import ru.teamtwo.core.dtos.customer.CustomerDto;
+import ru.teamtwo.core.dtos.product.ProductDto;
+import ru.teamtwo.core.dtos.product.ProductOfferDto;
+import ru.teamtwo.telegrambot.CustomerStateTestUtils;
+import ru.teamtwo.telegrambot.mapper.CustomerStateMapper;
+import ru.teamtwo.telegrambot.model.customer.CustomerState;
+import ru.teamtwo.telegrambot.service.api.rest.RESTHandler;
+import ru.teamtwo.telegrambot.service.api.rest.RESTHandlerException;
+import ru.teamtwo.telegrambot.service.impl.rest.clients.customer.CustomerClient;
+import ru.teamtwo.telegrambot.service.impl.rest.clients.product.ProductOfferClient;
+
+import java.util.HashSet;
+import java.util.Set;
+
+@SpringBootTest
 class RESTHandlerImplTest {
-/*
     static final Long USER_ID = 12345L;
 
     @Mock
-    User user;
     Set<CartItemDto> testCart = new HashSet<>();
     Set<ProductDto> testQueryResult = new HashSet<>();
+    @Autowired
+    CustomerStateMapper customerStateMapper;
     CustomerState filledCustomerState;
+    CustomerDto customerDto;
     @Mock
     CustomerClient customerClient;
     @Mock
     ProductOfferClient productOfferClient;
-    RESTHandler restHandler = new RESTHandlerImpl();
+    @Autowired
+    RESTHandler restHandler;
 
     @BeforeEach
     void setUp() {
-        testCart.add(new CartItemDto(1, 1L, 1, 1));
-        Mockito.when(user.getId()).thenReturn(USER_ID);
+        testCart.add(new CartItemDto(1L, 1L, 1L, 1));
 
-        filledCustomerState = CustomerState.builder()
-                .address("Address")
-                .user(user)
-                .chatId("12345")
-                .stage(Stage.WAITING_FOR_QUANTITY)
-                .searchQuery("Search query")
-                .sortingTypeField(ProductOfferController.SortingTypeField.PRODUCT_RATING)
-                .sortingTypeAscDesc(ProductOfferController.SortingTypeAscDesc.ASC)
-                .offset(5)
-                .limit(10)
-                .cart(testCart)
-                .currentProductId(123)
-                .queryResult(testQueryResult)
-                .build();
+        filledCustomerState = CustomerStateTestUtils.getCustomerState();
+        customerDto = CustomerStateTestUtils.getCustomerDto();
     }
 
     @Test
-    void getCustomerState() {
-        Mockito.when(customerClient.get(user.getId())).thenReturn(filledCustomerState);
+    void getCustomerState() throws RESTHandlerException {
+        ResponseEntity<CustomerDto> response = new ResponseEntity<>(customerDto, HttpStatus.OK);
+        Mockito.when(customerClient.get(USER_ID)).thenReturn(response);
 
         CustomerState customerState = restHandler.getCustomerState(USER_ID);
 
-        Mockito.verify(customerClient, Mockito.times(1)).get(user.getId());
-        Assertions.assertThat(filledCustomerState);
+        Mockito.verify(customerClient, Mockito.times(1)).get(USER_ID);
+        Assertions.assertThat(filledCustomerState.getUserId()).isEqualTo(customerState.getUserId());
     }
 
     @Test
-    void saveCustomerState() {
+    void saveCustomerState() throws RESTHandlerException {
         restHandler.saveCustomerState(filledCustomerState);
 
-        Mockito.verify(customerClient, Mockito.times(1)).save();
+        Set<CustomerDto> argThat = (Set<CustomerDto>) MockitoHamcrest.argThat(Matchers.hasItem(customerDto));
+        Mockito.verify(customerClient, Mockito.times(1)).save(argThat);
     }
 
     @Test
-    void queryProducts() {
-        ProductSearchHandler.ProductQuery productQuery = new ProductSearchHandler.ProductQuery("query");
+    void queryProducts() throws RESTHandlerException {
+        ProductOfferController.ProductQuery productQuery = new ProductOfferController.ProductQuery("query", ProductOfferController.SortingTypeField.PRODUCT_RATING, ProductOfferController.SortingTypeAscDesc.ASC, 0, 5);
 
-        ResponseEntity<Set<ProductOfferDto>> productQueryResult = restHandler.queryProducts(productQuery);
+        Set<ProductOfferDto> productQueryResult = restHandler.queryProducts(productQuery);
 
-        Mockito.verify(customerClient, Mockito.times(1)).save();
+        Mockito.verify(productOfferClient, Mockito.times(1)).query(productQuery);
     }
 
- */
 }

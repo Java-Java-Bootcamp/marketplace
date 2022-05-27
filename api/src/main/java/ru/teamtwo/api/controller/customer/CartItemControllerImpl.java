@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamtwo.api.service.api.customer.CartItemService;
 import ru.teamtwo.core.dtos.controller.customer.CartItemController;
@@ -30,14 +29,12 @@ public class CartItemControllerImpl implements CartItemController {
     }
 
     @Override
-    @ResponseBody
     @PostMapping("")
     public ResponseEntity<Set<Long>> save(@RequestBody Set<CartItemDto> dto) {
         return ResponseEntity.ok(cartItemService.save(dto));
     }
 
     @Override
-    @ResponseBody
     @GetMapping("byCustomer/{customerId}")
     public ResponseEntity<Set<CartItemDto>> getAllByCustomer(@PathVariable Long customerId) {
         return ResponseEntity.ok(cartItemService.getAllByCustomer(customerId));

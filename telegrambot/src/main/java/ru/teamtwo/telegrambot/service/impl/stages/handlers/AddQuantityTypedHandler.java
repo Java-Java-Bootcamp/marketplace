@@ -28,7 +28,7 @@ public class AddQuantityTypedHandler implements StageHandler {
             Integer quantity = Integer.valueOf(context.message());
 
             CartItemDto cartItemDto = new CartItemDto(null,
-                    context.customerState().getUser().getId(),
+                    context.customerState().getUserId(),
                     context.customerState().getCurrentProductId(),
                     quantity);
             context.customerState().getCart().add(cartItemDto);

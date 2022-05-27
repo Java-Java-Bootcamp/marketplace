@@ -29,7 +29,7 @@ import java.time.Instant;
 @Table(name = "\"order\"", schema = "marketplace")
 public class Order implements BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 

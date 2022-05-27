@@ -35,13 +35,13 @@ public class CustomerServiceImpl implements CustomerService {
                     id,
                     "",
                     "",
+                    "WAITING_FOR_SEARCH_START",
                     "",
-                    "",
-                    "",
-                    "",
+                    "PRODUCT_NAME",
+                    "DESC",
                     0,
                     5,
-                    0L
+                    1L
             );
             return customerMapper.convert(customerRepository.save(customerMapper.convert(customerDto)));
         }

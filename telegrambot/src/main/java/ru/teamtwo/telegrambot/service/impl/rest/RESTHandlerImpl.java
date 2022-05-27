@@ -41,7 +41,7 @@ public class RESTHandlerImpl implements RESTHandler {
 
     @Override
     public CustomerState getCustomerState(Long userId) throws RESTHandlerException {
-        ResponseEntity<CustomerDto> customerDto = customerClient.get(userId);
+        CustomerDto customerDto = fromResponseEntity(customerClient.get(userId));
 
         Set<CartItemDto> cartItemsByCustomer = fromResponseEntity(cartItemClient.getAllByCustomer(userId));
 

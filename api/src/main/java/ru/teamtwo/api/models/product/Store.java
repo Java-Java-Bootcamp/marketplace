@@ -25,7 +25,7 @@ import javax.persistence.Table;
 @Table(name = "store", schema = "marketplace")
 public class Store implements BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
