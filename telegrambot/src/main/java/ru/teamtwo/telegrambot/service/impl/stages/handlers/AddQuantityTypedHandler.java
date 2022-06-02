@@ -14,8 +14,8 @@ import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 @RequiredArgsConstructor
 @Slf4j
 public class AddQuantityTypedHandler implements StageHandler {
-    final SendMessageHandler sendMessageHandler;
-    final CustomerStateHandler customerStateHandler;
+    private final SendMessageHandler sendMessageHandler;
+    private final CustomerStateHandler customerStateHandler;
 
     @Override
     public boolean shouldRun(StageContext context) {
@@ -28,7 +28,7 @@ public class AddQuantityTypedHandler implements StageHandler {
             Integer quantity = Integer.valueOf(context.message());
 
             CartItemDto cartItemDto = new CartItemDto(null,
-                    context.customerState().getUser().getId(),
+                    context.customerState().getUserId(),
                     context.customerState().getCurrentProductId(),
                     quantity);
             context.customerState().getCart().add(cartItemDto);

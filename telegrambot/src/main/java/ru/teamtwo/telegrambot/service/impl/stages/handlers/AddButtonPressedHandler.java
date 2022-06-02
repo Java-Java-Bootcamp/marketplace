@@ -14,9 +14,8 @@ import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 @RequiredArgsConstructor
 @Slf4j
 public class AddButtonPressedHandler implements StageHandler {
-    final SendMessageHandler sendMessageHandler;
-    final CustomerStateHandler customerStateHandler;
-
+    private final SendMessageHandler sendMessageHandler;
+    private final CustomerStateHandler customerStateHandler;
 
     @Override
     public boolean shouldRun(StageContext context) {

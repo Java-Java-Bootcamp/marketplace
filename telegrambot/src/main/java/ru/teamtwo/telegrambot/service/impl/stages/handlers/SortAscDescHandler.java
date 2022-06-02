@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.teamtwo.core.dtos.controller.product.ProductOfferController;
-import ru.teamtwo.core.dtos.product.ProductOfferDto;
 import ru.teamtwo.telegrambot.model.bot.menus.TelegramBotInlineMenus;
+import ru.teamtwo.telegrambot.model.product.Product;
 import ru.teamtwo.telegrambot.service.api.bot.SendMessageHandler;
 import ru.teamtwo.telegrambot.service.api.customer.CustomerStateHandler;
 import ru.teamtwo.telegrambot.service.api.rest.RESTHandler;
@@ -15,16 +15,16 @@ import ru.teamtwo.telegrambot.service.api.stage.StageHandler;
 import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 
 import java.util.Set;
+import java.util.StringJoiner;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class SortAscDescHandler implements StageHandler {
-
-    final CustomerStateHandler customerStateHandler;
-    final SendMessageHandler sendMessageHandler;
-    final RESTHandler restHandler;
-    final TelegramBotInlineMenus inlineMenus;
+    private final CustomerStateHandler customerStateHandler;
+    private final SendMessageHandler sendMessageHandler;
+    private final RESTHandler restHandler;
+    private final TelegramBotInlineMenus inlineMenus;
 
     @Override
     public boolean shouldRun(StageContext context) {
@@ -49,10 +49,17 @@ public class SortAscDescHandler implements StageHandler {
         );
 
         try {
-            Set<ProductOfferDto> products = restHandler.queryProducts(productQuery);
+            Set<Product> products = restHandler.queryProducts(productQuery);
 
-            products.forEach(productDTO -> {
-                sendMessageHandler.sendMessage(context.chatId(), productDTO.toString(), inlineMenus.createAddButton(String.valueOf(productDTO.id())));
+            products.forEach(product -> {
+                StringJoiner productInfo = new StringJoiner(", ");
+                productInfo.add(product.name());
+                productInfo.add(product.price().toString()+" рублей");
+                productInfo.add(product.rating().toString()+" очков");
+                productInfo.add("от "+product.seller());
+                productInfo.add(product.sellerRating().toString()+" очков");
+
+                sendMessageHandler.sendMessage(context.chatId(), productInfo.toString(), inlineMenus.createAddButton(String.valueOf(product.productOfferDto().id())));
             });
 
             context.customerState().setStage(Stage.WAITING_FOR_ADD_OR_FINISH);

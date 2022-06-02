@@ -3,10 +3,10 @@ name: Build
 on:
   pull_request:
     branches:
-      - 'telegram-bot-sprint1'
+      - 'main'
   push:
     branches:
-      - 'telegram-bot-sprint1'
+      - 'main'
 
 jobs:
   build:
@@ -23,22 +23,22 @@ jobs:
           distribution: 'temurin'
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
       - name: Maven Install Core
-        run: mvn -f core/pom.xml clean install -Dmaven.test.skip=true
+        run: mvn -f core/pom.xml clean install
 
       - name: Maven Package Telegrambot
-        run: mvn -f telegrambot/pom.xml clean package -Dmaven.test.skip=true
+        run: mvn -f telegrambot/pom.xml clean package
 
-      - name: Maven Package api
-        run: mvn -f api/pom.xml clean package -Dmaven.test.skip=true
+      - name: Maven Package Backend
+        run: mvn -f api/pom.xml clean package
 
-      - name: FTP Deploy api
+      - name: FTP Deploy Backend
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          local-dir: api/
-          server-dir: api/
+          local-dir: backend/
+          server-dir: backend/
           exclude: |
             **/maven-archiver/**
             **/classes/**
@@ -75,7 +75,7 @@ jobs:
           host: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          script: docker build api -t teamtwo/api:latest
+          script: docker build backend -t teamtwo/backend:latest
 
       - name: SSH Build Docker Telegrambot
         uses: appleboy/ssh-action@master
@@ -85,13 +85,13 @@ jobs:
           password: teamtwo
           script: docker build telegrambot -t teamtwo/telegrambot:latest
 
-      - name: SSH Run Docker API
+      - name: SSH Run Docker Backend
         uses: appleboy/ssh-action@master
         with:
           host: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          script: docker run -d -p 8080:8080 --rm --name teamtwo_api teamtwo/api
+          script: docker run -d -p 8080:8080 --rm --name teamtwo_backend teamtwo/backend &
 
       - name: SSH Run Docker Telegrambot
         uses: appleboy/ssh-action@master

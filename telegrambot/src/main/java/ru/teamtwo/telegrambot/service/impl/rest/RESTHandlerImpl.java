@@ -2,7 +2,6 @@ package ru.teamtwo.telegrambot.service.impl.rest;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -11,17 +10,22 @@ import ru.teamtwo.core.dtos.customer.CartItemDto;
 import ru.teamtwo.core.dtos.customer.CustomerDto;
 import ru.teamtwo.core.dtos.customer.OrderDto;
 import ru.teamtwo.core.dtos.customer.OrderItemDto;
+import ru.teamtwo.core.dtos.product.ProductDto;
 import ru.teamtwo.core.dtos.product.ProductOfferDto;
+import ru.teamtwo.core.dtos.product.StoreDto;
 import ru.teamtwo.telegrambot.mapper.CustomerStateMapper;
 import ru.teamtwo.telegrambot.model.customer.CustomerOrder;
 import ru.teamtwo.telegrambot.model.customer.CustomerState;
+import ru.teamtwo.telegrambot.model.product.Product;
 import ru.teamtwo.telegrambot.service.api.rest.RESTHandler;
 import ru.teamtwo.telegrambot.service.api.rest.RESTHandlerException;
 import ru.teamtwo.telegrambot.service.impl.rest.clients.customer.CartItemClient;
 import ru.teamtwo.telegrambot.service.impl.rest.clients.customer.CustomerClient;
 import ru.teamtwo.telegrambot.service.impl.rest.clients.customer.OrderClient;
 import ru.teamtwo.telegrambot.service.impl.rest.clients.customer.OrderItemClient;
+import ru.teamtwo.telegrambot.service.impl.rest.clients.product.ProductClient;
 import ru.teamtwo.telegrambot.service.impl.rest.clients.product.ProductOfferClient;
+import ru.teamtwo.telegrambot.service.impl.rest.clients.product.StoreClient;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -31,12 +35,14 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor(onConstructor=@__(@Autowired))
+@RequiredArgsConstructor
 public class RESTHandlerImpl implements RESTHandler {
     private final CartItemClient cartItemClient;
     private final CustomerClient customerClient;
     private final OrderClient orderClient;
     private final OrderItemClient orderItemClient;
+    private final ProductClient productClient;
+    private final StoreClient storeClient;
     private final ProductOfferClient productOfferClient;
     private final CustomerStateMapper customerStateMapper;
 
@@ -54,12 +60,12 @@ public class RESTHandlerImpl implements RESTHandler {
             customerOrders.add(new CustomerOrder(orderDto, orderItemByOrder));
         }
 
-        return customerStateMapper.convert(customerDto, cartItemsByCustomer, customerOrders);
+        return customerStateMapper.convertToEntity(customerDto, cartItemsByCustomer, customerOrders);
     }
 
     @Override
     public void saveCustomerState(CustomerState customerState) throws RESTHandlerException {
-        checkResponseEntity(customerClient.save(Collections.singleton(customerStateMapper.convert(customerState))));
+        checkResponseEntity(customerClient.save(Collections.singleton(customerStateMapper.convertToDto(customerState))));
 
         checkResponseEntity(cartItemClient.save(customerState.getCart()));
 
@@ -76,8 +82,25 @@ public class RESTHandlerImpl implements RESTHandler {
     }
 
     @Override
-    public Set<ProductOfferDto> queryProducts(ProductOfferController.ProductQuery productQuery) throws RESTHandlerException {
-        return fromResponseEntity(productOfferClient.query(productQuery));
+    public Set<Product> queryProducts(ProductOfferController.ProductQuery productQuery) throws RESTHandlerException {
+        Set<ProductOfferDto> productOfferDtos = fromResponseEntity(productOfferClient.query(productQuery));
+
+        Set<Product> products = new HashSet<>();
+        for (ProductOfferDto productOfferDto : productOfferDtos) {
+            ProductDto productDto = fromResponseEntity(productClient.get(productOfferDto.productId()));
+            StoreDto storeDto = fromResponseEntity(storeClient.get(productOfferDto.storeId()));
+
+            products.add(new Product(
+                    productOfferDto,
+                    productDto.name(),
+                    productDto.price(),
+                    productDto.rating(),
+                    storeDto.name(),
+                    storeDto.rating(),
+                    productOfferDto.quantity()));
+        }
+
+        return products;
     }
 
     private void checkResponseEntity(ResponseEntity<?> responseEntity) throws RESTHandlerException {

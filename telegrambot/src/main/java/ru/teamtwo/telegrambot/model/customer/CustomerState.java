@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.telegram.telegrambots.meta.api.objects.User;
 import ru.teamtwo.core.dtos.controller.product.ProductOfferController;
 import ru.teamtwo.core.dtos.customer.CartItemDto;
 import ru.teamtwo.core.dtos.product.ProductDto;
@@ -24,8 +23,7 @@ import java.util.Set;
 public class CustomerState {
     private String address;
     private String name;
-    private User user;
-    private String chatId;
+    private Long userId;
     private Stage stage;
     private String searchQuery;
     private ProductOfferController.SortingTypeField sortingTypeField;

@@ -12,9 +12,9 @@ import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 @Component
 @RequiredArgsConstructor
 public class UserAddressTypedHandler implements StageHandler {
-    final SendMessageHandler sendMessageHandler;
-    final CustomerStateHandler customerStateHandler;
-    final RESTHandlerImpl restHandlerImpl;
+    private final SendMessageHandler sendMessageHandler;
+    private final CustomerStateHandler customerStateHandler;
+    private final RESTHandlerImpl restHandlerImpl;
 
     @Override
     public boolean shouldRun(StageContext context) {

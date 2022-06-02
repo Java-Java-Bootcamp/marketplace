@@ -12,9 +12,8 @@ import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 @Component
 @RequiredArgsConstructor
 public class QueryResultHandler implements StageHandler {
-
-    final SendMessageHandler sendMessageHandler;
-    final RESTHandlerImpl restHandlerImpl;
+    private final SendMessageHandler sendMessageHandler;
+    private final RESTHandlerImpl restHandlerImpl;
 
     @Override
     public boolean shouldRun(StageContext context) {

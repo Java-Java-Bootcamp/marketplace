@@ -10,7 +10,7 @@ import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 @Component
 @RequiredArgsConstructor
 public class GoToSearchHandler implements StageHandler {
-    final SendMessageHandler sendMessageHandler;
+    private final SendMessageHandler sendMessageHandler;
 
     @Override
     public boolean shouldRun(StageContext context) {
