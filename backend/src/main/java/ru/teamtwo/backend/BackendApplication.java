@@ -8,10 +8,10 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = { "ru.teamtwo.*" })
 @EntityScan("ru.teamtwo.*")
-public class ApiApplication {
+public class BackendApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ApiApplication.class, args);
+        SpringApplication.run(BackendApplication.class, args);
     }
 
 }

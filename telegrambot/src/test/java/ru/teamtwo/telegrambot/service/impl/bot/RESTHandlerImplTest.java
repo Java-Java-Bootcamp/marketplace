@@ -16,11 +16,11 @@ import ru.teamtwo.core.dtos.customer.CartItemDto;
 import ru.teamtwo.core.dtos.customer.CustomerDto;
 import ru.teamtwo.core.dtos.customer.OrderDto;
 import ru.teamtwo.core.dtos.product.ProductDto;
-import ru.teamtwo.core.dtos.product.ProductOfferDto;
 import ru.teamtwo.telegrambot.CustomerStateTestUtils;
 import ru.teamtwo.telegrambot.mapper.CustomerStateMapper;
 import ru.teamtwo.telegrambot.model.customer.CustomerOrder;
 import ru.teamtwo.telegrambot.model.customer.CustomerState;
+import ru.teamtwo.telegrambot.model.product.Product;
 import ru.teamtwo.telegrambot.service.api.rest.RESTHandlerException;
 import ru.teamtwo.telegrambot.service.impl.rest.RESTHandlerImpl;
 import ru.teamtwo.telegrambot.service.impl.rest.clients.customer.CartItemClient;
@@ -119,7 +119,7 @@ class RESTHandlerImplTest {
     void queryProducts() throws RESTHandlerException {
         ProductOfferController.ProductQuery productQuery = new ProductOfferController.ProductQuery("query", ProductOfferController.SortingTypeField.PRODUCT_RATING, ProductOfferController.SortingTypeAscDesc.ASC, 0, 5);
 
-        Set<ProductOfferDto> productQueryResult = restHandler.queryProducts(productQuery);
+        Set<Product> productQueryResult = restHandler.queryProducts(productQuery);
 
         Mockito.verify(productOfferClient, Mockito.times(1)).query(productQuery);
     }
