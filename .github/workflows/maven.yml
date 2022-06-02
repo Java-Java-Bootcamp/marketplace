@@ -3,10 +3,10 @@ name: Build
 on:
   pull_request:
     branches:
-      - 'telegram-bot-sprint1'
+      - 'main'
   push:
     branches:
-      - 'telegram-bot-sprint1'
+      - 'main'
 
 jobs:
   build:
@@ -23,22 +23,22 @@ jobs:
           distribution: 'temurin'
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
       - name: Maven Install Core
-        run: mvn -f core/pom.xml clean install -Dmaven.test.skip=true
+        run: mvn -f core/pom.xml clean install
 
       - name: Maven Package Telegrambot
-        run: mvn -f telegrambot/pom.xml clean package -Dmaven.test.skip=true
+        run: mvn -f telegrambot/pom.xml clean package
 
-      - name: Maven Package Website
-        run: mvn -f website/pom.xml clean package -Dmaven.test.skip=true
+      - name: Maven Package Backend
+        run: mvn -f api/pom.xml clean package
 
-      - name: FTP Deploy Website
+      - name: FTP Deploy Backend
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          local-dir: website/
-          server-dir: website/
+          local-dir: backend/
+          server-dir: backend/
           exclude: |
             **/maven-archiver/**
             **/classes/**
@@ -69,13 +69,13 @@ jobs:
             HELP.md
             pom.xml
 
-      - name: SSH Build Docker Website
+      - name: SSH Build Docker API
         uses: appleboy/ssh-action@master
         with:
           host: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          script: docker build website -t teamtwo/website:latest
+          script: docker build backend -t teamtwo/backend:latest
 
       - name: SSH Build Docker Telegrambot
         uses: appleboy/ssh-action@master
@@ -85,13 +85,13 @@ jobs:
           password: teamtwo
           script: docker build telegrambot -t teamtwo/telegrambot:latest
 
-      - name: SSH Run Docker Website
+      - name: SSH Run Docker Backend
         uses: appleboy/ssh-action@master
         with:
           host: 62.109.17.193
           username: teamtwo
           password: teamtwo
-          script: docker run -d -p 8080:8080 --rm --name teamtwo_website teamtwo/website
+          script: docker run -d -p 8080:8080 --rm --name teamtwo_backend teamtwo/backend &
 
       - name: SSH Run Docker Telegrambot
         uses: appleboy/ssh-action@master
