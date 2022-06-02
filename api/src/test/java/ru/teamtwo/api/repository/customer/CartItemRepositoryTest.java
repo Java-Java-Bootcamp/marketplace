@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataAccessException;
-import ru.teamtwo.api.BaseTestEntities;
+import ru.teamtwo.api.BaseTestEntitiesImpl;
 import ru.teamtwo.api.models.customer.CartItem;
 import ru.teamtwo.api.models.customer.Customer;
 import ru.teamtwo.api.models.product.ProductOffer;
@@ -21,7 +21,7 @@ import static ru.teamtwo.api.TestUtils.UNIMPORTANT_NUMBER;
 @DataJpaTest
 class CartItemRepositoryTest {
     @Autowired
-    BaseTestEntities baseTestEntities;
+    BaseTestEntitiesImpl baseTestEntities;
     @Autowired
     CartItemRepository cartItemRepository;
     CartItem cartItem;
@@ -67,8 +67,8 @@ class CartItemRepositoryTest {
 
     @Test
     void getCartItemsByCustomer_Id() {
-        assertThat(cartItemRepository.getCartItemsByCustomer_Id(null)).isEmpty();
-        assertThat(cartItemRepository.getCartItemsByCustomer_Id(EMPTY_ID)).isEmpty();
-        assertThat(cartItemRepository.getCartItemsByCustomer_Id(setupCartItem.getCustomer().getId())).contains(setupCartItem);
+        assertThat(cartItemRepository.getByCustomer_Id(null)).isEmpty();
+        assertThat(cartItemRepository.getByCustomer_Id(EMPTY_ID)).isEmpty();
+        assertThat(cartItemRepository.getByCustomer_Id(setupCartItem.getCustomer().getId())).contains(setupCartItem);
     }
 }

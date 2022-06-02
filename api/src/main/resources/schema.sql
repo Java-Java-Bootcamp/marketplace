@@ -65,10 +65,10 @@ CREATE TABLE IF NOT EXISTS marketplace.order_item (
     quantity integer NOT NULL
 );
 
-CREATE SEQUENCE IF NOT EXISTS marketplace.product_id_seq MINVALUE 1 OWNED BY marketplace.product.id;
-CREATE SEQUENCE IF NOT EXISTS marketplace.product_offer_id_seq MINVALUE 1 OWNED BY marketplace.product_offer.id;
-CREATE SEQUENCE IF NOT EXISTS marketplace.store_id_seq MINVALUE 1 OWNED BY marketplace.store.id;
-CREATE SEQUENCE IF NOT EXISTS marketplace.cart_item_id_seq MINVALUE 1 OWNED BY marketplace.cart_item.id;
-CREATE SEQUENCE IF NOT EXISTS marketplace.order_id_seq MINVALUE 1 OWNED BY marketplace."order".id;
-CREATE SEQUENCE IF NOT EXISTS marketplace.order_item_id_seq MINVALUE 1 OWNED BY marketplace.order_item.id;
+CREATE SEQUENCE IF NOT EXISTS marketplace.product_id_seq MINVALUE 1;
+CREATE SEQUENCE IF NOT EXISTS marketplace.product_offer_id_seq MINVALUE 1;
+CREATE SEQUENCE IF NOT EXISTS marketplace.store_id_seq MINVALUE 1;
+CREATE SEQUENCE IF NOT EXISTS marketplace.cart_item_id_seq MINVALUE 1;
+CREATE SEQUENCE IF NOT EXISTS marketplace.order_id_seq MINVALUE 1;
+CREATE SEQUENCE IF NOT EXISTS marketplace.order_item_id_seq MINVALUE 1;
 

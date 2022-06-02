@@ -1,4 +1,4 @@
-package ru.teamtwo.api.service.impl.customer;
+package ru.teamtwo.api.service.impl.product;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,31 +7,31 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import ru.teamtwo.api.BaseTestEntitiesImpl;
-import ru.teamtwo.api.mappers.customer.CartItemMapper;
-import ru.teamtwo.api.repository.customer.CartItemRepository;
+import ru.teamtwo.api.mappers.product.ProductOfferMapper;
+import ru.teamtwo.api.repository.product.ProductOfferRepository;
 import ru.teamtwo.api.service.impl.ServiceTestUtils;
 import ru.teamtwo.api.service.impl.ServiceTestUtilsParams;
 
 @DataJpaTest
-class CartItemServiceImplTest {
+class ProductOfferServiceTest {
     @Autowired
     BaseTestEntitiesImpl baseTestEntities;
     @Mock
-    private CartItemRepository cartItemRepository;
+    private ProductOfferRepository productOfferRepository;
     @Mock
-    private CartItemMapper cartItemMapper;
+    private ProductOfferMapper productOfferMapper;
     @InjectMocks
-    private CartItemServiceImpl cartItemService;
+    private ProductOfferServiceImpl productOfferService;
     private ServiceTestUtilsParams serviceTestUtilsParams;
 
     @BeforeEach
     void setUp() {
         serviceTestUtilsParams = new ServiceTestUtilsParams(
-                cartItemService,
-                cartItemRepository,
-                baseTestEntities.getCartItem(),
-                baseTestEntities.getCartItemDto(),
-                cartItemMapper);
+                productOfferService,
+                productOfferRepository,
+                baseTestEntities.getProductOffer(),
+                baseTestEntities.getProductOfferDto(),
+                productOfferMapper);
     }
 
     @Test
@@ -42,10 +42,5 @@ class CartItemServiceImplTest {
     @Test
     void save() {
         ServiceTestUtils.testBasicSave(serviceTestUtilsParams);
-    }
-
-    @Test
-    void getAllByCustomer() {
-        ServiceTestUtils.testGetByCustomer(serviceTestUtilsParams);
     }
 }

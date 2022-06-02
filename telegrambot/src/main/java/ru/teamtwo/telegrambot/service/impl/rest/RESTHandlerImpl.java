@@ -53,12 +53,12 @@ public class RESTHandlerImpl implements RESTHandler {
             customerOrders.add(new CustomerOrder(orderDto, orderItemByOrder));
         }
 
-        return customerStateMapper.convert(customerDto, cartItemsByCustomer, customerOrders);
+        return customerStateMapper.convertToEntity(customerDto, cartItemsByCustomer, customerOrders);
     }
 
     @Override
     public void saveCustomerState(CustomerState customerState) throws RESTHandlerException {
-        checkResponseEntity(customerClient.save(Collections.singleton(customerStateMapper.convert(customerState))));
+        checkResponseEntity(customerClient.save(Collections.singleton(customerStateMapper.convertToDto(customerState))));
 
         checkResponseEntity(cartItemClient.save(customerState.getCart()));
 

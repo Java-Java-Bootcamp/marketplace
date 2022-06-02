@@ -6,13 +6,14 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.teamtwo.api.mappers.BaseMapper;
 import ru.teamtwo.api.models.customer.OrderItem;
 import ru.teamtwo.api.repository.customer.OrderRepository;
 import ru.teamtwo.api.repository.product.ProductOfferRepository;
 import ru.teamtwo.core.dtos.customer.OrderItemDto;
 
 @Mapper(componentModel = "spring")
-public abstract class OrderItemMapper {
+public abstract class OrderItemMapper implements BaseMapper<OrderItem, OrderItemDto> {
     @Autowired
     private ProductOfferRepository productOfferRepository;
     @Autowired
@@ -21,8 +22,8 @@ public abstract class OrderItemMapper {
             @Mapping(target="orderId", source="orderItem.order.id"),
             @Mapping(target="productOfferId", source="orderItem.productOffer.id")
     })
-    public abstract OrderItemDto convert(OrderItem orderItem);
-    public abstract OrderItem convert(OrderItemDto orderItemDto);
+    public abstract OrderItemDto convertToDto(OrderItem orderItem);
+    public abstract OrderItem convertToEntity(OrderItemDto orderItemDto);
     @AfterMapping
     protected void afterMapping(OrderItemDto orderItemDto, @MappingTarget OrderItem.OrderItemBuilder orderItemBuilder) {
         orderItemBuilder.order(orderRepository.getById(orderItemDto.orderId()));

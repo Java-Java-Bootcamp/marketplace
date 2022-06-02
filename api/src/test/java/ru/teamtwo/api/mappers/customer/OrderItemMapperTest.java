@@ -40,13 +40,13 @@ class OrderItemMapperTest {
 
     @Test
     void convertToDto() {
-        OrderItemDto convert = orderItemMapper.convert(orderItem);
+        OrderItemDto convert = orderItemMapper.convertToDto(orderItem);
         assertDtoAndEntityEqual(convert, orderItem);
     }
 
     @Test
     void convertFromDto() {
-        OrderItem convert = orderItemMapper.convert(orderItemDto);
+        OrderItem convert = orderItemMapper.convertToEntity(orderItemDto);
         assertDtoAndEntityEqual(orderItemDto, convert);
     }
 }

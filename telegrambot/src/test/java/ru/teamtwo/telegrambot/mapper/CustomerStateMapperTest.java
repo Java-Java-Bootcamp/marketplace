@@ -27,7 +27,7 @@ class CustomerStateMapperTest {
 
     @Test
     void convertToDto() {
-        CustomerDto convert = customerStateMapper.convert(customerState);
+        CustomerDto convert = customerStateMapper.convertToDto(customerState);
         Assertions.assertThat(convert.id()).isEqualTo(customerState.getUserId());
         Assertions.assertThat(convert.name()).isEqualTo(customerState.getName());
         Assertions.assertThat(convert.address()).isEqualTo(customerState.getAddress());
@@ -44,7 +44,7 @@ class CustomerStateMapperTest {
     void convertFromDto() {
         HashSet<CartItemDto> cart = new HashSet<>();
         HashSet<CustomerOrder> orders = new HashSet<>();
-        CustomerState convert = customerStateMapper.convert(customerDto, cart, orders);
+        CustomerState convert = customerStateMapper.convertToEntity(customerDto, cart, orders);
         Assertions.assertThat(customerDto.id()).isEqualTo(convert.getUserId());
         Assertions.assertThat(customerDto.name()).isEqualTo(convert.getName());
         Assertions.assertThat(customerDto.address()).isEqualTo(convert.getAddress());

@@ -2,9 +2,7 @@ package ru.teamtwo.api.repository.customer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.teamtwo.api.models.customer.Order;
+import ru.teamtwo.api.repository.GetByCustomerRepository;
 
-import java.util.Set;
-
-public interface OrderRepository extends JpaRepository<Order, Long> {
-    Set<Order> getOrdersByCustomer_Id(Long customerId);
+public interface OrderRepository extends JpaRepository<Order, Long>, GetByCustomerRepository<Order> {
 }

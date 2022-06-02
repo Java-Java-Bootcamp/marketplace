@@ -7,6 +7,7 @@ import org.assertj.core.api.Assertions;
 import org.springframework.boot.test.context.TestComponent;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.teamtwo.api.TestUtils;
@@ -21,6 +22,19 @@ import java.util.Set;
 public class ControllerTestUtils {
 
     public static ObjectMapper objectMapper = new ObjectMapper();
+    static {
+        objectMapper.findAndRegisterModules();
+    }
+
+    public static void baseGetTest(ControllerTestUtilsParams controllerTestUtilsParams) throws Exception {
+        MvcResult result = controllerTestUtilsParams.mockMvc().perform(ControllerTestUtils.get(controllerTestUtilsParams.mapping(), controllerTestUtilsParams.entity())).andReturn();
+        ControllerTestUtils.assertContentAndEntityEqual(result.getResponse(), controllerTestUtilsParams.dto().getClass(), controllerTestUtilsParams.entity());
+    }
+
+    public static void baseSaveTest(ControllerTestUtilsParams controllerTestUtilsParams) throws Exception {
+        MvcResult result = controllerTestUtilsParams.mockMvc().perform(ControllerTestUtils.post(controllerTestUtilsParams.mapping(), controllerTestUtilsParams.dto())).andReturn();
+        ControllerTestUtils.assertContentAndEntityIdsEqual(result.getResponse(), controllerTestUtilsParams.entity());
+    }
 
     public static MockHttpServletRequestBuilder get(String controllerRequestMapping, String methodMapping, BaseEntity entity){
         return MockMvcRequestBuilders.get(uriWithContext(controllerRequestMapping, methodMapping, entity.getId().toString()));
@@ -33,9 +47,6 @@ public class ControllerTestUtils {
     }
     public static MockHttpServletRequestBuilder post(String controllerRequestMapping, Record dto) throws JsonProcessingException {
         return post(controllerRequestMapping, "", Collections.singleton(dto));
-    }
-    public static MockHttpServletRequestBuilder post(String controllerRequestMapping, Set dto) throws JsonProcessingException {
-        return post(controllerRequestMapping, "", dto);
     }
     public static MockHttpServletRequestBuilder post(String controllerRequestMapping, String methodMapping, Set dto) throws JsonProcessingException {
         return MockMvcRequestBuilders.post(uriWithContext(controllerRequestMapping, methodMapping)).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(dto));

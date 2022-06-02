@@ -1,4 +1,4 @@
-package ru.teamtwo.api.controller.product;
+package ru.teamtwo.api.controller.customer;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,8 +12,8 @@ import ru.teamtwo.api.controller.ControllerTestUtilsParams;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class ProductOfferControllerImplTest {
-    String CONTROLLER_REQUEST_MAPPING = "product_offer";
+class OrderControllerImplTest {
+    String CONTROLLER_REQUEST_MAPPING = "order";
     @Autowired
     BaseTestEntitiesImpl baseTestEntities;
     @Autowired
@@ -25,8 +25,8 @@ class ProductOfferControllerImplTest {
         controllerTestUtilsParams = new ControllerTestUtilsParams(
                 mockMvc,
                 CONTROLLER_REQUEST_MAPPING,
-                baseTestEntities.getProductOffer(),
-                baseTestEntities.getProductOfferDto());
+                baseTestEntities.getOrder(),
+                baseTestEntities.getOrderDto());
     }
 
     @Test
@@ -37,9 +37,5 @@ class ProductOfferControllerImplTest {
     @Test
     void save() throws Exception {
         ControllerTestUtils.baseSaveTest(controllerTestUtilsParams);
-    }
-
-    @Test
-    void query() {
     }
 }

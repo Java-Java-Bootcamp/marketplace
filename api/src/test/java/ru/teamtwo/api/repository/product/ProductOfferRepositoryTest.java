@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataAccessException;
-import ru.teamtwo.api.BaseTestEntities;
+import ru.teamtwo.api.BaseTestEntitiesImpl;
 import ru.teamtwo.api.models.product.Product;
 import ru.teamtwo.api.models.product.ProductOffer;
 import ru.teamtwo.api.models.product.Store;
@@ -21,7 +21,7 @@ import static ru.teamtwo.api.TestUtils.UNIMPORTANT_NUMBER;
 @DataJpaTest
 class ProductOfferRepositoryTest {
     @Autowired
-    BaseTestEntities baseTestEntities;
+    BaseTestEntitiesImpl baseTestEntities;
     @Autowired
     ProductOfferRepository productOfferRepository;
     Product product;

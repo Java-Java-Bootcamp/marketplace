@@ -7,31 +7,31 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import ru.teamtwo.api.BaseTestEntitiesImpl;
-import ru.teamtwo.api.mappers.customer.CartItemMapper;
-import ru.teamtwo.api.repository.customer.CartItemRepository;
+import ru.teamtwo.api.mappers.customer.OrderItemMapper;
+import ru.teamtwo.api.repository.customer.OrderItemRepository;
 import ru.teamtwo.api.service.impl.ServiceTestUtils;
 import ru.teamtwo.api.service.impl.ServiceTestUtilsParams;
 
 @DataJpaTest
-class CartItemServiceImplTest {
+class OrderItemServiceImplTest {
     @Autowired
     BaseTestEntitiesImpl baseTestEntities;
     @Mock
-    private CartItemRepository cartItemRepository;
+    private OrderItemRepository orderItemRepository;
     @Mock
-    private CartItemMapper cartItemMapper;
+    private OrderItemMapper orderItemMapper;
     @InjectMocks
-    private CartItemServiceImpl cartItemService;
+    private OrderItemServiceImpl orderItemService;
     private ServiceTestUtilsParams serviceTestUtilsParams;
 
     @BeforeEach
     void setUp() {
         serviceTestUtilsParams = new ServiceTestUtilsParams(
-                cartItemService,
-                cartItemRepository,
-                baseTestEntities.getCartItem(),
-                baseTestEntities.getCartItemDto(),
-                cartItemMapper);
+                orderItemService,
+                orderItemRepository,
+                baseTestEntities.getOrderItem(),
+                baseTestEntities.getOrderItemDto(),
+                orderItemMapper);
     }
 
     @Test
@@ -45,7 +45,7 @@ class CartItemServiceImplTest {
     }
 
     @Test
-    void getAllByCustomer() {
-        ServiceTestUtils.testGetByCustomer(serviceTestUtilsParams);
+    void getAllByOrder() {
+        ServiceTestUtils.testGetByOrder(serviceTestUtilsParams);
     }
 }

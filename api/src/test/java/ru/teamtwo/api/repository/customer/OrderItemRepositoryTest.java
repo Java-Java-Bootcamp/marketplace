@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataAccessException;
-import ru.teamtwo.api.BaseTestEntities;
+import ru.teamtwo.api.BaseTestEntitiesImpl;
 import ru.teamtwo.api.models.customer.Customer;
 import ru.teamtwo.api.models.customer.Order;
 import ru.teamtwo.api.models.customer.OrderItem;
@@ -22,7 +22,7 @@ import static ru.teamtwo.api.TestUtils.UNIMPORTANT_NUMBER;
 @DataJpaTest
 class OrderItemRepositoryTest {
     @Autowired
-    BaseTestEntities baseTestEntities;
+    BaseTestEntitiesImpl baseTestEntities;
     @Autowired
     OrderItemRepository orderItemRepository;
     Order order;
@@ -71,8 +71,8 @@ class OrderItemRepositoryTest {
 
     @Test
     void getOrderItemsByOrder_Id() {
-        assertThat(orderItemRepository.getOrderItemsByOrder_Id(null)).isEmpty();
-        assertThat(orderItemRepository.getOrderItemsByOrder_Id(EMPTY_ID)).isEmpty();
-        assertThat(orderItemRepository.getOrderItemsByOrder_Id(setupOrderItem.getOrder().getId())).contains(setupOrderItem);
+        assertThat(orderItemRepository.getByOrder_Id(null)).isEmpty();
+        assertThat(orderItemRepository.getByOrder_Id(EMPTY_ID)).isEmpty();
+        assertThat(orderItemRepository.getByOrder_Id(setupOrderItem.getOrder().getId())).contains(setupOrderItem);
     }
 }

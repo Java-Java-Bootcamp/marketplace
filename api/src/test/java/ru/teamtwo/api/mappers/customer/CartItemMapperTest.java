@@ -40,13 +40,13 @@ class CartItemMapperTest {
 
     @Test
     void convertToDto() {
-        CartItemDto convert = cartItemMapper.convert(cartItem);
+        CartItemDto convert = cartItemMapper.convertToDto(cartItem);
         assertDtoAndEntityEqual(convert, cartItem);
     }
 
     @Test
     void convertFromDto() {
-        CartItem convert = cartItemMapper.convert(cartItemDto);
+        CartItem convert = cartItemMapper.convertToEntity(cartItemDto);
         assertDtoAndEntityEqual(cartItemDto, convert);
     }
 }

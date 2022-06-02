@@ -159,24 +159,24 @@ VALUES
     (10,17,80);
 
 INSERT INTO marketplace.customer(
-    id, "name", address)
-VALUES (1, 'customer1', 'address1');
+    id, "name", address, stage, search_query, sorting_type_field, sorting_type_asc_desc, "offset", "limit", current_product_id)
+VALUES (1, 'customer1', 'address1', 0, 'query', 0, 0, 0, 5, 1);
 
 INSERT INTO marketplace."order"(
-    id, customer, created_on)
-VALUES (1, 1, '2016-06-01 00:00');
+    customer, created_on)
+VALUES (1, '2016-06-01 00:00');
 
 INSERT INTO marketplace.order_item(
-    id, "order", product_offer, quantity)
-VALUES (1, 1, 1, 9);
+    "order", product_offer, quantity)
+VALUES (1, 1, 9);
 
 INSERT INTO marketplace.cart_item(
-    id, customer, product_offer, quantity)
-VALUES (1, 1, 1, 9);
+    customer, product_offer, quantity)
+VALUES (1, 1, 9);
 
-select setval('marketplace.product_id_seq',  (SELECT MAX(id) FROM marketplace.product));
-select setval('marketplace.product_offer_id_seq',  (SELECT MAX(id) FROM marketplace.product_offer));
-select setval('marketplace.store_id_seq',  (SELECT MAX(id) FROM marketplace.store));
-select setval('marketplace.cart_item_id_seq',  (SELECT MAX(id) FROM marketplace.cart_item));
-select setval('marketplace.order_id_seq',  (SELECT MAX(id) FROM marketplace."order"));
-select setval('marketplace.order_item_id_seq',  (SELECT MAX(id) FROM marketplace.order_item));
+ALTER SEQUENCE marketplace.product_id_seq RESTART WITH 1000;
+ALTER SEQUENCE marketplace.product_offer_id_seq RESTART WITH 1000;
+ALTER SEQUENCE marketplace.store_id_seq RESTART WITH 1000;
+ALTER SEQUENCE marketplace.cart_item_id_seq RESTART WITH 1000;
+ALTER SEQUENCE marketplace.order_id_seq RESTART WITH 1000;
+ALTER SEQUENCE marketplace.order_item_id_seq RESTART WITH 1000;

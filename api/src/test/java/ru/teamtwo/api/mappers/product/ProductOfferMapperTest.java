@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import ru.teamtwo.api.BaseTestEntities;
+import ru.teamtwo.api.BaseTestEntitiesImpl;
 import ru.teamtwo.api.models.product.ProductOffer;
 import ru.teamtwo.core.dtos.product.ProductOfferDto;
 
@@ -13,7 +13,7 @@ import static ru.teamtwo.api.TestUtils.assertDtoAndEntityEqual;
 @DataJpaTest
 class ProductOfferMapperTest {
     @Autowired
-    BaseTestEntities baseTestEntities;
+    BaseTestEntitiesImpl baseTestEntities;
     @Autowired
     ProductOfferMapper productOfferMapper;
     ProductOffer productOffer;
@@ -31,13 +31,13 @@ class ProductOfferMapperTest {
 
     @Test
     void convertToDto() {
-        ProductOfferDto convert = productOfferMapper.convert(productOffer);
+        ProductOfferDto convert = productOfferMapper.convertToDto(productOffer);
         assertDtoAndEntityEqual(convert, productOffer);
     }
 
     @Test
     void convertFromDto() {
-        ProductOffer convert = productOfferMapper.convert(productOfferDto);
+        ProductOffer convert = productOfferMapper.convertToEntity(productOfferDto);
         assertDtoAndEntityEqual(productOfferDto, convert);
     }
 }

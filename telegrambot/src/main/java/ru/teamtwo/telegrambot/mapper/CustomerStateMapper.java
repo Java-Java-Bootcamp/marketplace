@@ -16,11 +16,11 @@ public interface CustomerStateMapper {
     @Mappings({
             @Mapping(target="id", source="customerState.userId"),
     })
-    CustomerDto convert(CustomerState customerState);
+    CustomerDto convertToDto(CustomerState customerState);
     @Mappings({
             @Mapping(target="userId", source="customerDto.id"),
             @Mapping(target="cart", source="cartItemDtos"),
             @Mapping(target="orders", source="customerOrders"),
     })
-    CustomerState convert(CustomerDto customerDto, Set<CartItemDto> cartItemDtos, Set<CustomerOrder> customerOrders);
+    CustomerState convertToEntity(CustomerDto customerDto, Set<CartItemDto> cartItemDtos, Set<CustomerOrder> customerOrders);
 }

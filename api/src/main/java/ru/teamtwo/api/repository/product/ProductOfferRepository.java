@@ -8,6 +8,4 @@ import ru.teamtwo.api.models.product.ProductOffer;
 
 public interface ProductOfferRepository extends PagingAndSortingRepository<ProductOffer, Long>, JpaRepository<ProductOffer, Long> {
     Page<ProductOffer> getProductOffersByProduct_NameContains(String name, Pageable pageable);
-
-    ProductOffer getProductOfferById(Long id);
 }

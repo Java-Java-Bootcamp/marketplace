@@ -54,13 +54,13 @@ class CustomerMapperTest {
 
     @Test
     void convertToDto() {
-        CustomerDto convert = customerMapper.convert(customer);
+        CustomerDto convert = customerMapper.convertToDto(customer);
         assertDtoAndEntityEqual(convert, customer);
     }
 
     @Test
     void convertFromDto() {
-        Customer convert = customerMapper.convert(customerDto);
+        Customer convert = customerMapper.convertToEntity(customerDto);
         assertDtoAndEntityEqual(customerDto, convert);
     }
 }
