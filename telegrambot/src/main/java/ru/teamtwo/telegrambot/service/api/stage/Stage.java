@@ -1,0 +1,11 @@
+package ru.teamtwo.telegrambot.service.api.stage;
+
+public enum Stage {
+    WAITING_FOR_SEARCH_START,
+    WAITING_FOR_SEARCH_QUERY,
+    WAITING_FOR_SORTING_TYPE_FIELD,
+    WAITING_FOR_SORTING_TYPE_ASCDESC,
+    WAITING_FOR_ADD_OR_FINISH,
+    WAITING_FOR_QUANTITY,
+    WAITING_FOR_ADDRESS
+}
