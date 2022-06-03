@@ -29,7 +29,7 @@ jobs:
         run: mvn -f telegrambot/pom.xml clean package
 
       - name: Maven Package Backend
-        run: mvn -f api/pom.xml clean package
+        run: mvn -f backend/pom.xml clean package
 
       - name: FTP Deploy Backend
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
