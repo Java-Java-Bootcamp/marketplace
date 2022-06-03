@@ -34,9 +34,9 @@ jobs:
       - name: FTP Deploy Backend
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          server: 62.109.17.193
-          username: teamtwo
-          password: teamtwo
+          server: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_LOGIN }}
+          password: ${{ secrets.SERVER_PASSWORD }}
           local-dir: backend/
           server-dir: backend/
           exclude: |
@@ -53,9 +53,9 @@ jobs:
       - name: FTP Deploy Telegrambot
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          server: 62.109.17.193
-          username: teamtwo
-          password: teamtwo
+          server: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_LOGIN }}
+          password: ${{ secrets.SERVER_PASSWORD }}
           local-dir: telegrambot/
           server-dir: telegrambot/
           exclude: |
@@ -72,31 +72,31 @@ jobs:
       - name: SSH Build Docker API
         uses: appleboy/ssh-action@master
         with:
-          host: 62.109.17.193
-          username: teamtwo
-          password: teamtwo
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_LOGIN }}
+          password: ${{ secrets.SERVER_PASSWORD }}
           script: docker build backend -t teamtwo/backend:latest
 
       - name: SSH Build Docker Telegrambot
         uses: appleboy/ssh-action@master
         with:
-          host: 62.109.17.193
-          username: teamtwo
-          password: teamtwo
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_LOGIN }}
+          password: ${{ secrets.SERVER_PASSWORD }}
           script: docker build telegrambot -t teamtwo/telegrambot:latest
 
       - name: SSH Run Docker Backend
         uses: appleboy/ssh-action@master
         with:
-          host: 62.109.17.193
-          username: teamtwo
-          password: teamtwo
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_LOGIN }}
+          password: ${{ secrets.SERVER_PASSWORD }}
           script: docker run -d -p 8080:8080 --rm --name teamtwo_backend teamtwo/backend &
 
       - name: SSH Run Docker Telegrambot
         uses: appleboy/ssh-action@master
         with:
-          host: 62.109.17.193
-          username: teamtwo
-          password: teamtwo
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_LOGIN }}
+          password: ${{ secrets.SERVER_PASSWORD }}
           script: docker run -d --rm --name teamtwo_telegrambot teamtwo/telegrambot &
