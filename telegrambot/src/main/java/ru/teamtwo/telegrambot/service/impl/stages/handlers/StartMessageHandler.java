@@ -11,7 +11,6 @@ import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 @Component
 @RequiredArgsConstructor
 public class StartMessageHandler implements StageHandler {
-
     private final SendMessageHandler sendMessageHandler;
 
     @Override

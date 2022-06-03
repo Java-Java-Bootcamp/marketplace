@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.teamtwo.telegrambot.model.bot.menus.TelegramBotInlineMenus;
 import ru.teamtwo.telegrambot.service.api.bot.SendMessageHandler;
-import ru.teamtwo.telegrambot.service.api.customer.CustomerStateHandler;
 import ru.teamtwo.telegrambot.service.api.stage.Stage;
 import ru.teamtwo.telegrambot.service.api.stage.StageHandler;
 import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
@@ -15,7 +14,6 @@ import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 @Slf4j
 public class AddButtonPressedHandler implements StageHandler {
     private final SendMessageHandler sendMessageHandler;
-    private final CustomerStateHandler customerStateHandler;
 
     @Override
     public boolean shouldRun(StageContext context) {
