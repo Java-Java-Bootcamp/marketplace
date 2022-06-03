@@ -3,18 +3,14 @@ package ru.teamtwo.telegrambot.service.impl.stages.handlers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.teamtwo.telegrambot.service.api.bot.SendMessageHandler;
-import ru.teamtwo.telegrambot.service.api.customer.CustomerStateHandler;
 import ru.teamtwo.telegrambot.service.api.stage.Stage;
 import ru.teamtwo.telegrambot.service.api.stage.StageHandler;
-import ru.teamtwo.telegrambot.service.impl.rest.RESTHandlerImpl;
 import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 
 @Component
 @RequiredArgsConstructor
 public class UserAddressTypedHandler implements StageHandler {
     private final SendMessageHandler sendMessageHandler;
-    private final CustomerStateHandler customerStateHandler;
-    private final RESTHandlerImpl restHandlerImpl;
 
     @Override
     public boolean shouldRun(StageContext context) {
