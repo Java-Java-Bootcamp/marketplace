@@ -7,13 +7,14 @@ import ru.teamtwo.core.dtos.controller.product.ProductOfferController;
 import ru.teamtwo.telegrambot.model.bot.menus.TelegramBotInlineMenus;
 import ru.teamtwo.telegrambot.model.product.Product;
 import ru.teamtwo.telegrambot.service.api.bot.SendMessageHandler;
-import ru.teamtwo.telegrambot.service.api.customer.CustomerStateHandler;
 import ru.teamtwo.telegrambot.service.api.rest.RESTHandler;
 import ru.teamtwo.telegrambot.service.api.rest.RESTHandlerException;
 import ru.teamtwo.telegrambot.service.api.stage.Stage;
 import ru.teamtwo.telegrambot.service.api.stage.StageHandler;
 import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.Set;
 import java.util.StringJoiner;
 
@@ -21,24 +22,20 @@ import java.util.StringJoiner;
 @RequiredArgsConstructor
 @Slf4j
 public class SortAscDescHandler implements StageHandler {
-    private final CustomerStateHandler customerStateHandler;
     private final SendMessageHandler sendMessageHandler;
     private final RESTHandler restHandler;
     private final TelegramBotInlineMenus inlineMenus;
 
     @Override
     public boolean shouldRun(StageContext context) {
-        return context.customerState().getStage() == Stage.WAITING_FOR_SORTING_TYPE_FIELD;
+        return context.customerState().getStage() == Stage.WAITING_FOR_SORTING_TYPE_ASCDESC;
     }
 
     @Override
     public void execute(StageContext context) {
-        for (ProductOfferController.SortingTypeAscDesc type : ProductOfferController.SortingTypeAscDesc.values()) {
-            if (type.inputName.equals(context.message())) {
-                context.customerState().setSortingTypeAscDesc(type);
-            }
-        }
-        if (context.customerState().getSortingTypeAscDesc() == null) return;
+        Optional<ProductOfferController.SortingTypeAscDesc> sortingTypeAscDesc = Arrays.stream(ProductOfferController.SortingTypeAscDesc.values()).filter((type) -> type.inputName.equals(context.message())).findFirst();
+        if (sortingTypeAscDesc.isEmpty()) return;
+        context.customerState().setSortingTypeAscDesc(sortingTypeAscDesc.get());
 
         ProductOfferController.ProductQuery productQuery = new ProductOfferController.ProductQuery(
                 context.customerState().getSearchQuery(),

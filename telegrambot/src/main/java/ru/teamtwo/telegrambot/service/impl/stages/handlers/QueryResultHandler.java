@@ -6,14 +6,12 @@ import ru.teamtwo.telegrambot.model.bot.menus.TelegramBotMenus;
 import ru.teamtwo.telegrambot.service.api.bot.SendMessageHandler;
 import ru.teamtwo.telegrambot.service.api.stage.Stage;
 import ru.teamtwo.telegrambot.service.api.stage.StageHandler;
-import ru.teamtwo.telegrambot.service.impl.rest.RESTHandlerImpl;
 import ru.teamtwo.telegrambot.service.impl.stages.StageContext;
 
 @Component
 @RequiredArgsConstructor
 public class QueryResultHandler implements StageHandler {
     private final SendMessageHandler sendMessageHandler;
-    private final RESTHandlerImpl restHandlerImpl;
 
     @Override
     public boolean shouldRun(StageContext context) {
