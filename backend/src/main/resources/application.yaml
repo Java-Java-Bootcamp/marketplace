@@ -14,7 +14,7 @@ spring:
       hibernate:
         auto_quote_keyword: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/dbmarketplace2
+    url: jdbc:postgresql://62.109.17.193:5432/dbmarketplace
     username: postgres
     password: admin
     driver-class-name: org.postgresql.Driver
